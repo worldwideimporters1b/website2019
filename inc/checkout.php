@@ -11,7 +11,7 @@ function pay($amount, $orderid, $customerid ){
     // check payment
 
     if($idealresult == 0){
-        $paymentresult; = 0;
+        $paymentresult = 0;
     }
     if($idealresult == 1){
         $paymentresult = 1;
