@@ -27,7 +27,7 @@ function pay($amount, $orderid, $customerid ){
 
 renderIdeal($amount,$shopid,$orderid){
 $idealresult = 0;
-
+}
 // do something
 
 return $idealresult;
