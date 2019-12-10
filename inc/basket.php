@@ -41,6 +41,6 @@ function toonWinkelmand($winkelmandid,$conn){
                           <a href='index.php?page=verwijder&nummer=" . $regel['nummer'] . "' class='btn btn-danger'>Verwijder</a></td>";
         $html .= "</tr>";
 
-}
+}}
 
     ?>
