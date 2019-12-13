@@ -1,0 +1,30 @@
+body{
+    background-color: red;
+}
+
+.header{
+    background-color: #fff;
+    min-height: 150px;
+    height: 170px;
+}
+
+.flag{
+    max-width: 40px;
+}
+
+.totalprice{
+    padding-right: 20px;
+}
+
+.wwilogo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 320px;
+}
+
+.subheader{
+    padding-top: 5px;
+    height: 50px;
+    background-color: #332be6;
+}
