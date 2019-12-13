@@ -1,11 +1,45 @@
 body{
-    background-color: red;
+    /*background-color: red;*/
 }
 
 .header{
     background-color: #fff;
     min-height: 150px;
     height: 170px;
+}
+
+.actionmenu{
+    display: block;
+    padding-top: 10px;
+}
+
+.btn-secondary {
+    color: #332be6 !important;
+    background-color: #fff;
+    border: 2px solid #332be6;
+    box-shadow: none;
+    transition: .3s ease;
+}
+
+.btn-secondary:hover{
+    border: 2px solid #332be6;
+    background-color: #332be6;
+    color: #fff !important;
+}
+
+.btn-primary{
+    border: 2px solid #332be6;
+    box-shadow: none;
+    background-color: white;
+    color: #332be6;
+    transition: .3s ease;
+    border-radius: 10px;
+}
+
+.btn-primary:hover{
+    border: 2px solid #fff;
+    background-color: #332be6;
+    color: #fff;
 }
 
 .flag{
@@ -28,3 +62,4 @@ body{
     height: 50px;
     background-color: #332be6;
 }
+
