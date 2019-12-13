@@ -3,14 +3,15 @@ include "head.php";
 include "footer.php";
 
 function registreren($gegevens) {
-    if (accountregistreren($conn, $gegevens["emailadres"], $gegevens["voornaam"],$gegevens["achternaam"], $gegevens["geslacht"],
+    if (accountregistreren($gegevens["emailadres"], $gegevens["voornaam"],$gegevens["achternaam"], $gegevens["geslacht"],
             $gegevens["wachtwoord"],$gegevens["adres"],$gegevens["woonplaats"], $gegevens["postcode"]) == 1)
         $gegevens["melding"] = "Uw account is geregistreerd. Klik op de onderstaande link in te loggen.";
     else $gegevens["melding"] = "Het registreren is mislukt. Probeer het nog eens.";
     return $gegevens;
 }
-function accountregistreren($conn, $emailadres, $voornaam, $achternaam, $geslacht, $wachtwoord, $adres, $woonplaats, $postcode) {
-    $sql = "INSERT INTO gebruiker (emailadres, voornaam, achternaam, geslacht, wachtwoord, adres, woonplaats, postcode) VALUES(?,?,?,?,?,?,?,?)";
+function accountregistreren($emailadres, $voornaam, $achternaam, $geslacht, $wachtwoord, $adres, $woonplaats, $postcode) {
+    $sql = "INSERT INTO gebruiker (emailadres, voornaam, achternaam, geslacht, wachtwoord, adres, woonplaats, postcode) 
+            VALUES('$emailadres','$voornaam', '$achternaam', '$geslacht', '$wachtwoord','$adres','$woonplaats','$postcode')";
     //mysqli_stmt_bind_param($statement, 'ss', $emailadres, $voornaam,$achternaam, $geslacht, $wachtwoord, $adres, $woonplaats, $postcode);
     $conn->query($sql);
     //return mysqli_stmt_affected_rows($statement) == 1;
@@ -83,7 +84,7 @@ if (isset($_GET["registreren"])){
     <br>
     <input type="text" name="postcode" class="form-control" value="<?php print($gegevens[$postcode]); ?>" placeholder="Postcode"/>
     <br>
-    <input type="submit" class="btn btn-primary" name="registreren" value="registreren"/>
+    <input type="submit" class="btn btn-outline-primary" name="registreren" value="registreren"/>
 </form>
 <br><?php print($gegevens[$message]); ?><br>
 <a href="inloggen.php">Terug naar de inlogpagina</a>
