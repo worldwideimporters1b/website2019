@@ -1,6 +1,10 @@
 <?php
 include "head.php";
 include "footer.php";
+include "menu.php";
+
+//database verbinding
+$conn = new mysqli('localhost','root','','world_wide_importers');
 
 function registreren($gegevens) {
     if (accountregistreren($gegevens["emailadres"], $gegevens["voornaam"],$gegevens["achternaam"], $gegevens["geslacht"],
@@ -13,7 +17,9 @@ function registreren($gegevens) {
 
     return $gegevens;
 }
-function accountregistreren($emailadres, $voornaam, $achternaam, $geslacht, $wachtwoord, $adres, $woonplaats, $postcode) {
+//de functie account registreren zal de gegevens van de klant opslaan in de database
+function accountregistreren($emailadres, $voornaam, $achternaam, $geslacht, $wachtwoord, $adres, $woonplaats, $postcode, $conn) {
+    //met een INSERT voegen we de nieuwe klantgegevens toe aan de database
     $sql = "INSERT INTO gebruiker (emailadres, voornaam, achternaam, geslacht, wachtwoord, adres, woonplaats, postcode) 
             VALUES('$emailadres','$voornaam', '$achternaam', '$geslacht', '$wachtwoord','$adres','$woonplaats','$postcode')";
     //mysqli_stmt_bind_param($statement, 'ss', $emailadres, $voornaam,$achternaam, $geslacht, $wachtwoord, $adres, $woonplaats, $postcode);
