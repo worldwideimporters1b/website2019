@@ -106,6 +106,6 @@ if (isset($_GET["registreren"])){
     <input type="submit" class="btn btn-outline-primary" name="registreren" value="registreren"/>
 </form>
 <br><?php print($gegevens[$message]); ?><br>
-<a href="inloggen.php">Terug naar de inlogpagina</a>
+<a class="btn btn-primary" href="inloggen.php" role="button">Terug naar de inlogpagina</a>
 </body>
 </html>

@@ -50,7 +50,6 @@ function gegevensOphalen($gebruikersid, $conn){
 <h3>Uw gegevens</h3>
 <br>
 <table class="table">
-
     <?php
     gegevensOphalen(1,$conn);
 
@@ -58,5 +57,6 @@ function gegevensOphalen($gebruikersid, $conn){
     ?>
 
 </table>
-
+<a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a>
+<a class="btn btn-outline-success" href="checkout.php" role="button">Plaats bestelling</a>
 </html>
