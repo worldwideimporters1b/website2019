@@ -15,9 +15,10 @@ function gegevensOphalen($gebruikersid, $conn){
 
     foreach ($result as $gegevens) {
         print("<th scope='col'>");
+        print("<tr>" . $gegevens["emailadres"] . "</tr><br>");
         print("<tr>" . $gegevens["voornaam"] . "</tr><br>");
-        print("<tr>" . $gegevens["tussenvoegsel"] . "</tr>");
         print("<tr>" . $gegevens["achternaam"] . "</tr><br>");
+        print("<tr>" . $gegevens["geslacht"] . "</tr><br>");
         print("<tr>" . $gegevens["adres"] . "</tr><br>");
         print("<tr>" . $gegevens["postcode"] . "</tr><br>");
         print("<tr>" . $gegevens["woonplaats"] . "</tr><br>");
