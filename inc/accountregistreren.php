@@ -4,11 +4,15 @@ include "footer.php";
 include "menu.php";
 
 //database verbinding
-$conn = new mysqli('localhost','root','','world_wide_importers');
+function databaseConnectie(){
+    $conn = new mysqli('localhost','root','','world_wide_importers');
+    return $conn;
+}
 
 function registreren($gegevens) {
+    $conn = databaseConnectie();
     if (accountregistreren($gegevens["emailadres"], $gegevens["voornaam"],$gegevens["achternaam"], $gegevens["geslacht"],
-            $gegevens["wachtwoord"],$gegevens["adres"],$gegevens["woonplaats"], $gegevens["postcode"]) == 1)
+            $gegevens["wachtwoord"],$gegevens["adres"],$gegevens["woonplaats"], $gegevens["postcode"], $conn) == 1)
 
         //controle of het account succesvol is geregistreerd. Wanneer de webshop 1 terug geeft, is het gelukt.
 
@@ -36,7 +40,7 @@ $achternaam = "achternaam";
 $geslacht = "geslacht";
 $geboortedatum = "geboortedatum";
 $wachtwoord = "wachtwoord";
-$wachtwoord2 = "wachtwoord2";
+//$wachtwoord2 = "wachtwoord2";
 $adres = "adres";
 $woonplaats = "woonplaats";
 $postcode = "postcode";
@@ -50,7 +54,7 @@ if (isset($_GET["registreren"])){
     $gegevens[$geslacht] = isset($_GET[$geslacht]) ? $_GET[$geslacht] : "";
     $gegevens[$geboortedatum] = isset($_GET[$geboortedatum]) ? $_GET[$geboortedatum] : "";
     $gegevens[$wachtwoord] = isset($_GET[$wachtwoord]) ? $_GET[$wachtwoord] : "";
-    $gegevens[$wachtwoord2] = isset($_GET[$wachtwoord2]) ? $_GET[$wachtwoord2] : "";
+    //$gegevens[$wachtwoord2] = isset($_GET[$wachtwoord2]) ? $_GET[$wachtwoord2] : "";
     $gegevens[$adres] = isset($_GET[$adres]) ? $_GET[$adres] : "";
     $gegevens[$woonplaats] = isset($_GET[$woonplaats]) ? $_GET[$woonplaats] : "";
     $gegevens[$postcode] = isset($_GET[$postcode]) ? $_GET[$postcode] : "";
@@ -63,7 +67,7 @@ if (isset($_GET["registreren"])){
     $gegevens[$geslacht] = "";
     $gegevens[$geboortedatum] = "";
     $gegevens[$wachtwoord] = "";
-    $gegevens[$wachtwoord2] = "";
+    //$gegevens[$wachtwoord2] = "";
     $gegevens[$adres] = "";
     $gegevens[$woonplaats] = "";
     $gegevens[$postcode] = "";
@@ -91,7 +95,7 @@ if (isset($_GET["registreren"])){
     <br>
     <input type="password" name="wachtwoord" class="form-control" value="<?php print($gegevens[$wachtwoord]); ?>" placeholder="Wachtwoord">
     <br>
-    <input type="password" name="wachtwoord2" class="form-control" value="<?php print($gegevens[$wachtwoord2]); ?>" placeholder="Herhaal uw wachtwoord">
+   <!-- <input type="password" name="wachtwoord2" class="form-control" value="<?php print($gegevens[$wachtwoord2]); ?>" placeholder="Herhaal uw wachtwoord"> -->
     <br>
     <input type="text" name="adres" class="form-control" value="<?php print($gegevens[$adres]); ?>" placeholder="Adres"/>
     <br>
