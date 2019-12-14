@@ -11,9 +11,10 @@ function registreren($gegevens) {
             $gegevens["wachtwoord"],$gegevens["adres"],$gegevens["woonplaats"], $gegevens["postcode"]) == 1)
 
         //controle of het account succesvol is geregistreerd. Wanneer de webshop 1 terug geeft, is het gelukt.
+
         $gegevens["melding"] = "Uw account is geregistreerd. Klik op de onderstaande link in te loggen.";
-    //anders word er onderstaande foutmelding gegeven.
-    else $gegevens["melding"] = "Het registreren is mislukt. Probeer het nog eens.";
+
+    else $gegevens["melding"] = "Het registreren is mislukt. Probeer het nog eens."; //anders word er onderstaande foutmelding gegeven.
 
     return $gegevens;
 }
@@ -22,13 +23,13 @@ function accountregistreren($emailadres, $voornaam, $achternaam, $geslacht, $wac
     //met een INSERT voegen we de nieuwe klantgegevens toe aan de database
     $sql = "INSERT INTO gebruiker (emailadres, voornaam, achternaam, geslacht, wachtwoord, adres, woonplaats, postcode) 
             VALUES('$emailadres','$voornaam', '$achternaam', '$geslacht', '$wachtwoord','$adres','$woonplaats','$postcode')";
-    //mysqli_stmt_bind_param($statement, 'ss', $emailadres, $voornaam,$achternaam, $geslacht, $wachtwoord, $adres, $woonplaats, $postcode);
+
     $conn->query($sql);
-    //return mysqli_stmt_affected_rows($statement) == 1;
+
     return $sql;
 }
 
-
+//variabelen definieren
 $emailadres = "emailadres";
 $voornaam = "voornaam";
 $achternaam = "achternaam";
@@ -41,6 +42,7 @@ $woonplaats = "woonplaats";
 $postcode = "postcode";
 $message = "melding";
 
+// Als de knop "registreren" is geklikt, haal met $_GET de gegevens op.
 if (isset($_GET["registreren"])){
     $gegevens[$emailadres] = isset($_GET[$emailadres]) ? $_GET[$emailadres] : "";
     $gegevens[$voornaam] = isset($_GET[$voornaam]) ? $_GET[$voornaam] : "";
@@ -54,6 +56,7 @@ if (isset($_GET["registreren"])){
     $gegevens[$postcode] = isset($_GET[$postcode]) ? $_GET[$postcode] : "";
     $gegevens = registreren($gegevens);
 }else{
+    //als het een veld niet is ingevult:
     $gegevens[$emailadres] = "";
     $gegevens[$voornaam] = "";
     $gegevens[$achternaam] = "";
@@ -77,6 +80,8 @@ if (isset($_GET["registreren"])){
 <h1>WWI</h1><br>
 <h2>Account registreren</h2><br>
 <form method="get" action="accountregistreren.php">
+
+<!-- Selfhandling formulier weergeven op het scherm, zodat de klant zijn of haar gegevens kan registreren. -->
 
     <input type="text" name="voornaam" class="form-control "value="<?php print($gegevens[$voornaam]); ?>" placeholder="Voornaam"/>
     <br>
