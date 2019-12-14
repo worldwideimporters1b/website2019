@@ -5,8 +5,12 @@ include "footer.php";
 function registreren($gegevens) {
     if (accountregistreren($gegevens["emailadres"], $gegevens["voornaam"],$gegevens["achternaam"], $gegevens["geslacht"],
             $gegevens["wachtwoord"],$gegevens["adres"],$gegevens["woonplaats"], $gegevens["postcode"]) == 1)
+
+        //controle of het account succesvol is geregistreerd. Wanneer de webshop 1 terug geeft, is het gelukt.
         $gegevens["melding"] = "Uw account is geregistreerd. Klik op de onderstaande link in te loggen.";
+    //anders word er onderstaande foutmelding gegeven.
     else $gegevens["melding"] = "Het registreren is mislukt. Probeer het nog eens.";
+
     return $gegevens;
 }
 function accountregistreren($emailadres, $voornaam, $achternaam, $geslacht, $wachtwoord, $adres, $woonplaats, $postcode) {
