@@ -1,5 +1,9 @@
 <?php
 
+
+
+$conn = new mysqli('localhost','root','','world_wide_importers');
+
 function updateProductAantal($winkelmandid,$artikelid,$aantal,$conn){ // de 3 dingen die hier opgesomd staan met een $ ervoor, zijn ####parameters####, deze stuur je mee als je de functie aanroept
 
             //hieronder bouwen we de query naar de database op, met daarin de parameters op de juiste plekken.
@@ -24,11 +28,12 @@ function updateProductAantal($winkelmandid,$artikelid,$aantal,$conn){ // de 3 di
 
 function toonWinkelmand($winkelmandid,$conn){
 
-    $sql = "SELECT * FROM `mandje` WHERE `winkelmandid` = ".$winkelmandid;
+    $sql = "SELECT * FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
 
     $result = $conn->query($sql);
 
-    $html .= '<table width="100%">';
+
+    $html = '<table width="100%">';
     foreach ($result as $regel) {
 
         $html .= "<tr>"; // tr is table row
@@ -37,10 +42,12 @@ function toonWinkelmand($winkelmandid,$conn){
             $html .= "<td>" . $veld . "</td>"; // td is table data
 
         }
-        $html .= "<td><a href='index.php?page=toon&nummer=" . $regel['nummer'] . "' class='btn btn-primary'>Bewerken</a> 
-                          <a href='index.php?page=verwijder&nummer=" . $regel['nummer'] . "' class='btn btn-danger'>Verwijder</a></td>";
+        $html .= "<td>" . $regel['winkelmand_id'] . "</td>";
         $html .= "</tr>";
-
+return $html;
 }}
+
+
+echo toonWinkelmand('1',$conn);
 
     ?>
