@@ -88,25 +88,25 @@ if (isset($_GET["registreren"])){
 <h2>Account registreren</h2><br>
 <form method="get" action="accountregistreren.php">
 
-<!-- Selfhandling formulier weergeven op het scherm, zodat de klant zijn of haar gegevens kan registreren. -->
+<!-- Selfhandling formulier weergeven op het scherm, zodat de klant zijn of haar gegevens kan registreren. Alle velden zijn verplicht, op geslacht en geb. datum na. -->
 
-    <input type="text" name="emailadres" class="form-control "value="<?php print($gegevens[$emailadres]); ?>" placeholder="E-mail adres"/>
+    <input type="text" name="emailadres" class="form-control "value="<?php print($gegevens[$emailadres]); ?>" placeholder="E-mail adres" required/>
     <br>
-    <input type="text" name="voornaam" class="form-control "value="<?php print($gegevens[$voornaam]); ?>" placeholder="Voornaam"/>
+    <input type="text" name="voornaam" class="form-control "value="<?php print($gegevens[$voornaam]); ?>" placeholder="Voornaam" required/>
     <br>
-    <input type="text" name="achternaam" class="form-control "value="<?php print($gegevens[$achternaam]); ?>" placeholder="Achternaam"/>
+    <input type="text" name="achternaam" class="form-control "value="<?php print($gegevens[$achternaam]); ?>" placeholder="Achternaam"required/>
     <br>
     <input type="text" name="geslacht" class="form-control "value="<?php print($gegevens[$geslacht]); ?>" placeholder="Geslacht"/>
     <br>
-    <input type="password" name="wachtwoord" class="form-control" value="<?php print($gegevens[$wachtwoord]); ?>" placeholder="Wachtwoord">
+    <input type="password" name="wachtwoord" class="form-control" value="<?php print($gegevens[$wachtwoord]); ?>" placeholder="Wachtwoord" required>
 
    <!-- <input type="password" name="wachtwoord2" class="form-control" value="<?php//print($gegevens[$wachtwoord2]); ?>" placeholder="Herhaal uw wachtwoord"> -->
     <br>
-    <input type="text" name="adres" class="form-control" value="<?php print($gegevens[$adres]); ?>" placeholder="Adres"/>
+    <input type="text" name="adres" class="form-control" value="<?php print($gegevens[$adres]); ?>" placeholder="Adres" required/>
     <br>
-    <input type="text" name="woonplaats" class="form-control" value="<?php print($gegevens[$woonplaats]); ?>" placeholder="Woonplaats"/>
+    <input type="text" name="woonplaats" class="form-control" value="<?php print($gegevens[$woonplaats]); ?>" placeholder="Woonplaats" required/>
     <br>
-    <input type="text" name="postcode" class="form-control" value="<?php print($gegevens[$postcode]); ?>" placeholder="Postcode"/>
+    <input type="text" name="postcode" class="form-control" value="<?php print($gegevens[$postcode]); ?>" placeholder="Postcode" required/>
     <br>
     <input type="text" name="geboortedatum" class="form-control "value="<?php print($gegevens[$geboortedatum]); ?>" placeholder="Geboortedatum yyyy-mm-dd (optioneel)"/>
     <br>
