@@ -8,17 +8,20 @@ include "Kortingscode.php";
 $conn = new mysqli('localhost','root','','world_wide_importers');
 
 //variabelen aanmaken voor deze pagina
-$kortingscode = 'placeholder';
+$kortingscode = ' ';
+$winkelmandid = '1';
 
-if (isset($_GET["Toepassen"])){ //kortingscode ophalen uit formulier
+if (isset($_GET["Kortingtoepassen"])){ //kortingscode ophalen uit formulier
     $kortingscode = isset($_GET["kortingscode"]);
-    $prijs = kortingsCodeToepassen($kortingscode,'1',$conn); //$winkelmandid is hier nog ff 1
+    $prijs = kortingsCodeToepassen($kortingscode,$winkelmandid,$conn); //$winkelmandid is hier nog ff 1
+    //$kortingnaam = kortingsNaamTonen($kortingscode, $conn); //naam van de korting ophalen
 }
 
 if (isset($_GET["Verwijder+code"])){ //kortingscode verwijderen
     $kortingscode = isset($_GET["kortingscode"]);
-    kortingsCodeVerwijderen('1', $conn); //$winkelmandid is hier nog ff 1
+    kortingsCodeVerwijderen($winkelmandid, $conn); //$winkelmandid is hier nog ff 1
 }
+$kortingsfeedback = kortingsCodeFeedback($kortingscode,$winkelmandid,$conn);//$winkelmandid is hier nog ff 1
 ?>
 
 <!doctype html>
@@ -41,7 +44,7 @@ if (isset($_GET["Verwijder+code"])){ //kortingscode verwijderen
 <div class="container">
     <h3>hier komt de totaalprijs van de winkelwagen</h3><br>
     <?php
-    if(isset($prijs)){echo $prijs;} //als een prijs is dan deze tonen
+    //if(isset($prijs)){echo $prijs;} //als een prijs is dan deze tonen
     ?>
 </div>
 
@@ -54,7 +57,7 @@ if (isset($_GET["Verwijder+code"])){ //kortingscode verwijderen
             <input type="submit" name="Kortingverwijderen" value="Verwijder code" class="btn btn-primary">
         </div>
     </form>
-    <small id="kortingantwoord" class="form-text text-muted">Hier komt feedback over de kortingscode</small>
+    <small id="kortingantwoord" class="form-text text-muted"><?php echo kortingsCodeFeedback($kortingscode,$winkelmandid,$conn); ?></small>
     <br>
     <?php
 
