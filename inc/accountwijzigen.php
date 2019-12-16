@@ -1,4 +1,5 @@
 <?php
+// Door Lennard S1080997
 
 include "head.php";
 include "footer.php";
@@ -35,7 +36,7 @@ function accountWijzigen($accountgegevens){ //De feedback geven door middel van 
 
 //De SQL query die word aangeroepen door de functie accountWijzigen.
 function updateAccount($emailadres, $voornaam, $achternaam, $geslacht, $adres, $woonplaats, $postcode, $geboortedatum, $conn){
-    $gebruikersid = 1;
+    $gebruikersid = 1; //Gebruikers ID nog verandere in een variabele, SESSIE o.i.d.
     $sql = "UPDATE `gebruiker` SET `emailadres` = '$emailadres', `voornaam` = '$voornaam',`achternaam` = '$achternaam',`geslacht` = '$geslacht',`adres` = '$adres'
             , `woonplaats` = '$woonplaats',`postcode` = '$postcode',`geboortedatum` = '$geboortedatum' WHERE `gebruiker_id` = '$gebruikersid';";
 
@@ -83,7 +84,6 @@ if (isset($_GET["bijwerken"])){
 ?>
 
 
-
 <html>
 <head>
     <meta charset="UTF-8">
@@ -96,45 +96,54 @@ if (isset($_GET["bijwerken"])){
 
         <div class="col-sm-10">
     <label for="emailadres">E-mail adres</label>
-    <input type="text" class="form-control" name="emailadres" value="<?php echo $accountgegevens[$emailadres]; ?>"/>
+    <input type="email" class="form-control" name="emailadres" placeholder='<?php print($accountgegevens["emailadres"]); ?>' value="<?php print($accountgegevens[$emailadres]); ?>"/>
     <br>
         </div>
+
         <div class="col-sm-10">
     <label for="voornaam">Voornaam</label>
     <input type="text" class="form-control" name="voornaam" value="<?php print($accountgegevens[$voornaam]); ?>"/>
     <br>
         </div>
+
         <div class="col-sm-10">
     <label for="achternaam">Achternaam</label>
     <input type="text" class="form-control" name="achternaam" value="<?php print($accountgegevens[$achternaam]); ?>"/>
     <br>
         </div>
+
             <div class="col-sm-10">
     <label for="geslacht">Geslacht</label>
     <input type="text" class="form-control" name="geslacht" value="<?php print($accountgegevens[$geslacht]); ?>"/>
     <br>
             </div>
+
             <div class="col-sm-10">
     <label for="adres">Adres</label>
     <input type="text" class="form-control" name="adres" value="<?php print($accountgegevens[$adres]); ?>"/>
     <br>
             </div>
+
             <div class="col-sm-10">
     <label for="postcode">Postcode</label>
     <input type="text" class="form-control" name="postcode" value="<?php print($accountgegevens[$postcode]); ?>"/>
     <br>
             </div>
+
             <div class="col-sm-10">
     <label for="woonplaats">Woonplaats</label>
     <input type="text" class="form-control" name="woonplaats" value="<?php print($accountgegevens[$woonplaats]); ?>"/>
     <br>
             </div>
+
             <div class="col-sm-10">
     <label for="geboortedatum">Geboortedatum</label>
     <input type="text" class="form-control" name="geboortedatum" value="<?php print($accountgegevens[$geboortedatum]); ?>"/>
     <br>
             </div>
+
     <input type="submit" class="btn btn-outline-primary" name="bijwerken" value="Bijwerken"/>
+    <a class="btn btn-outline-success" href="accountoverzicht.php" role="button">Terug naar accountoverzicht</a>
 </form>
 </div>
 <div class="container">
@@ -142,7 +151,7 @@ if (isset($_GET["bijwerken"])){
 <?php
 print("$accountgegevens[$message]");
 ?>
-    <br><br>
-    <a class="btn btn-outline-success" href="accountoverzicht.php" role="button">Terug naar accountoverzicht</a>
+
+
 </div>
 </html>

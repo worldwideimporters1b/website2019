@@ -1,4 +1,6 @@
 <?php
+// Door Lennard S1080997
+
 include "head.php";
 include "footer.php";
 include "menu.php";
@@ -46,7 +48,7 @@ function gegevensOphalen($gebruikersid, $conn){
 <div class="container">
 <table class="table">
     <?php
-    // Hier geven we aan dat we van gebruiker met ID 1 de gegevens willen weergeven.
+    // Hier geven we aan dat we van gebruiker met ID 1 de gegevens willen weergeven. Later veranderen naar Sessie ID o.i.d.
 
     gegevensOphalen(1,$conn);
 
