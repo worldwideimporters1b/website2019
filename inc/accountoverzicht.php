@@ -3,6 +3,7 @@ include "head.php";
 include "footer.php";
 include "menu.php";
 
+
 //met $conn roepen we de verbinding met de database aan.
 $conn = new mysqli('localhost','root','','world_wide_importers');
 
@@ -47,7 +48,7 @@ function gegevensOphalen($gebruikersid, $conn){
     <?php
     // Hier geven we aan dat we van gebruiker met ID 1 de gegevens willen weergeven.
 
-    $accountgegevens = gegevensOphalen(1,$conn);
+    gegevensOphalen(1,$conn);
 
 
 
@@ -57,6 +58,6 @@ function gegevensOphalen($gebruikersid, $conn){
 </div>
 <div class="container">
 <a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a>
-<a class="btn btn-outline-success" href="checkout.php" role="button">Plaats bestelling</a>
+<a class="btn btn-outline-success" href="besteloverzicht.php" role="button">Plaats bestelling</a>
 </div>
 </html>

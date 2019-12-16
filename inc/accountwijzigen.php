@@ -4,14 +4,38 @@ include "head.php";
 include "footer.php";
 include "menu.php";
 
-
-function accountWijzigen($accountgegevens){
-    $conn = databaseConnectie();
-
-
+function databaseConnectie(){
+    $conn = new mysqli('localhost','root','','world_wide_importers');
+    return $conn;
 }
 
+$conn = databaseConnectie();
+gegevensOphalen(1,$conn); //gegevens van in dit geval gebruiker met ID 1 ophalen
+
+//zorgen dat bovenstaande functie uitgevoerd word.
+function gegevensOphalen($gebruikersid, $conn){
+    $sql = "SELECT * FROM `gebruiker` WHERE `gebruiker_id` = ".$gebruikersid.";";  //Met deze sql query geven we aan dat we alle gegevens van de tabel gebruiker willen hebben.
+
+    $accountgegevens = $conn->query($sql); // Hiermee voeren we de bovenstaande query uitvoeren
+
+    return $accountgegevens;
+}
+
+
+function accountWijzigen($accountgegevens){ //De feedback geven door middel van een melding op het scherm.
+    $conn = databaseConnectie();
+    if (updateAccount($accountgegevens["emailadres"], $accountgegevens["voornaam"], $accountgegevens["achternaam"], $accountgegevens["geslacht"], $accountgegevens["adres"],
+    $accountgegevens["woonplaats"], $accountgegevens["postcode"], $accountgegevens["geboortedatum"], $conn) == 1)
+
+        $accountgegevens["melding"] = "Uw accountgegevens zijn bijgewerkt.";
+    else $accountgegevens["melding"] = "Het bijwerken is mislukt. Probeer het nog eens.";
+
+    return $accountgegevens;
+}
+
+//De SQL query die word aangeroepen door de functie accountWijzigen.
 function updateAccount($emailadres, $voornaam, $achternaam, $geslacht, $adres, $woonplaats, $postcode, $geboortedatum, $conn){
+    $gebruikersid = 1;
     $sql = "UPDATE `gebruiker` SET `emailadres` = '$emailadres', `voornaam` = '$voornaam',`achternaam` = '$achternaam',`geslacht` = '$geslacht',`adres` = '$adres'
             , `woonplaats` = '$woonplaats',`postcode` = '$postcode',`geboortedatum` = '$geboortedatum' WHERE `gebruiker_id` = '$gebruikersid';";
 
@@ -66,33 +90,59 @@ if (isset($_GET["bijwerken"])){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <div class="container">
+    <h3>Uw gegevens</h3><br>
+
 <form method="get" action="accountwijzigen.php">
-    <label>E-mail adres</label>
-    <input type="text" name="emailadres" value="<?php print($accountgegevens[$emailadres]); ?>"/>
+
+        <div class="col-sm-10">
+    <label for="emailadres">E-mail adres</label>
+    <input type="text" class="form-control" name="emailadres" value="<?php echo $accountgegevens[$emailadres]; ?>"/>
     <br>
-    <label>Voornaam</label>
-    <input type="text" name="voornaam" value="<?php print($accountgegevens[$voornaam]); ?>"/>
+        </div>
+        <div class="col-sm-10">
+    <label for="voornaam">Voornaam</label>
+    <input type="text" class="form-control" name="voornaam" value="<?php print($accountgegevens[$voornaam]); ?>"/>
     <br>
-    <label>Achternaam</label>
-    <input type="text" name="achternaam" value="<?php print($accountgegevens[$achternaam]); ?>"/>
+        </div>
+        <div class="col-sm-10">
+    <label for="achternaam">Achternaam</label>
+    <input type="text" class="form-control" name="achternaam" value="<?php print($accountgegevens[$achternaam]); ?>"/>
     <br>
-    <label>Geslacht</label>
-    <input type="text" name="emailadres" value="<?php print($accountgegevens[$geslacht]); ?>"/>
+        </div>
+            <div class="col-sm-10">
+    <label for="geslacht">Geslacht</label>
+    <input type="text" class="form-control" name="geslacht" value="<?php print($accountgegevens[$geslacht]); ?>"/>
     <br>
-    <label>Adres</label>
-    <input type="text" name="adres" value="<?php print($accountgegevens[$adres]); ?>"/>
+            </div>
+            <div class="col-sm-10">
+    <label for="adres">Adres</label>
+    <input type="text" class="form-control" name="adres" value="<?php print($accountgegevens[$adres]); ?>"/>
     <br>
-    <label>Postcode</label>
-    <input type="text" name="postcode" value="<?php print($accountgegevens[$postcode]); ?>"/>
+            </div>
+            <div class="col-sm-10">
+    <label for="postcode">Postcode</label>
+    <input type="text" class="form-control" name="postcode" value="<?php print($accountgegevens[$postcode]); ?>"/>
     <br>
-    <label>Woonplaats</label>
-    <input type="text" name="woonplaats" value="<?php print($accountgegevens[$woonplaats]); ?>"/>
+            </div>
+            <div class="col-sm-10">
+    <label for="woonplaats">Woonplaats</label>
+    <input type="text" class="form-control" name="woonplaats" value="<?php print($accountgegevens[$woonplaats]); ?>"/>
     <br>
-    <label>Geboortedatum</label>
-    <input type="text" name="geboortedatum" value="<?php print($accountgegevens[$geboortedatum]); ?>"/>
+            </div>
+            <div class="col-sm-10">
+    <label for="geboortedatum">Geboortedatum</label>
+    <input type="text" class="form-control" name="geboortedatum" value="<?php print($accountgegevens[$geboortedatum]); ?>"/>
     <br>
-    <input type="submit" name="bijwerken" value="Bijwerken"/>
+            </div>
+    <input type="submit" class="btn btn-outline-primary" name="bijwerken" value="Bijwerken"/>
 </form>
 </div>
-
+<div class="container">
+<br>
+<?php
+print("$accountgegevens[$message]");
+?>
+    <br><br>
+    <a class="btn btn-outline-success" href="accountoverzicht.php" role="button">Terug naar accountoverzicht</a>
+</div>
 </html>
