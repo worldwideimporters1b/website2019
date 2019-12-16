@@ -58,16 +58,16 @@ $geboortedatum = "geboortedatum";
 $message = "melding";
 
 
-// Als de knop "Bijwerken" is geklikt, haal met $_GET de gegevens op.
-if (isset($_GET["bijwerken"])){
-    $accountgegevens[$emailadres] = isset($_GET[$emailadres]) ? $_GET[$emailadres] : "";
-    $accountgegevens[$voornaam] = isset($_GET[$voornaam]) ? $_GET[$voornaam] : "";
-    $accountgegevens[$achternaam] = isset($_GET[$achternaam]) ? $_GET[$achternaam] : "";
-    $accountgegevens[$geslacht] = isset($_GET[$geslacht]) ? $_GET[$geslacht] : "";
-    $accountgegevens[$adres] = isset($_GET[$adres]) ? $_GET[$adres] : "";
-    $accountgegevens[$woonplaats] = isset($_GET[$woonplaats]) ? $_GET[$woonplaats] : "";
-    $accountgegevens[$postcode] = isset($_GET[$postcode]) ? $_GET[$postcode] : "";
-    $accountgegevens[$geboortedatum] = isset($_GET[$geboortedatum]) ? $_GET[$geboortedatum] : "";
+// Als de knop "Bijwerken" is geklikt, haal met POST de gegevens op.
+if (isset($_POST["bijwerken"])){
+    $accountgegevens[$emailadres] = isset($_POST[$emailadres]) ? $_POST[$emailadres] : "";
+    $accountgegevens[$voornaam] = isset($_POST[$voornaam]) ? $_POST[$voornaam] : "";
+    $accountgegevens[$achternaam] = isset($_POST[$achternaam]) ? $_POST[$achternaam] : "";
+    $accountgegevens[$geslacht] = isset($_POST[$geslacht]) ? $_POST[$geslacht] : "";
+    $accountgegevens[$adres] = isset($_POST[$adres]) ? $_POST[$adres] : "";
+    $accountgegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";
+    $accountgegevens[$postcode] = isset($_POST[$postcode]) ? $_POST[$postcode] : "";
+    $accountgegevens[$geboortedatum] = isset($_POST[$geboortedatum]) ? $_POST[$geboortedatum] : "";
     $accountgegevens = accountWijzigen($accountgegevens);
 }else{
     //als een veld niet is ingevult:
@@ -92,7 +92,7 @@ if (isset($_GET["bijwerken"])){
 <div class="container">
     <h3>Uw gegevens</h3><br>
 
-<form method="get" action="accountwijzigen.php">
+<form method="post" action="accountwijzigen.php">
 
         <div class="col-sm-10">
     <label for="emailadres">E-mail adres</label>

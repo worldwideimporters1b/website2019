@@ -52,24 +52,24 @@ $postcode = "postcode";
 $geboortedatum = "geboortedatum";
 $message = "melding";
 
-/*if(isset($_GET["registreren"])) {
-    if (strlen(($_GET[$wachtwoord])) < 6 OR strlen(($_GET[$wachtwoord])) > 20 OR !preg_match("#[0-9]+#", ($_GET[$wachtwoord])) OR !preg_match("#[a-z]+#", ($_GET[$wachtwoord]))) {
+/*if(isset($_POST["registreren"])) {
+    if (strlen(($_POST[$wachtwoord])) < 6 OR strlen(($_POST[$wachtwoord])) > 20 OR !preg_match("#[0-9]+#", ($_POST[$wachtwoord])) OR !preg_match("#[a-z]+#", ($_POST[$wachtwoord]))) {
         print("tea");
     }
 }*/
 
-// Als de knop "registreren" is geklikt, haal met $_GET de gegevens op.
-if (isset($_GET["registreren"])){
-    $gegevens[$emailadres] = isset($_GET[$emailadres]) ? $_GET[$emailadres] : "";
-    $gegevens[$voornaam] = isset($_GET[$voornaam]) ? $_GET[$voornaam] : "";
-    $gegevens[$achternaam] = isset($_GET[$achternaam]) ? $_GET[$achternaam] : "";
-    $gegevens[$geslacht] = isset($_GET[$geslacht]) ? $_GET[$geslacht] : "";
-    $gegevens[$wachtwoord] = isset($_GET[$wachtwoord]) ?  md5("@uY1#ae6R4J0B4%1" . $_GET[$wachtwoord]) : ""; //md5 encryptie om het wachtwoord versleutelt op te slaan.
-    //$gegevens[$wachtwoord2] = isset($_GET[$wachtwoord2]) ? $_GET[$wachtwoord2] : "";
-    $gegevens[$adres] = isset($_GET[$adres]) ? $_GET[$adres] : "";
-    $gegevens[$woonplaats] = isset($_GET[$woonplaats]) ? $_GET[$woonplaats] : "";
-    $gegevens[$postcode] = isset($_GET[$postcode]) ? $_GET[$postcode] : "";
-    $gegevens[$geboortedatum] = isset($_GET[$geboortedatum]) ? $_GET[$geboortedatum] : "";
+// Als de knop "registreren" is geklikt, haal met $_POST de gegevens op.
+if (isset($_POST["registreren"])){
+    $gegevens[$emailadres] = isset($_POST[$emailadres]) ? $_POST[$emailadres] : "";
+    $gegevens[$voornaam] = isset($_POST[$voornaam]) ? $_POST[$voornaam] : "";
+    $gegevens[$achternaam] = isset($_POST[$achternaam]) ? $_POST[$achternaam] : "";
+    $gegevens[$geslacht] = isset($_POST[$geslacht]) ? $_POST[$geslacht] : "";
+    $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ?  md5("@uY1#ae6R4J0B4%1" . $_POST[$wachtwoord]) : ""; //md5 encryptie om het wachtwoord versleutelt op te slaan.
+    //$gegevens[$wachtwoord2] = isset($_POST[$wachtwoord2]) ? $_POST[$wachtwoord2] : "";
+    $gegevens[$adres] = isset($_POST[$adres]) ? $_POST[$adres] : "";
+    $gegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";
+    $gegevens[$postcode] = isset($_POST[$postcode]) ? $_POST[$postcode] : "";
+    $gegevens[$geboortedatum] = isset($_POST[$geboortedatum]) ? $_POST[$geboortedatum] : "";
     $gegevens = registreren($gegevens);
 }else{
     //als een veld niet is ingevult:
@@ -95,7 +95,7 @@ if (isset($_GET["registreren"])){
 <div class="container">
 <h1>WWI</h1><br>
 <h2>Account registreren</h2><br>
-<form method="get" action="accountregistreren.php">
+<form method="post" action="accountregistreren.php">
 
 <!-- Selfhandling formulier weergeven op het scherm, zodat de klant zijn of haar gegevens kan registreren. Alle velden zijn verplicht, op geslacht en geb. datum na. -->
 
