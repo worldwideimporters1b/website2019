@@ -1,5 +1,5 @@
 <?php
-// Door Lennard S1080997
+// Door Lennard S1080997 WIP
 
 include "head.php";
 include "footer.php";
@@ -52,7 +52,7 @@ $postcode = "postcode";
 $geboortedatum = "geboortedatum";
 $message = "melding";
 
-/*if(isset($_POST["registreren"])) {
+/*if(isset($_POST["registreren"])) { //wachtwoordcontrole (?)
     if (strlen(($_POST[$wachtwoord])) < 6 OR strlen(($_POST[$wachtwoord])) > 20 OR !preg_match("#[0-9]+#", ($_POST[$wachtwoord])) OR !preg_match("#[a-z]+#", ($_POST[$wachtwoord]))) {
         print("tea");
     }
@@ -64,7 +64,7 @@ if (isset($_POST["registreren"])){
     $gegevens[$voornaam] = isset($_POST[$voornaam]) ? $_POST[$voornaam] : "";
     $gegevens[$achternaam] = isset($_POST[$achternaam]) ? $_POST[$achternaam] : "";
     $gegevens[$geslacht] = isset($_POST[$geslacht]) ? $_POST[$geslacht] : "";
-    $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ?  md5("@uY1#ae6R4J0B4%1" . $_POST[$wachtwoord]) : ""; //md5 encryptie om het wachtwoord versleutelt op te slaan.
+    $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ?  md5("a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //md5 encryptie om het wachtwoord versleutelt op te slaan.
     //$gegevens[$wachtwoord2] = isset($_POST[$wachtwoord2]) ? $_POST[$wachtwoord2] : "";
     $gegevens[$adres] = isset($_POST[$adres]) ? $_POST[$adres] : "";
     $gegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";

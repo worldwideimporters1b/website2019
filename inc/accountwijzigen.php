@@ -1,5 +1,5 @@
 <?php
-// Door Lennard S1080997
+// Door Lennard S1080997 WIP
 
 include "head.php";
 include "footer.php";
@@ -143,7 +143,9 @@ if (isset($_POST["bijwerken"])){
             </div>
 
     <input type="submit" class="btn btn-outline-primary" name="bijwerken" value="Bijwerken"/>
+    <a class="btn btn-outline-danger" href="accountverwijderen.php" role="button">Account verwijderen</a><br><br>
     <a class="btn btn-outline-success" href="accountoverzicht.php" role="button">Terug naar accountoverzicht</a>
+
 </form>
 </div>
 <div class="container">
