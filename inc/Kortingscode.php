@@ -8,7 +8,7 @@
 $conn = new mysqli('localhost','root','','world_wide_importers');
 
 function kortingsCodeBestaat($kortingscode, $conn){ //functie die controleerd of code bestaat
-    $sql = "SELECT korting_id FROM korting WHERE kortingscode ='$kortingscode';";
+    $sql = "SELECT `korting_id` FROM `korting` WHERE `kortingscode` ='$kortingscode';";
     $result = $conn->query($sql);
     $codebestaat = 0;
     if($result->num_rows == 0) {
@@ -20,7 +20,7 @@ function kortingsCodeBestaat($kortingscode, $conn){ //functie die controleerd of
 }
 
 function alKortingsCodeGebruikt($winkelmandid,$conn){ //deze functie controleert of een kortingscode al reeds is toegepast true/false
-    $sql = "SELECT kortingscode FROM winkelmand WHERE winkelmand_id = '$winkelmandid';";
+    $sql = "SELECT `kortingscode` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid';";
     $result = $conn->query($sql);
     $kortingalgebruikt = 3;
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -42,17 +42,17 @@ function kortingsCodeToepassen($kortingscode,$winkelmandid,$conn){ //deze functi
 
     $opgehaaldeprijs = totaalprijsTonen($winkelmandid,$conn);//de totaalprijs van de winkelwagen ophalen
 
-        $sql1 = "SELECT percentage FROM korting WHERE kortingscode = '$kortingscode';"; //het kortingspercentage ophalen
+        $sql1 = "SELECT `percentage` FROM `korting` WHERE `kortingscode` = '$kortingscode';"; //het kortingspercentage ophalen
         $result1 = $conn->query($sql1); //het kortingspercentage uitlezen
         $percentage = 0;
         while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC))
         {$percentage = $row["percentage"];}
         // de query om het percentage van een reeds toegepaste code op te vragen
-    $sql2 = "SELECT percentage FROM korting WHERE kortingscode IN (SELECT kortingscode FROM winkelmand WHERE winkelmand_id = winkelmand_id = '$winkelmandid');";
+    $sql2 = "SELECT `percentage` FROM `korting` WHERE `kortingscode` IN (SELECT `kortingscode` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid');";
 
         if($kortingalgebruikt1 == 0 && $codebestaat1 == 1) { //als er nog geen korting is gebruikt dan wordt de korting berekend
             $nieuweprijs = (1 - ($percentage / 100)) * $opgehaaldeprijs; //kortingspercentage in procenten naar nieuwe prijs
-            $sql3 = "UPDATE winkelmand SET kortingscode = '$kortingscode' WHERE winkelmand_id = '$winkelmandid';"; //schrijft de gebruikte code naar de winkelwagen
+            $sql3 = "UPDATE `winkelmand` SET `kortingscode` = '$kortingscode' WHERE `winkelmand_id` = '$winkelmandid';"; //schrijft de gebruikte code naar de winkelwagen
             $conn->query($sql3);
         }
         elseif($kortingalgebruikt1 == 1 && $codebestaat1 == 1) {
@@ -74,13 +74,13 @@ function kortingsCodeToepassen($kortingscode,$winkelmandid,$conn){ //deze functi
 }
 
 function kortingsCodeVerwijderen($winkelmandid, $conn){ //deze functie verwijderd de (alle) kortingscode
-    $sql = "UPDATE winkelmand SET kortingscode = NULL WHERE winkelmand_id = '$winkelmandid';"; // kortingscode veld leegmaken
+    $sql = "UPDATE `winkelmand` SET `kortingscode` = NULL WHERE `winkelmand_id` = '$winkelmandid';"; // kortingscode veld leegmaken
     $result = $conn->query($sql);
     return $result;
 }
 
 function kortingsNaamTonen($winkelmandid, $conn){ //functie geeft de naam terug van een kortingscode
-    $sql = "SELECT kortingnaam FROM korting WHERE kortingscode IN (SELECT kortingscode FROM winkelmand WHERE winkelmand_id = '$winkelmandid');"; //de naam van de korting ophalen .$kortingscode.
+    $sql = "SELECT `kortingnaam` FROM `korting` WHERE `kortingscode` IN (SELECT `kortingscode` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid');"; //de naam van de korting ophalen .$kortingscode.
     $result = $conn->query($sql);
     $naam = 'kortingscode fout';
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -110,15 +110,15 @@ function kortingsCodeFeedback($kortingscode,$winkelmandid,$conn){// functie die 
     }
     return $kortingfeedback;
 }
-
+//hier volgen de functies die benodigd zijn voor het bestel overzicht
 function totaalprijsUpdaten($winkelmandid,$nieuweprijs,$conn){ //deze functie schrijft de berekenede prijs weg naar de database
-    $sql = "UPDATE winkelmand SET totaalprijs = '$nieuweprijs' WHERE winkelmand_id = '$winkelmandid';"; //schrijft de nieuwe prijs naar de database
+    $sql = "UPDATE `winkelmand` SET `totaalprijs` = '$nieuweprijs' WHERE `winkelmand_id` = '$winkelmandid';"; //schrijft de nieuwe prijs naar de database
     $result=$conn->query($sql);
     return $result;
 }
 
 function totaalprijsTonen($winkelmandid,$conn){ //deze functie haalt de totaalprijs van de winkelmand op
-    $sql1 = "SELECT totaalprijs FROM winkelmand WHERE winkelmand_id = '$winkelmandid';";
+    $sql1 = "SELECT `totaalprijs` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid';";
     $result1 = $conn->query($sql1);
     while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC))
     {
@@ -126,6 +126,25 @@ function totaalprijsTonen($winkelmandid,$conn){ //deze functie haalt de totaalpr
     }
     return $opgehaaldeprijs;
 }
+
+function toonBestelOverzicht($winkelmandid,$conn){
+
+    $sql = "SELECT `StockItemID`, `StockItemName`, `aantal`, `RecommendedRetailPrice` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
+    $result = $conn->query($sql);
+
+    $html = '<table width="100%" class = "table-striped"><th>Nr</th><th>Artikel Nr.</th><th>Artikelnaam</th><th>Aantal</th><th>Prijs p/st</th>';
+    foreach ($result as $regel) {
+        $i = 1;
+        $html .= "<tr>"; // tr is table row
+        $html .= "<td>" . $i . "</td>";
+        foreach ($regel as $veld) {
+            $html .= "<td>" . $veld . "</td>"; // td is table data
+            $i++;
+        }
+        //$html .= "<td>" . $regel['aantal'] . "</td>";
+        $html .= "</tr></table>";
+        return $html;
+    }}
 ?>
 
 
