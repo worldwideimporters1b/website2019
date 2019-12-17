@@ -1,3 +1,5 @@
+<?php
+
 function toonProductPagina($conn){
 
 $sql = "SELECT * FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
@@ -19,3 +21,5 @@ $html = '<table width="100%">';
         $html .= "</tr>";
     return $html;
     }}
+
+    

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="028cef39-14d5-4250-a9a5-4de7e1f23304" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/inc/productpagina.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/productpagina.php" beforeDir="false" afterPath="$PROJECT_DIR$/inc/productpagina.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +53,7 @@
       <updated>1575018014079</updated>
       <workItem from="1575018017040" duration="7275000" />
       <workItem from="1575270525535" duration="6790000" />
-      <workItem from="1576598320358" duration="2165000" />
+      <workItem from="1576598320358" duration="2385000" />
     </task>
     <task id="LOCAL-00001" summary="Leipe shit ouwe">
       <created>1575018254358</created>
@@ -91,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575033635299</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="productpaginafunctie">
+      <created>1576600820833</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1576600820833</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,6 +120,7 @@
     <MESSAGE value="checkout 1st commit" />
     <MESSAGE value="Voorbeeldje" />
     <MESSAGE value="Leipe shit ouwe" />
-    <option name="LAST_COMMIT_MESSAGE" value="Leipe shit ouwe" />
+    <MESSAGE value="productpaginafunctie" />
+    <option name="LAST_COMMIT_MESSAGE" value="productpaginafunctie" />
   </component>
 </project>
