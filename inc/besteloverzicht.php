@@ -12,16 +12,15 @@ $kortingscode = ' ';
 $winkelmandid = '1';
 
 if (isset($_GET["Kortingtoepassen"])){ //kortingscode ophalen uit formulier
-    $kortingscode = isset($_GET["kortingscode"]);
-    $prijs = kortingsCodeToepassen($kortingscode,$winkelmandid,$conn); //$winkelmandid is hier nog ff 1
+    $kortingscode = $_GET["kortingscode"];
+    $prijs = kortingsCodeToepassen($kortingscode,$winkelmandid,$conn);
     //$kortingnaam = kortingsNaamTonen($kortingscode, $conn); //naam van de korting ophalen
 }
 
-if (isset($_GET["Verwijder+code"])){ //kortingscode verwijderen
-    $kortingscode = isset($_GET["kortingscode"]);
-    kortingsCodeVerwijderen($winkelmandid, $conn); //$winkelmandid is hier nog ff 1
+if (isset($_GET["Kortingverwijderen"])){ //kortingscode verwijderen
+    kortingsCodeVerwijderen($winkelmandid, $conn);
 }
-$kortingsfeedback = kortingsCodeFeedback($kortingscode,$winkelmandid,$conn);//$winkelmandid is hier nog ff 1
+//$kortingsfeedback = kortingsCodeFeedback($kortingscode,$winkelmandid,$conn);//$winkelmandid is hier nog ff 1
 ?>
 
 <!doctype html>
@@ -44,8 +43,9 @@ $kortingsfeedback = kortingsCodeFeedback($kortingscode,$winkelmandid,$conn);//$w
 <div class="container">
     <h3>hier komt de totaalprijs van de winkelwagen</h3><br>
     <?php
-    //if(isset($prijs)){echo $prijs;} //als een prijs is dan deze tonen
-    ?>
+    if(isset($prijs)){ echo $prijs;}
+    else{ echo totaalprijsTonen($winkelmandid,$conn);}
+  ?>
 </div>
 
 <div class="container">
