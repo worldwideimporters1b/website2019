@@ -42,12 +42,11 @@ if (isset($_GET["Kortingverwijderen"])){ //kortingscode verwijderen
 
 <div class="container">
     <h3>hier komt de totaalprijs van de winkelwagen</h3><br>
-    <?php
-    if(isset($prijs)){ echo $prijs;}
+    <p><?php if(isset($prijs)){ echo $prijs;}
     else{ echo totaalprijsTonen($winkelmandid,$conn);}
-  ?>
+  ?></p>
 </div>
-
+<br>
 <div class="container">
     <label for="kortingscodeinput">Een kortingscode toepassen?</label>
     <form action ="besteloverzicht.php" method="get" class="form-inline">

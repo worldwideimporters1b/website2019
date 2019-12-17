@@ -42,28 +42,34 @@ function kortingsCodeToepassen($kortingscode,$winkelmandid,$conn){ //deze functi
 
     $opgehaaldeprijs = totaalprijsTonen($winkelmandid,$conn);//de totaalprijs van de winkelwagen ophalen
 
-    if($codebestaat1 = 1) {//de code bestaat
-        $sql2 = "SELECT percentage FROM korting WHERE kortingscode = '$kortingscode';"; //het kortingspercentage ophalen
-        $result2 = $conn->query($sql2); //het kortingspercentage uitlezen
+        $sql1 = "SELECT percentage FROM korting WHERE kortingscode = '$kortingscode';"; //het kortingspercentage ophalen
+        $result1 = $conn->query($sql1); //het kortingspercentage uitlezen
         $percentage = 0;
-        while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC))
-        {
-            $percentage = $row["percentage"];
-        }
+        while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC))
+        {$percentage = $row["percentage"];}
+        // de query om het percentage van een reeds toegepaste code op te vragen
+    $sql2 = "SELECT percentage FROM korting WHERE kortingscode IN (SELECT kortingscode FROM winkelmand WHERE winkelmand_id = winkelmand_id = '$winkelmandid');";
 
-        if ($kortingalgebruikt1 == 0) { //als er nog geen korting is gebruikt dan wordt de korting berekend
+        if($kortingalgebruikt1 == 0 && $codebestaat1 == 1) { //als er nog geen korting is gebruikt dan wordt de korting berekend
             $nieuweprijs = (1 - ($percentage / 100)) * $opgehaaldeprijs; //kortingspercentage in procenten naar nieuwe prijs
-            //$sql3 = "UPDATE winkelmand SET totaalprijs = '$nieuweprijs' WHERE winkelmand_id = '$winkelmandid';"; //schrijft de nieuwe prijs naar de database
-            $sql4 = "UPDATE winkelmand SET kortingscode = '$kortingscode' WHERE winkelmand_id = '$winkelmandid';"; //schrijft de gebruikte code naar de winkelwagen
-            //$conn->query($sql3);
-            $conn->query($sql4);
-        } else {
+            $sql3 = "UPDATE winkelmand SET kortingscode = '$kortingscode' WHERE winkelmand_id = '$winkelmandid';"; //schrijft de gebruikte code naar de winkelwagen
+            $conn->query($sql3);
+        }
+        elseif($kortingalgebruikt1 == 1 && $codebestaat1 == 1) {
+            $result2 = $conn->query($sql2);
+            $percentage2 = 0;
+            while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {$percentage2 = $row["percentage"];}
+            $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
+        }
+        elseif($kortingalgebruikt1 == 1 && $codebestaat1 == 0) {
+            $result2 = $conn->query($sql2);
+            $percentage2 = 0;
+            while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {$percentage2 = $row["percentage"];}
+            $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
+        }
+        else {
             $nieuweprijs = $opgehaaldeprijs; //geen wijziging in nieuweprijs
         }
-    }
-    else{ //de totaalprijs van de winkelwagen wordt opgehaald
-        $nieuweprijs = $opgehaaldeprijs;
-    }
     return $nieuweprijs;
 }
 
@@ -73,8 +79,8 @@ function kortingsCodeVerwijderen($winkelmandid, $conn){ //deze functie verwijder
     return $result;
 }
 
-function kortingsNaamTonen($kortingscode, $conn){ //functie geeft de naam terug van een kortingscode
-    $sql = "SELECT kortingnaam FROM korting WHERE kortingscode = '$kortingscode';"; //de naam van de korting ophalen .$kortingscode.
+function kortingsNaamTonen($winkelmandid, $conn){ //functie geeft de naam terug van een kortingscode
+    $sql = "SELECT kortingnaam FROM korting WHERE kortingscode IN (SELECT kortingscode FROM winkelmand WHERE winkelmand_id = '$winkelmandid');"; //de naam van de korting ophalen .$kortingscode.
     $result = $conn->query($sql);
     $naam = 'kortingscode fout';
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -89,19 +95,16 @@ function kortingsCodeFeedback($kortingscode,$winkelmandid,$conn){// functie die 
     $kcalgebruikt = alKortingsCodeGebruikt($winkelmandid,$conn);
 
     if($kcbestaat == 1 && $kcalgebruikt == 0){//de kortingscode is geldig en er is nog geen code toegepast
-        $kortingfeedback = 'De volgende kortingscode is bestaat:'. kortingsNaamTonen($kortingscode,$conn);
+        $kortingfeedback = 'De volgende kortingscode is bestaat:'. kortingsNaamTonen($winkelmandid,$conn);
     }
     Elseif($kcbestaat == 1 && $kcalgebruikt == 1){//de code is geldig maar er is al een code toegepast
-        $kortingfeedback = 'De kortingscode '. kortingsNaamTonen($kortingscode,$conn) . ' is toegepast';
+        $kortingfeedback = 'De kortingscode '. kortingsNaamTonen($winkelmandid,$conn) . ' is toegepast';
     }
     Elseif($kcbestaat == 0 && $kcalgebruikt == 1){// de code is ongeldig en er is al een andere code toegepast
-        $kortingfeedback = 'De ingevoerde code is ongeldig, De volgende kortingscode is al toegespast:'. kortingsNaamTonen($kortingscode,$conn);
+        $kortingfeedback = 'De volgende kortingscode is al toegespast: '. kortingsNaamTonen($winkelmandid,$conn);
     }
     Elseif($kcbestaat == 0 && $kcalgebruikt == 0){ //de ingevoerde code is niet goed en er is nog geen code toegepast
-        $kortingfeedback = 'voer een geldige kortingscode in';
-    }
-    elseif($kcbestaat == 0 && $kcalgebruikt == 1 && (kortingsNaamTonen($kortingscode,$conn) == 'kortingscode fout')){
-        $kortingfeedback = 'voer een geldige kortingscode in';
+        $kortingfeedback = 'Voer eventueel een kortingscode in';
     }
     else{$kortingfeedback = 'Voer eventueel een kortingscode in';
     }
