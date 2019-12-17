@@ -22,4 +22,3 @@ $html = '<table width="100%">';
     return $html;
     }}
 
-    
