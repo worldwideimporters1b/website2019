@@ -1,24 +1,30 @@
 <?php
+error_reporting(E_ALL);
+$conn = new mysqli('localhost','root','','world_wide_importers');
 
-function toonProductPagina($conn){
+function toonProductPagina($conn)
+{
 
-$sql = "SELECT * FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
-// query moet nog even werkend worden gemaakt
-$result = $conn->query($sql);
+    $sql = "SELECT bestandslocatie , naam FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` LIMIT 4";
 
+    $result = $conn->query($sql);
 
-$html = '<table width="100%">';
+    $html = '<table width="100%">';
     foreach ($result as $regel) {
-
-    $html .= "<tr>"; // tr is table row
+        $html .= "<tr>";
         foreach ($regel as $veldnaam => $veld) {
-        if($veldnaam == 'artikel_afbeelding' ){
-        $html .= "<td><img src='" . $veld . "' height="100" width="200"/></td>"; // td is table data
-        }
-        $html .= "<td>" . $veld . "</td>"; // td is table data
-
+            if ($veldnaam == 'bestandslocatie') {
+                $html .= "<td><img src='../" . $veld . "' height='150' width='150'/></td>";
+            }
+            else {
+                $html .= "<td>" . $veld . "</td>";
+            }
         }
         $html .= "</tr>";
-    return $html;
-    }}
 
+    }
+    $html .= "</table>";
+    return $html;
+}
+
+echo toonProductPagina($conn);
