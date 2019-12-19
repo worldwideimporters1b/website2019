@@ -22,7 +22,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
                 }
 
                 if ($veldnaam == 'artikel_id') {
-                    $html .= "<td><a class='btn btn-info' href='productpagina.php?id=" . $veld . "'>Bekijk Product</a></td>";
+                    $html .= "<td><a class='btn btn-secondary' href='productpagina.php?id=" . $veld . "'>Bekijk Product</a></td>";
                 }
 
                 if ($veldnaam !== 'bestandslocatie' AND $veldnaam !== 'artikel_id') {
@@ -52,7 +52,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 
 
         }
-        $html .= "</table><a class='btn btn-info' href='productpagina.php'>Terug naar overzicht</a>";
+        $html .= "</table><a class='btn btn-secondary' href='productpagina.php'>Terug naar overzicht</a>";
 
 
     }
