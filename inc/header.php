@@ -9,8 +9,8 @@
             <div class="col-md-4"></div>
             <div class="col-md-4 actionmenu">
                 <span class="totalprice">€ 0,00 </span>
-                <span class="winkelmand"><a class="btn btn-secondary">winkelmand</a></span>
-                <span class="myaccount"><a class="btn btn-secondary">Mijn account</a></span>
+                <span class="winkelmand"><a href="basket.php" class="btn btn-secondary">winkelmand</a></span>
+                <span class="myaccount"><a href="accountoverzicht.php" class="btn btn-secondary">Mijn account</a></span>
             </div>
         </div>
         <div class="row">

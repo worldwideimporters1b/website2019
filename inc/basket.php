@@ -1,6 +1,6 @@
 <?php
 
-
+error_reporting(E_ALL);
 
 $conn = new mysqli('localhost','root','','world_wide_importers');
 
@@ -49,5 +49,3 @@ return $html;
 
 
 echo toonWinkelmand('1',$conn);
-
-    ?>
