@@ -1,7 +1,8 @@
+<!doctype html>
 <?php
 include "head.php";
 include "header.php";
-include "footer.php";
+//include "footer.php";
 include "menu.php";
 include "Kortingscode.php";
 
@@ -10,7 +11,7 @@ $conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 //variabelen aanmaken voor deze pagina
 $kortingscode = ' ';
-$winkelmandid = '1';
+$winkelmandid = '1'; //tijdelijke id voor testen
 
 if (isset($_GET["Kortingtoepassen"])) { //kortingscode ophalen uit formulier
     $kortingscode = $_GET["kortingscode"];
@@ -29,8 +30,13 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
     <h3>Besteloverzicht</h3><br>
 
     <p><?php echo toonBestelOverzicht($winkelmandid, $conn); ?></p>
-
-    <p class="lead"> Het totaal bedrag van de bestelling is: €<?php if (isset($prijs)) {
+    <p class="lead"> De verzendkosten bedragen: €<?php $kostenverzending = verzendkostenBerkenen($winkelmandid, $conn); //bij gratis verzendkosten wordt hier informatie over getoond
+        if($kostenverzending == '0'){
+            echo $kostenverzending ."<br><small id = 'verzendkostenbericht' class='font-weight-light'>" . "  Verzendkosten voor bestellingen boven de €30 zijn gratis" . "</small>";
+        }
+        else{ echo $kostenverzending;}
+        ?></p>
+    <p class="lead" > Het totaal bedrag van de bestelling is: €<?php if (isset($prijs)) {
             echo $prijs;
         } //de getoonde totaalprijs bepalen
         else {
@@ -54,7 +60,7 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
     <form method="get">
         <div class="form-group">
             <label for="kortingscodeinput">Wil je de bestelling plaatsen?</label><br>
-            <input type="submit" name="bestellen" value="Plaats bestelling" class="btn btn-primary"><br>
+            <a class="btn btn-outline-success" href="checkout.php" role="button">Plaats bestelling</a>
         </div>
     </form>
 </div>

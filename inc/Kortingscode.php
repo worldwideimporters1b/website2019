@@ -39,8 +39,9 @@ function kortingsCodeToepassen($kortingscode,$winkelmandid,$conn){ //deze functi
 
     $codebestaat1 = kortingsCodeBestaat($kortingscode,$conn);
     $kortingalgebruikt1 = alKortingsCodeGebruikt($winkelmandid,$conn);
+    $verzendkosten1 = verzendkostenBerkenen($winkelmandid, $conn);
 
-    $opgehaaldeprijs = totaalprijsTonen($winkelmandid,$conn);//de totaalprijs van de winkelwagen ophalen
+    $opgehaaldeprijs = totaalprijsTonen($winkelmandid,$conn) - $verzendkosten1;//de totaalprijs van de winkelwagen ophalen
 
         $sql1 = "SELECT `percentage` FROM `korting` WHERE `kortingscode` = '$kortingscode';"; //het kortingspercentage ophalen
         $result1 = $conn->query($sql1); //het kortingspercentage uitlezen
@@ -51,7 +52,7 @@ function kortingsCodeToepassen($kortingscode,$winkelmandid,$conn){ //deze functi
     $sql2 = "SELECT `percentage` FROM `korting` WHERE `kortingscode` IN (SELECT `kortingscode` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid');";
 
         if($kortingalgebruikt1 == 0 && $codebestaat1 == 1) { //als er nog geen korting is gebruikt dan wordt de korting berekend
-            $nieuweprijs = (1 - ($percentage / 100)) * $opgehaaldeprijs; //kortingspercentage in procenten naar nieuwe prijs
+            $nieuweprijs = ((1 - ($percentage / 100)) * $opgehaaldeprijs); //kortingspercentage in procenten naar nieuwe prijs
             $sql3 = "UPDATE `winkelmand` SET `kortingscode` = '$kortingscode' WHERE `winkelmand_id` = '$winkelmandid';"; //schrijft de gebruikte code naar de winkelwagen
             $conn->query($sql3);
         }
@@ -59,18 +60,19 @@ function kortingsCodeToepassen($kortingscode,$winkelmandid,$conn){ //deze functi
             $result2 = $conn->query($sql2);
             $percentage2 = 0;
             while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {$percentage2 = $row["percentage"];}
-            $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
+            $nieuweprijs = ((1 - ($percentage2 / 100)) * $opgehaaldeprijs); //kortingspercentage toepassen van de korting in de database
         }
         elseif($kortingalgebruikt1 == 1 && $codebestaat1 == 0) {
             $result2 = $conn->query($sql2);
             $percentage2 = 0;
             while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {$percentage2 = $row["percentage"];}
-            $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
+            $nieuweprijs = ((1 - ($percentage2 / 100)) * $opgehaaldeprijs); //kortingspercentage toepassen van de korting in de database
         }
         else {
             $nieuweprijs = $opgehaaldeprijs; //geen wijziging in nieuweprijs
         }
-    return $nieuweprijs;
+
+    return ($nieuweprijs + $verzendkosten1);
 }
 
 function kortingsCodeVerwijderen($winkelmandid, $conn){ //deze functie verwijderd de (alle) kortingscode
@@ -118,13 +120,14 @@ function totaalprijsUpdaten($winkelmandid,$nieuweprijs,$conn){ //deze functie sc
 }
 
 function totaalprijsTonen($winkelmandid,$conn){ //deze functie haalt de totaalprijs van de winkelmand op
-    $sql1 = "SELECT `totaalprijs` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid';";
-    $result1 = $conn->query($sql1);
-    while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC))
+    $verzendkosten1 = verzendkostenBerkenen($winkelmandid, $conn);
+    $sql = "SELECT `totaalprijs` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid';";
+    $result = $conn->query($sql);
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
     {
         $opgehaaldeprijs = $row["totaalprijs"];
     }
-    return $opgehaaldeprijs;
+    return ($opgehaaldeprijs + $verzendkosten1);
 }
 
 function toonBestelOverzicht($winkelmandid,$conn){
@@ -145,6 +148,20 @@ function toonBestelOverzicht($winkelmandid,$conn){
         $html .= "</tr></table>";
         return $html;
     }}
+
+    function verzendkostenBerkenen($winkelmandid, $conn){ //functie berkend de verzendkosten op basis van het totaalbedrag
+        $verzendkosten = 0; //0 euro verzendkosten
+        $sql = "SELECT `totaalprijs` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid';"; //de totaalprijs uit de winkelmand halen
+        $result = $conn->query($sql);
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+        {
+            $opgehaaldeprijs1 = $row["totaalprijs"];
+        }
+        if($opgehaaldeprijs1 < 30){// als het totaalbedrag kleiner is dan 30 euro dan kost de verzending 3 euro anders 0
+            $verzendkosten = 3;
+        }
+        return $verzendkosten;
+    }
 ?>
 
 
