@@ -41,7 +41,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 
         $html = '<table class="table table-hover">';
         foreach ($result as $regel) {
-
+            $html .= "<tr><td></td><td><a class='btn btn-secondary'href='basket.php?add=".$artikel_id."'>Toevoegen</a></td></tr>";
             foreach ($regel as $veldnaam => $veld) {
                 if ($veldnaam == 'bestandslocatie') {
                     $html .= "<tr><td><img src='../" . $veld . "' height='200' width='200'/></td></tr>";
