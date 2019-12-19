@@ -48,5 +48,7 @@ function toonWinkelmand($winkelmandid,$conn){
         return $html;
 }
 
+include('head.php');
+include('header.php');
 
 echo toonWinkelmand('1',$conn);
