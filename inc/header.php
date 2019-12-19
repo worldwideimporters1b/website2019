@@ -2,9 +2,9 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4"><img class="flag" src="img/netherlands.png" alt="dutch-flag"> <img class="flag"
-                                                                                                     src="img/united-states.png"
-                                                                                                     alt="united-states-flag">
+            <div class="col-md-4">
+                <img class="flag" src="../img/netherlands.png" alt="dutch-flag">
+                <img class="flag" src="../img/united-states.png" alt="united-states-flag">
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-4 actionmenu">
@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="row">
-            <img class="wwilogo" alt="worldwideimporterslogo" src="img/wide-world-importers-logo-small.png">
+            <img class="wwilogo" alt="worldwideimporterslogo" src="../img/wide-world-importers-logo-small.png">
         </div>
     </div>
 
@@ -27,12 +27,12 @@
                 <span class="input-group-btn">
                 <a class="btn btn-primary">Home</a>
                 </span>
-                <select class="productgroepselector form-control">
-                    <option value="">Selecteer een productgroep</option>
-                    <option value="test">test</option>
-                    <option value="test">test</option>
-                    <option value="test">test</option>
-                </select>
+                    <select class="productgroepselector form-control">
+                        <option value="">Selecteer een productgroep</option>
+                        <option value="test">test</option>
+                        <option value="test">test</option>
+                        <option value="test">test</option>
+                    </select>
                 </div>
             </div>
 

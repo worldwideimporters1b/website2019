@@ -1,5 +1,9 @@
 <?php
 #error_reporting(E_ALL);
+
+include_once('head.php');
+include_once('header.php');
+
 $conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 function toonProductPagina($conn, $artikel_id = 'NULL')
