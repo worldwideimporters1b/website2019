@@ -1,8 +1,8 @@
 <!doctype html>
 
-<?php include 'inc/head.php'; ?>
+<?php include 'head.php'; ?>
 
-<?php include 'inc/header.php' ?>
+<?php include 'header.php' ?>
 
 <body>
 <div class="container">

@@ -1,6 +1,7 @@
 <?php
 // Door Lennard S1080997 WIP
 
+include "header.php";
 include "head.php";
 include "footer.php";
 include "menu.php";

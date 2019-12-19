@@ -1,5 +1,5 @@
 <footer>
-test
+
 </footer>
 
 <!-- Optional JavaScript -->
