@@ -1,19 +1,20 @@
 <?php
 
-function pay($amount, $orderid, $customerid ){
+function pay($amount, $orderid, $customerid)
+{
 
     $paymentresult = 0;
 
     // render ideal stuff on website in iframe
 
-    $idealresult = renderIdeal($amount,$shopid,$orderid);
+    $idealresult = renderIdeal($amount, $shopid, $orderid);
 
     // check payment
 
-    if($idealresult == 0){
+    if ($idealresult == 0) {
         $paymentresult = 0;
     }
-    if($idealresult == 1){
+    if ($idealresult == 1) {
         $paymentresult = 1;
     }
 
@@ -24,8 +25,7 @@ function pay($amount, $orderid, $customerid ){
 }
 
 
-
-renderIdeal($amount,$shopid,$orderid){
+renderIdeal($amount, $shopid, $orderid){
 $idealresult = 0;
 }
 // do something
@@ -33,10 +33,10 @@ $idealresult = 0;
 return $idealresult;
 }
 
-if($idealresult == 0){
+if ($idealresult == 0) {
     $paymentresult = 0;
 }
-if($idealresult == 1){
+if ($idealresult == 1) {
     $paymentresult = 1;
 }
 

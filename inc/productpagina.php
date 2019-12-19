@@ -1,10 +1,10 @@
 <?php
 #error_reporting(E_ALL);
-$conn = new mysqli('localhost','root','','world_wide_importers');
+$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
-function toonProductPagina($conn,$artikel_id = 'NULL')
+function toonProductPagina($conn, $artikel_id = 'NULL')
 {
-    if($artikel_id == 'NULL') {
+    if ($artikel_id == 'NULL') {
         $sql = "SELECT `bestandslocatie` , `naam` , `art`.artikel_id FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` LIMIT 4";
 
         $result = $conn->query($sql);
@@ -21,7 +21,7 @@ function toonProductPagina($conn,$artikel_id = 'NULL')
                     $html .= "<td><a class='btn btn-info' href='productpagina.php?id=" . $veld . "'>Bekijk Product</a></td>";
                 }
 
-                if ($veldnaam !== 'bestandslocatie' AND $veldnaam !== 'artikel_id'){
+                if ($veldnaam !== 'bestandslocatie' AND $veldnaam !== 'artikel_id') {
                     $html .= "<td>" . $veld . "</td>";
                 }
             }
@@ -29,13 +29,9 @@ function toonProductPagina($conn,$artikel_id = 'NULL')
 
         }
         $html .= "</table>";
-    }
+    } else {
 
-    else
-
-    {
-
-        $sql = "SELECT bestandslocatie, naam, herkomst, productieproces, ingredienten, afmetingen, gewicht, art.omschrijving FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` WHERE `art`.`artikel_id` = '".$artikel_id."' LIMIT 1";
+        $sql = "SELECT bestandslocatie, naam, herkomst, productieproces, ingredienten, afmetingen, gewicht, art.omschrijving FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` WHERE `art`.`artikel_id` = '" . $artikel_id . "' LIMIT 1";
 
         $result = $conn->query($sql);
 
@@ -59,22 +55,19 @@ function toonProductPagina($conn,$artikel_id = 'NULL')
 
     return $html;
 }
-    if(isset($_GET['id'])){
 
-        if(is_numeric($_GET['id'])){
+if (isset($_GET['id'])) {
 
-           $id = $_GET['id'];
+    if (is_numeric($_GET['id'])) {
 
-           echo toonProductPagina($conn,$id);
+        $id = $_GET['id'];
 
-        }
+        echo toonProductPagina($conn, $id);
 
     }
 
-    else
+} else {
 
-        {
+    echo toonProductPagina($conn);
 
-            echo toonProductPagina($conn);
-
-        }
+}
