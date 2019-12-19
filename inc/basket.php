@@ -44,8 +44,9 @@ function toonWinkelmand($winkelmandid,$conn){
         }
         $html .= "<td>" . $regel['winkelmand_id'] . "</td>";
         $html .= "</tr>";
-return $html;
-}}
+    }
+        return $html;
+}
 
 
 echo toonWinkelmand('1',$conn);
