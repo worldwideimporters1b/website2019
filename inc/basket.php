@@ -28,7 +28,7 @@ function updateProductAantal($winkelmandid,$artikelid,$aantal,$conn){ // de 3 di
 
 function toonWinkelmand($winkelmandid,$conn){
 
-    $sql = "SELECT * FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
+    $sql = "SELECT `winkelmand_id`,`naam`, `unitprice`, `aantal` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
 
     $result = $conn->query($sql);
 
@@ -36,15 +36,16 @@ function toonWinkelmand($winkelmandid,$conn){
     $html = '<table class="table">';
     foreach ($result as $regel) {
 
-        $html .= "<tr>"; // tr is table row
+        $html .= "<tr><th>Bestelnummer</th><th>Product</th><th>Prijs</th><th>Aantal</th></tr><tr>"; // tr is table row
         foreach ($regel as $veld) {
 
             $html .= "<td>" . $veld . "</td>"; // td is table data
 
         }
-        $html .= "<td>" . $regel['winkelmand_id'] . "</td>";
+
         $html .= "</tr>";
     }
+       $html .= '</table>';
         return $html;
 }
 
@@ -52,3 +53,10 @@ include('head.php');
 include('header.php');
 
 echo toonWinkelmand('1',$conn);
+echo '
+<form method="get" target="accountoverzicht.php">
+        <div class="form-group">
+            <label for="kortingscodeinput">Doorgaan?</label><br>
+            <a class="btn btn-secondary" href="productpagina.php" role="button">Verder winkelen</a> <a class="btn btn-secondary" href="accountoverzicht.php" role="button">Inloggen & verzendinformatie</a>
+        </div>
+    </form>';
