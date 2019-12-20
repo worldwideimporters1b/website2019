@@ -19,39 +19,40 @@
     </div>
 
 </div>
-<div class="subheader">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="input-group">
-                <span class="input-group-btn">
-                <a class="btn btn-primary">Home</a>
-                </span>
-                    <select class="productgroepselector form-control">
-                        <option value="">Selecteer een productgroep</option>
-                        <option value="test">test</option>
-                        <option value="test">test</option>
-                        <option value="test">test</option>
-                    </select>
-                </div>
-            </div>
+<div class="subheader"><nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
-            <div class="col-md-4">
-                <a class="btn btn-primary">Over ons</a>
-                <a class="btn btn-primary">Contact</a>
-                <a class="btn btn-primary">Chat</a>
-            </div>
-            <div class="col-md-4">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Zoeken">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button">Zoek</button>
-                    </span>
-                </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
 
-            </div>
+                <li class="nav-item">
+                    <a class="btn btn-primary" href="home.php">Home</a>
+                </li>
 
+                <li class="nav-item">
+                    <a class="btn btn-primary" href="productpagina.php">Artikelen</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn btn-primary" href="#" tabindex="-1" aria-disabled="false">Over Ons</a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary" href="#" tabindex="-1" aria-disabled="false">Contact</a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary" href="#" tabindex="-1" aria-disabled="false">Chat</a>
+
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Zoek artikel" aria-label="Search">
+                <button class="btn btn-primary" type="submit">Zoek</button>
+            </form>
         </div>
-    </div>
+    </nav>
 </div>

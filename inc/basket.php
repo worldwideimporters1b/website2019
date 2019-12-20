@@ -53,6 +53,7 @@ function toonWinkelmand($winkelmandid,$conn){
 include('head.php');
 include('header.php');
 
+echo "<div class='container'>";
 echo toonWinkelmand('1',$conn);
 echo '
 <form method="get" target="accountoverzicht.php">
@@ -61,3 +62,5 @@ echo '
             <a class="btn btn-secondary" href="productpagina.php" role="button">Verder winkelen</a> <a class="btn btn-secondary" href="accountoverzicht.php" role="button">Inloggen & verzendinformatie</a>
         </div>
     </form>';
+echo "</div>";
+include_once('footer.php');
