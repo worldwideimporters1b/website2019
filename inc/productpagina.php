@@ -3,7 +3,7 @@
 
 include_once('head.php');
 include_once('header.php');
-
+echo "<div class='container'>";
 $conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 function toonProductPagina($conn, $artikel_id = 'NULL')
@@ -75,3 +75,5 @@ if (isset($_GET['id'])) {
     echo toonProductPagina($conn);
 
 }
+echo "</div>";
+include_once('footer.php');
