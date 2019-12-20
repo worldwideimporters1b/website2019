@@ -25,7 +25,7 @@
             <div class="col-md-4">
                 <div class="input-group">
                 <span class="input-group-btn">
-                <a class="btn btn-primary">Home</a>
+                <a class="btn btn-primary" href="home.php">Home</a>
                 </span>
                     <select class="productgroepselector form-control">
                         <option value="">Selecteer een productgroep</option>
