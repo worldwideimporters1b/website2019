@@ -2,8 +2,8 @@
 // Door Lennard S1080997 WIP
 
 include "head.php";
-include "footer.php";
-include "menu.php";
+include "header.php";
+
 require_once "accountwijzigen.php";
 
 function controle(){
@@ -44,11 +44,7 @@ if(isset($_GET["verwijderen"])){
 }
 
 ?>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+
 
 <div class="container">
     <label>Bevestig uw e-mail adres en wachtwoord.</label>
@@ -58,4 +54,4 @@ if(isset($_GET["verwijderen"])){
 </div>
 
 
-</html>
+
