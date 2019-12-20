@@ -34,9 +34,10 @@ function toonWinkelmand($winkelmandid,$conn){
 
 
     $html = '<table class="table">';
+    $html .= "<tr><th>Bestelnummer</th><th>Product</th><th>Prijs</th><th>Aantal</th></tr>";
     foreach ($result as $regel) {
 
-        $html .= "<tr><th>Bestelnummer</th><th>Product</th><th>Prijs</th><th>Aantal</th></tr><tr>"; // tr is table row
+        $html .= "<tr>"; // tr is table row
         foreach ($regel as $veld) {
 
             $html .= "<td>" . $veld . "</td>"; // td is table data
