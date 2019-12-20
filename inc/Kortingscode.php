@@ -1,6 +1,5 @@
 <?php
 // gemaakt door Boaz S1147963
-
 //kortingspercentage wordt pas toegepast bij het bestellen. de variabele $nieuwprijs kan worden gebruikt om tot die tijd de aangepaste prijs te gebruiken
 
 
@@ -121,6 +120,7 @@ function totaalprijsUpdaten($winkelmandid,$nieuweprijs,$conn){ //deze functie sc
 
 function totaalprijsTonen($winkelmandid,$conn){ //deze functie haalt de totaalprijs van de winkelmand op
     $verzendkosten1 = verzendkostenBerkenen($winkelmandid, $conn);
+    //$sql = "SELECT sum(`aantal` * (SELECT `UnitPrice` FROM `wideworldimporters.stockitems` WHERE `wideworldimporters.stockitems.StockItemID` = 1)) as `prijs` FROM `orderregel` WHERE `winkelmand_id` in (SELECT `orderregel.artikel_id` FROM `orderregel` WHERE `winkelmand_id` = 1);";
     $sql = "SELECT `totaalprijs` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid';";
     $result = $conn->query($sql);
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -132,7 +132,7 @@ function totaalprijsTonen($winkelmandid,$conn){ //deze functie haalt de totaalpr
 
 function toonBestelOverzicht($winkelmandid,$conn){
 
-    $sql = "SELECT `StockItemID`, `StockItemName`, `aantal`, `RecommendedRetailPrice` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
+    $sql = "SELECT `StockItemID`, `StockItemName`, `aantal`, `UnitPrice` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
     $result = $conn->query($sql);
 
     $html = '<table width="100%" class = "table-striped"><th>Nr</th><th>Artikel Nr.</th><th>Artikelnaam</th><th>Aantal</th><th>Prijs p/st</th>';
@@ -165,7 +165,7 @@ function toonBestelOverzicht($winkelmandid,$conn){
     }
 
     function totaalBedragWinkelmandBijwerken($winkelmandid, $conn){
-    $sql = "SELECT sum(`RecommendedRetailPrice`) FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
+    $sql = "SELECT sum(`UnitPrice`) FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = ".$winkelmandid.";";
     $result = $conn->query($sql);
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $totaalprijs = $row["totaalprijs"];
