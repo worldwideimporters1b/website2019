@@ -33,7 +33,7 @@ function toonWinkelmand($winkelmandid,$conn){
     $result = $conn->query($sql);
 
 
-    $html = '<table width="100%">';
+    $html = '<table class="table">';
     foreach ($result as $regel) {
 
         $html .= "<tr>"; // tr is table row
