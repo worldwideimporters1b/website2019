@@ -2,8 +2,8 @@
 // Door Lennard S1080997 WIP
 
 include "head.php";
-include "footer.php";
-include "menu.php";
+include "header.php";
+
 
 function databaseConnectie(){
     $conn = new mysqli('localhost','root','','world_wide_importers');
@@ -84,11 +84,7 @@ if (isset($_POST["bijwerken"])){
 ?>
 
 
-<html>
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+
 <div class="container">
     <h3>Uw gegevens</h3><br>
 
@@ -156,4 +152,4 @@ print("$accountgegevens[$message]");
 
 
 </div>
-</html>
+
