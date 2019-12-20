@@ -41,6 +41,20 @@ if ($idealresult == 1) {
 }
 include('head.php');
 include('header.php');
-echo "<img src='../img/ideal.png'/>";
+
+echo "<div class='container'>
+
+ <div class=\"form-group\">
+  <label for=\"sel1\">Kies uw bank:</label>
+  <select class=\"form-control\" id=\"sel1\">
+    <option>ABN AMRO</option>
+    <option>Rabobank</option>
+    <option>ING</option>
+    <option>Stadsbank</option>
+  </select>
+</div> 
+
+<img class='checkoutidealimage' style='width: 50%; height: 50%' src='../img/ideal.png'/></div>";
+include('footer.php');
 
 ?>
