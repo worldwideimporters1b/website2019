@@ -55,7 +55,9 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
         </div>
     </form>
     <small id="kortingantwoord"
-           class="form-text text-muted"><?php echo kortingsCodeFeedback($kortingscode, $winkelmandid, $conn); ?></small>
+           class="form-text text-muted"><?php if(isset($_GET["Kortingtoepassen"])){
+            echo kortingsCodeFeedback($kortingscode, $winkelmandid, $conn); }
+               else{ echo 'Voer eventueel een geldige kortingscode in';} ?></small>
     <br>
     <form method="get">
         <div class="form-group">

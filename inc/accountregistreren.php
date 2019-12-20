@@ -2,8 +2,8 @@
 // Door Lennard S1080997 WIP
 
 include "head.php";
-include "footer.php";
-include "menu.php";
+include "header.php";
+
 
 //database verbinding
 function databaseConnectie(){
@@ -87,11 +87,7 @@ if (isset($_POST["registreren"])){
 }
 
 ?>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+
 <div class="container">
 <h1>WWI</h1><br>
 <h2>Account registreren</h2><br>
@@ -129,7 +125,7 @@ print($gegevens[$message]);
 ?><br>
 <a class="btn btn-outline-primary" href="" role="button">Terug naar de inlogpagina</a>
 </div>
-</html>
+
 <?php
 /*Nog te ontwikkelen; het veld wachtwoord bevestigen. Deze word niet opgenomen in de database (wat mij goed lijkt), maar ik heb
 nog geen functie gemaakt die controleerd of wachtwoord1 === wachtwoord2. */
