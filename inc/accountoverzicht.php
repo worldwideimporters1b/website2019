@@ -3,8 +3,6 @@
 
 include "header.php";
 include "head.php";
-include "footer.php";
-include "menu.php";
 
 
 //met $conn roepen we de verbinding met de database aan.
@@ -37,11 +35,7 @@ function gegevensOphalen($gebruikersid, $conn){
 
 ?>
 <!-- Stukje HTML om de bovenstaande gegevens in een overzicht neer te zetten. -->
-<html>
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+
 <div class="container">
 <h3>Uw gegevens</h3>
 <br>
@@ -63,4 +57,4 @@ function gegevensOphalen($gebruikersid, $conn){
 <a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a>
 <a class="btn btn-outline-success" href="besteloverzicht.php" role="button">Plaats bestelling</a>
 </div>
-</html>
+
