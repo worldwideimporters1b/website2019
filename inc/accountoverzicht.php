@@ -45,7 +45,7 @@ function gegevensOphalen($gebruikersid, $conn){
     <?php
     // Hier geven we aan dat we van gebruiker met ID 1 de gegevens willen weergeven. Later veranderen naar Sessie ID o.i.d.
 
-    gegevensOphalen(1,$conn);
+    gegevensOphalen(64,$conn);
 
 
 
