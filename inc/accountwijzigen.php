@@ -36,17 +36,17 @@ function accountWijzigen($accountgegevens){ //De feedback geven door middel van 
 
 //De SQL query die word aangeroepen door de functie accountWijzigen.
 function updateAccount($emailadres, $voornaam, $achternaam, $geslacht, $adres, $woonplaats, $postcode, $geboortedatum, $conn){
-    $gebruikersid = 1; //Gebruikers ID nog verandere in een variabele, SESSIE o.i.d.
+    $gebruikersid = 1; //Gebruikers ID nog verandere in een variabele, $SESSIE o.i.d.
     $sql = "UPDATE `gebruiker` SET `emailadres` = '$emailadres', `voornaam` = '$voornaam',`achternaam` = '$achternaam',`geslacht` = '$geslacht',`adres` = '$adres'
             , `woonplaats` = '$woonplaats',`postcode` = '$postcode',`geboortedatum` = '$geboortedatum' WHERE `gebruiker_id` = '$gebruikersid';";
 
     $result = $conn->query($sql);
 
     return $result;
-
 }
 
 //variabelen definieren
+
 $emailadres = "emailadres";
 $voornaam = "voornaam";
 $achternaam = "achternaam";

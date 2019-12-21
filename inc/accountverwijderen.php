@@ -4,7 +4,7 @@
 include "head.php";
 include "header.php";
 
-require_once "accountwijzigen.php";
+// require_once "accountwijzigen.php";
 
 function controle(){
 
@@ -32,13 +32,15 @@ if(isset($_GET["verwijderen"])){
 
         $check = $conn->query($query); //SQL QUERY verplaatsen in een functie?...
 
+        return $check;
+
         if($check == 1) {
             //Wanneer het resultaat 1 is, heeft de gebruiker een correct email adres en bijbehorend wachtwoord ingevoert.
-            accountVerwijderen(63, $conn);
+            accountVerwijderen(64, $conn);
         }
     }
     else{
-        print("Uw wachtwoord is onjuist.");
+        print("Uw e-mail adres of wachtwoord is onjuist.");
     }
 
 }
@@ -51,6 +53,7 @@ if(isset($_GET["verwijderen"])){
     <input type="email" name="emailadres" class="form-control" placeholder="e-mail adres" required>
     <input type="password" name="wachtwoord" class="form-control" placeholder="Wachtwoord" required><br>
     <input type="submit" class="btn btn-outline-danger" name="verwijderen" value="account verwijderen"/>
+    <a class="btn btn-secondary" href="accountoverzicht.php" role="button">Terug naar accountoverzicht</a>
 </div>
 
 
