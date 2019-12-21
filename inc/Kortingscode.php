@@ -199,6 +199,25 @@ function BtwTonen($kortingscode, $winkelmandid, $conn){ //deze functie toont het
     return $btwprijs;
 }
 
+Function klantNAWgegevens($winkelmandid, $conn){ // functie om de NAW gegevens van een klant te tonen
+    $sql = "Select `adres`, `postcode`, `woonplaats` 
+FROM `gebruiker` Where `gebruiker_id` IN (select `gebruiker_id` From `winkelmand` where `winkelmand_id` = '$winkelmandid');"; //de klantgegevens ophalen
+    $result = $conn->query($sql);
+
+    $html = '<table width="100%" class="table-borderless">';
+    $i = 0;
+    foreach ($result as $regel) {
+        $i++;
+        //$html .= "<tr>"; // tr is table row
+        foreach ($regel as $veld) {
+            $html .= "<tr><td class=\"font-weight-light\">" . $veld . "</td></tr>"; // td is table data
+        }
+    }
+    //$html .= "<td>" . $regel['aantal'] . "</td>";
+    $html .= "</table>";
+    return $html;
+}
+
 function totaalprijsUpdaten($winkelmandid, $bestellingprijs, $conn)
 { //deze functie schrijft de prijs van de bestelling weg naar de database in het winkelmandje
     $sql = "UPDATE `winkelmand` SET `totaalprijs` = '$bestellingprijs' WHERE `winkelmand_id` = '$winkelmandid';"; //schrijft de nieuwe prijs naar de database

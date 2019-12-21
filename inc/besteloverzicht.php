@@ -72,6 +72,8 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
             echo kortingsCodeFeedback($kortingscode, $winkelmandid, $conn); }
                else{ echo 'Voer eventueel een geldige kortingscode in';} ?></small>
     <br>
+    <?php echo "U bestelling wordt naar dit adres verstuurt: ". klantNAWgegevens($winkelmandid, $conn);?>
+    <br>
     <form method="get">
         <div class="form-group">
             <label for="kortingscodeinput">Wil je de bestelling plaatsen?</label><br>
