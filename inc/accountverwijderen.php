@@ -19,21 +19,24 @@ function controle($emailadres, $wachtwoord, $conn){
         accountVerwijderen($emailadres, $conn);
 
     }else{
-       echo "E-mailadres of wachtwoord is onjuist."; //feedback geven dat $row[0] == 0, oftewel emailadres en wachtwoord matchen niet.
-
+        echo "<blockquote class=\"blockquote text-center\">";
+        echo "<p class=\"mb-0\"><strong>E-mailadres of wachtwoord is onjuist.</strong></p>"; //feedback geven dat $row[0] == 0, oftewel emailadres en wachtwoord matchen niet.
+        echo "</blockquote>";
     }
 
     return $result;
 }
 
 function accountVerwijderen($emailadres, $conn){
-    // $sql = "DELETE FROM gebruiker WHERE `gebruiker_id` = ".$gebruikersid.";";
-    $sql = "DELETE FROM gebruiker WHERE `emailadres` = '$emailadres';"; //account verwijderen op basis van het ingevoerde emailadres.
+                                                                        //Deze functie word alleen aangeroepen nadat de controle is uitgevoerd.
+    $sql = "DELETE FROM gebruiker WHERE `emailadres` = '$emailadres';"; //Account verwijderen op basis van het ingevoerde emailadres. Hiervan is altijd maar 1 record.
 
-    $result = $conn->query($sql);
+    $result = $conn->query($sql); //query uitvoeren
 
-    if($result === TRUE) { //feedback geven
-        echo "Uw account is verwijderd.";
+    if($result === TRUE) { //feedback geven aan de gebruiker.
+        echo "<blockquote class=\"blockquote text-center\">";
+        echo "<p class=\"mb-0\"><strong>Uw account is verwijderd.</strong></p>";
+        echo "</blockquote>";
     }
     return $result;
 }
@@ -41,10 +44,10 @@ function accountVerwijderen($emailadres, $conn){
 if(isset($_POST["verwijderen"])){ //wanneer de knop "verwijderen" is geklikt;
     if(isset($_POST['emailadres'])  && isset($_POST['wachtwoord'])){ //controleer of het email adres en wachtwoord is ingevoerd.
 
-        $emailadres = $_POST['emailadres'];
-        $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST['wachtwoord']);
+        $emailadres = $_POST['emailadres']; //het ingevoerde emailadres opslaan in $emailadres
+        $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST['wachtwoord']); //het ingevoerde wachtwoord vergelijken met de md5 hash. Vervolgens opslaan in $wachtwoord.
 
-        controle($emailadres, $wachtwoord, $conn);
+        controle($emailadres, $wachtwoord, $conn); //de controle uitvoeren of het gegeven mailadres bij het wachtwoord hoort.
 
     }
     else{
@@ -55,7 +58,7 @@ if(isset($_POST["verwijderen"])){ //wanneer de knop "verwijderen" is geklikt;
 
 ?>
 
-
+<html> <!-- stukje HTML voor het formulier -->
 <div class="container">
     <form method="post" action="accountverwijderen.php">
     <label>Bevestig uw e-mail adres en wachtwoord.</label>
@@ -65,6 +68,6 @@ if(isset($_POST["verwijderen"])){ //wanneer de knop "verwijderen" is geklikt;
     <a class="btn btn-secondary" href="accountoverzicht.php" role="button">Terug naar accountoverzicht</a>
     </form>
 </div>
-
+</html>
 
 
