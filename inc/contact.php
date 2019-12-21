@@ -61,9 +61,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary"
-                        onclick="document.getElementById('contact-form').submit();">Send
-                </button>
+                <button type="submit" class="btn btn-primary">Verstuur</button>
             </form>
             <div class="status"></div>
         </div>
