@@ -2,8 +2,7 @@
 <?php
 include "head.php";
 include "header.php";
-//include "footer.php";
-include "menu.php";
+include "footer.php";
 include "Kortingscode.php";
 
 //database verbinding
@@ -15,7 +14,7 @@ $winkelmandid = '1'; //tijdelijke id voor testen
 
 if (isset($_GET["Kortingtoepassen"])) { //kortingscode ophalen uit formulier
     $kortingscode = $_GET["kortingscode"];
-    $prijs = kortingsCodeToepassen($kortingscode, $winkelmandid, $conn);
+    $prijs = prijsVanBestelling($winkelmandid,$kortingscode,$conn);
     //$kortingnaam = kortingsNaamTonen($kortingscode, $conn); //naam van de korting ophalen
 }
 
@@ -36,12 +35,8 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
         }
         else{ echo $kostenverzending;}
         ?></p>
-    <p class="lead" > Het totaal bedrag van de bestelling is: €<?php if (isset($prijs)) {
-            echo $prijs;
-        } //de getoonde totaalprijs bepalen
-        else {
-            echo totaalprijsTonen($winkelmandid, $conn);
-        } ?></p>
+    <p class="lead" > Het totaal bedrag van de bestelling is: €<?php echo prijsVanBestelling($winkelmandid,$kortingscode,$conn); //totaalprijsTonen($winkelmandid, $conn);
+         ?></p>
 </div>
 <br>
 
