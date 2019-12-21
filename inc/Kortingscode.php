@@ -48,26 +48,28 @@ function kortingsCodeToepassen($kortingscode, $winkelmandid, $conn)
     while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)) {
         $percentage = $row["percentage"];
     }
+
+    $percentage2 = KortingsPercentageTonen($winkelmandid, $conn);
     // de query om het percentage van een reeds toegepaste code op te vragen
-    $sql2 = "SELECT `percentage` FROM `korting` WHERE `kortingscode` IN (SELECT `kortingscode` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid');";
+    //$sql2 = "SELECT `percentage` FROM `korting` WHERE `kortingscode` IN (SELECT `kortingscode` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid');";
 
     if ($kortingalgebruikt1 == 0 && $codebestaat1 == 1) { //als er nog geen korting is gebruikt dan wordt de korting berekend
         $nieuweprijs = (1 - ($percentage / 100)) * $opgehaaldeprijs; //kortingspercentage in procenten naar nieuwe prijs
         $sql3 = "UPDATE `winkelmand` SET `kortingscode` = '$kortingscode' WHERE `winkelmand_id` = '$winkelmandid';"; //schrijft de gebruikte code naar de winkelwagen
         $conn->query($sql3);
     } elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 1) {
-        $result2 = $conn->query($sql2);
-        $percentage2 = 0;
-        while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
-            $percentage2 = $row["percentage"];
-        }
+        //$result2 = $conn->query($sql2);
+        //$percentage2 = 0;
+        //while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+           // $percentage2 = $row["percentage"];
+        //}
         $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
     } elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 0) {
-        $result2 = $conn->query($sql2);
-        $percentage2 = 0;
-        while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+        //$result2 = $conn->query($sql2);
+        //$percentage2 = 0;
+        //while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
             $percentage2 = $row["percentage"];
-        }
+        //}
         $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
     } else {
         $nieuweprijs = $opgehaaldeprijs; //geen wijziging in nieuweprijs
@@ -94,6 +96,23 @@ function kortingsNaamTonen($winkelmandid, $conn)
     return $naam;
 }
 
+function KortingsPercentageTonen($winkelmandid, $conn){//functie laat kortingcode zien die bij winkelwagen hoort
+    $percentage = 0; //variabele percentage aanmaken
+    $sql = "SELECT `percentage` FROM `korting` WHERE `kortingscode` in (SELECT kortingscode FROM winkelmand where winkelmand_id = '$winkelmandid');"; //het kortingspercentage ophalen
+    $result1 = $conn->query($sql); //het kortingspercentage uitlezen
+    while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)) {
+        $percentage = $row["percentage"];
+    }
+    return $percentage;
+}
+
+function kortingsBedragTonen($winkelmandid,$conn){ //deze functie berekend aan de hand van de kortingscode de korting in euro's
+    $percentage = KortingsPercentageTonen($winkelmandid, $conn); //variabele percentage aanmaken
+    $opgehaaldeprijs = totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn);//de totaalprijs van de winkelwagen ophalen zonder verzendkosten
+    $kortingsbedrag = $opgehaaldeprijs * ($percentage / 100);
+    return $kortingsbedrag; // de korting in euros
+}
+
 function kortingsCodeFeedback($kortingscode, $winkelmandid, $conn)
 {// functie die feedback genereerd op de kortingscode
     $kcbestaat = kortingsCodeBestaat($kortingscode, $conn);
@@ -102,7 +121,7 @@ function kortingsCodeFeedback($kortingscode, $winkelmandid, $conn)
     if ($kcbestaat == 1 && $kcalgebruikt == 0) {//de kortingscode is geldig en er is nog geen code toegepast
         $kortingfeedback = 'De kortingscode ' . kortingsNaamTonen($winkelmandid, $conn) . 'bestaat';
     } Elseif ($kcbestaat == 1 && $kcalgebruikt == 1) {//de code is geldig maar er is al een code toegepast
-        $kortingfeedback = 'De kortingscode ' . kortingsNaamTonen($winkelmandid, $conn) . ' is toegepast';
+        $kortingfeedback = 'De kortingscode ' . kortingsNaamTonen($winkelmandid, $conn) . ' is toegepast met '. KortingsPercentageTonen($winkelmandid, $conn) . '% korting op de bestelling.';
     } Elseif ($kcbestaat == 0 && $kcalgebruikt == 1) {// de code is ongeldig en er is al een andere code toegepast
         $kortingfeedback = 'Voer een geldige code in';
     } Elseif ($kcbestaat == 0 && $kcalgebruikt == 0) { //de ingevoerde code is niet goed en er is nog geen code toegepast
@@ -112,6 +131,8 @@ function kortingsCodeFeedback($kortingscode, $winkelmandid, $conn)
     }
     return $kortingfeedback;
 }
+
+
 
 //hier volgen de functies die benodigd zijn voor het besteloverzicht:
 
@@ -160,15 +181,22 @@ function totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn)
             $orderregelprijs = $row2["prijs"];}
         $prijswinkelmand += $orderregelprijs; //elke totaalprijs van een orderregel wordt opgeteld tot het totaal van de winkelwagen
     }
-    return $prijswinkelmand;
+    return round($prijswinkelmand,2);
 }
 
 function prijsVanBestelling($winkelmandid, $kortingscode, $conn){ //Deze functie berekend de daadwerkelijke prijs van de bestelling inclusief kortingen en verzendkosten
     $verzendkosten = verzendkostenBerkenen($winkelmandid, $conn);
     $nieuwprijs = kortingsCodeToepassen($kortingscode, $winkelmandid, $conn);
-    $bestellingprijs = $nieuwprijs + $verzendkosten;
+    $bestellingprijs = round(($nieuwprijs + $verzendkosten),2);
 
     return $bestellingprijs;
+}
+
+function BtwTonen($kortingscode, $winkelmandid, $conn){ //deze functie toont het btw bedrag van het bestelbedrag zonder de verzendkosten
+    $nieuwprijs = kortingsCodeToepassen($kortingscode, $winkelmandid, $conn); //het totaalbedrag ophalen zonder verzendkosten
+    $btwpercentage = 21;
+    $btwprijs = round((($btwpercentage / 100)) * $nieuwprijs,2);
+    return $btwprijs;
 }
 
 function totaalprijsUpdaten($winkelmandid, $bestellingprijs, $conn)
