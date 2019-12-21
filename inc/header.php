@@ -41,7 +41,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-primary" href="#" tabindex="-1" aria-disabled="false">Contact</a>
+                    <a class="btn btn-primary" href="contact.php" tabindex="-1" aria-disabled="false">Contact</a>
 
                 </li>
                 <li class="nav-item">
