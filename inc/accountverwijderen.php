@@ -10,12 +10,14 @@ $conn = new mysqli('localhost','root','','world_wide_importers');
 
 function controle($emailadres, $wachtwoord, $conn){
 
-    $query = "SELECT COUNT(*) FROM gebruiker WHERE `emailadres` = '$emailadres' AND `wachtwoord` = '$wachtwoord';"; //controleren of er een emailadres is met het ingevoerde wachtwoord
+    $query = "SELECT COUNT(*) FROM gebruiker WHERE `emailadres` == '$emailadres' AND `wachtwoord` == '$wachtwoord';"; //controleren of er een emailadres is met het ingevoerde wachtwoord
 
     $result = $conn->query($query);     //Wanneer de query word uitgevoerd, komt er 0 of 1 uit als resultaat.
 
-    if ($result !== 0) { //als het niet gelijk is aan 0, voeren we de verwijdering van het account uit.
+    if ($result === 1) { //als het niet gelijk is aan 0, voeren we de verwijdering van het account uit.
         accountVerwijderen($emailadres, $conn);
+    }else{
+        echo "Email of ww is onjuist";
     }
     return $result;
 }
@@ -26,11 +28,10 @@ function accountVerwijderen($emailadres, $conn){
 
     $resultaat = $conn->query($sql);
 
-    if($resultaat == TRUE) { //feedback geven
+    if($resultaat === TRUE) { //feedback geven
         echo "Uw account is verwijderd.";
     }
     return $resultaat;
-
 }
 
 if(isset($_POST["verwijderen"])){ //wanneer de knop "verwijderen" is geklikt;
