@@ -13,12 +13,13 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 
         $result = $conn->query($sql);
 
-        $html = '<table class="table table-hover">';
+        $html = '<table class="table rounded">';
+        $html .= '<tr><th><h3>Product Overzicht</h3></th></tr>';
         foreach ($result as $regel) {
             $html .= "<tr>";
             foreach ($regel as $veldnaam => $veld) {
                 if ($veldnaam == 'bestandslocatie') {
-                    $html .= "<td><img src='../" . $veld . "' height='150' width='150'/></td>";
+                    $html .= "<td><img style='height: 150px; width: auto;' src='../" . $veld . "' class=\"rounded img-responsive thumbnail border border-white\"/></td>";
                 }
 
                 if ($veldnaam == 'artikel_id') {
@@ -26,7 +27,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
                 }
 
                 if ($veldnaam !== 'bestandslocatie' AND $veldnaam !== 'artikel_id') {
-                    $html .= "<td>" . $veld . "</td>";
+                    $html .= "<td><h4>" . $veld . "</h4></td>";
                 }
             }
             $html .= "</tr>";
