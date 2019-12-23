@@ -7,10 +7,13 @@ $conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 //functies benodigd voor de Kortingscode:
 
-function kortingsCodeBestaat($kortingscode, $conn)
-{ //functie die controleerd of code bestaat
-    $sql = "SELECT `korting_id` FROM `korting` WHERE `kortingscode` ='$kortingscode';";
-    $result = $conn->query($sql);
+function kortingsCodeBestaat($kortingscode, $conn){ //functie die controleerd of code bestaat
+    //Bouwen query op veilige manier op.
+    $statement = mysqli_prepare($conn, "SELECT `korting_id` FROM `korting` WHERE `kortingscode` = ?;");
+    mysqli_stmt_bind_param($statement, 's', $kortingscode); // i = integer; s = string;
+    mysqli_stmt_execute($statement);
+    $result = mysqli_stmt_get_result($statement);
+
     $codebestaat = 0;
     if ($result->num_rows == 0) {
         $codebestaat = 0;// code bestaat niet
@@ -35,46 +38,38 @@ function alKortingsCodeGebruikt($winkelmandid, $conn)
     return $kortingalgebruikt;
 }
 
-function kortingsCodeToepassen($kortingscode, $winkelmandid, $conn)
-{ //deze functie past een kortingscode toe en berekend een nieuwe totaalprijs
-    $codebestaat1 = kortingsCodeBestaat($kortingscode, $conn);
-    $kortingalgebruikt1 = alKortingsCodeGebruikt($winkelmandid, $conn);
+function kortingsCodeToepassen($kortingscode, $winkelmandid, $conn){ //deze functie past een kortingscode toe en berekend een nieuwe totaalprijs
+    $codebestaat1 = kortingsCodeBestaat($kortingscode, $conn); //variabele die aangeeft of code bestaat
+    $kortingalgebruikt1 = alKortingsCodeGebruikt($winkelmandid, $conn); //variable die aangeeft of code al is gebruikt
     $opgehaaldeprijs = totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn);//de totaalprijs van de winkelwagen ophalen zonder verzendkosten
 
     $percentage = 0; //variabele percentage aanmaken
-    $sql1 = "SELECT `percentage` FROM `korting` WHERE `kortingscode` = '$kortingscode';"; //het kortingspercentage ophalen
-    $result1 = $conn->query($sql1); //het kortingspercentage uitlezen
 
+    //Query om injectie te voorkomen. hiermee wordt het percentage behorend bij een kortingscode opgehaald
+    $statement = mysqli_prepare($conn, "SELECT `percentage` FROM `korting` WHERE `kortingscode` = ?;");
+    mysqli_stmt_bind_param($statement, 's', $kortingscode); // i = integer; s = string;
+    mysqli_stmt_execute($statement);
+    $result1 = mysqli_stmt_get_result($statement);
     while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)) {
         $percentage = $row["percentage"];
     }
 
-    $percentage2 = KortingsPercentageTonen($winkelmandid, $conn);
-    // de query om het percentage van een reeds toegepaste code op te vragen
-    //$sql2 = "SELECT `percentage` FROM `korting` WHERE `kortingscode` IN (SELECT `kortingscode` FROM `winkelmand` WHERE `winkelmand_id` = '$winkelmandid');";
+    $percentage2 = KortingsPercentageTonen($winkelmandid, $conn); //percentage van een reeds toegepaste code opvragen
 
     if ($kortingalgebruikt1 == 0 && $codebestaat1 == 1) { //als er nog geen korting is gebruikt dan wordt de korting berekend
         $nieuweprijs = (1 - ($percentage / 100)) * $opgehaaldeprijs; //kortingspercentage in procenten naar nieuwe prijs
-        $sql3 = "UPDATE `winkelmand` SET `kortingscode` = '$kortingscode' WHERE `winkelmand_id` = '$winkelmandid';"; //schrijft de gebruikte code naar de winkelwagen
-        $conn->query($sql3);
-    } elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 1) {
-        //$result2 = $conn->query($sql2);
-        //$percentage2 = 0;
-        //while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
-           // $percentage2 = $row["percentage"];
-        //}
+        $statement = mysqli_prepare($conn, "UPDATE `winkelmand` SET `kortingscode` = ? WHERE `winkelmand_id` = '$winkelmandid';");
+        mysqli_stmt_bind_param($statement, 's', $kortingscode); // i = integer; s = string;
+        mysqli_stmt_execute($statement);
+    }
+    elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 1) {//korting is al gebruikt en code bestaat
         $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
-    } elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 0) {
-        //$result2 = $conn->query($sql2);
-        //$percentage2 = 0;
-        //while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
-            $percentage2 = $row["percentage"];
-        //}
+    }
+    elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 0) {//korting is al gebruikt en code bestaat niet
         $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
     } else {
-        $nieuweprijs = $opgehaaldeprijs; //geen wijziging in nieuweprijs
+        $nieuweprijs = $opgehaaldeprijs; //alle andere combinaties leveren geen wijziging in de nieuweprijs
     }
-
     return $nieuweprijs;
 }
 
@@ -98,7 +93,7 @@ function kortingsNaamTonen($winkelmandid, $conn)
 
 function KortingsPercentageTonen($winkelmandid, $conn){//functie laat kortingcode zien die bij winkelwagen hoort
     $percentage = 0; //variabele percentage aanmaken
-    $sql = "SELECT `percentage` FROM `korting` WHERE `kortingscode` in (SELECT kortingscode FROM winkelmand where winkelmand_id = '$winkelmandid');"; //het kortingspercentage ophalen
+    $sql = "SELECT `percentage` FROM `korting` WHERE `kortingscode` in (SELECT `kortingscode` FROM `winkelmand` where `winkelmand_id` = '$winkelmandid');"; //het kortingspercentage ophalen
     $result1 = $conn->query($sql); //het kortingspercentage uitlezen
     while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)) {
         $percentage = $row["percentage"];
@@ -170,12 +165,12 @@ function verzendkostenBerkenen($winkelmandid, $conn)
 function totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn)
 { //deze functie berekend ook de totaalprijs maar neemt de verzendkosten en korting niet mee. staat gelijk aan het totaal van de winkelmand
     $prijswinkelmand = 0;
-    $sql = "SELECT order_id FROM world_wide_importers.orderregel WHERE winkelmand_id = '$winkelmandid' ;"; //alle orderregels met de zelfde winkelmandid worden opgehaald
+    $sql = "SELECT `order_id` FROM `world_wide_importers`.`orderregel` WHERE `winkelmand_id` = '$winkelmandid' ;"; //alle orderregels met de zelfde winkelmandid worden opgehaald
     $result = $conn->query($sql);
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
         $opgehaaldeartikel = $row["order_id"];
-        $sql2 = "SELECT UnitPrice * (SELECT aantal FROM world_wide_importers.orderregel WHERE world_wide_importers.orderregel.order_id = '$opgehaaldeartikel') AS prijs 
-        FROM wideworldimporters.stockitems where StockItemID in (select artikel_id FROM world_wide_importers.orderregel where order_id = '$opgehaaldeartikel');";
+        $sql2 = "SELECT `UnitPrice` * (SELECT `aantal` FROM `world_wide_importers`.`orderregel` WHERE `world_wide_importers`.`orderregel`.`order_id` = '$opgehaaldeartikel') AS `prijs` 
+        FROM `wideworldimporters`.`stockitems` where `StockItemID` in (select `artikel_id` FROM `world_wide_importers`.`orderregel` where `order_id` = '$opgehaaldeartikel');";
         $result2 = $conn->query($sql2);
         while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) { //per orderregel wordt het aantal vermenigvuldigd met de prijs
             $orderregelprijs = $row2["prijs"];}
@@ -200,8 +195,7 @@ function BtwTonen($kortingscode, $winkelmandid, $conn){ //deze functie toont het
 }
 
 Function klantNAWgegevens($winkelmandid, $conn){ // functie om de NAW gegevens van een klant te tonen
-    $sql = "Select `adres`, `postcode`, `woonplaats` 
-FROM `gebruiker` Where `gebruiker_id` IN (select `gebruiker_id` From `winkelmand` where `winkelmand_id` = '$winkelmandid');"; //de klantgegevens ophalen
+    $sql = "Select `adres`, `postcode`, `woonplaats` FROM `gebruiker` Where `gebruiker_id` IN (select `gebruiker_id` From `winkelmand` where `winkelmand_id` = '$winkelmandid');"; //de klantgegevens ophalen
     $result = $conn->query($sql);
 
     $html = '<table width="100%" class="table-borderless">';
