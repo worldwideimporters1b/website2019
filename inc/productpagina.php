@@ -10,10 +10,12 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 {
     if ($artikel_id == 'NULL') {
 
+        // Hier wordt de zoek functie aan geroepen indien de zoek functie is gebruikt.
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['btnSearch'])) {
                 $zoekstring = $_POST['zoekstring'];
-                var_dump($zoekstring);die();
+                var_dump($zoekstring);
+                die();
                 $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
                         FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
                         JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
@@ -27,7 +29,6 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
                         JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID LIMIT 4";
             }
         }
-
 
 
         $result = $conn->query($sql);

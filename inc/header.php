@@ -53,7 +53,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Zoek artikel" aria-label="Search">
-                <button class="btn btn-primary" type="submit">Zoek</button>
+                <button class="btn btn-primary" type="submit" id="btnSearch">Zoek</button>
             </form>
         </div></div>
     </nav>
