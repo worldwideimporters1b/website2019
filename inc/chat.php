@@ -3,11 +3,20 @@
 include_once('head.php');
 include_once('header.php');
 
+if(isset($_POST['msg'])){
+	
+	$msg = filter_var(htmlspecialchars(strip_tags($_POST['msg'])),FILTER_SANITIZE_STRING);
+	
+}
+
 $ua = $_SERVER['HTTP_USER_AGENT']??null;
 $ip = $_SERVER['REMOTE_ADDR'];
 $algo = 'sha256';
+$medewerker = 1;
 
-echo "<div class='container'>";
+
+
+
 $conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 function checkLoginPerms($conn,$userid,$sessieid){
@@ -30,7 +39,7 @@ function checkLoginPerms($conn,$userid,$sessieid){
 
 function anonymousChat($conn,$token){
 
-
+ // check if user is logged in.
 
 }
 
@@ -52,8 +61,46 @@ function validateToken($ua,$ip,$token,$algo){
 
 }
 
-echo createToken($ua,$ip,$algo);
+$token = createToken($ua,$ip,$algo);
 
-echo validateToken($ua,$ip,createToken($ua,$ip,$algo),$algo);
+if (isset($msg)){
+	
+$sql = "SELECT * FROM `chat` WHERE `chat_id` = '".$token."'";
+	
+	
+	   $result = $conn->query($sql);
+       if ($result) {
+		
+           if ($result->num_rows !== 1) {
+               $sql = "INSERT INTO `chat` (`chat_id`, `starttijd`) VALUES ('".$token."', CURRENT_TIME());";
+			   $conn->query($sql);
+			   header("Location: chat.php");
+           }
+           if ($result->num_rows == 1) {
+               $sql = "INSERT INTO `chatregel` (`chatregel_id`, `chat_id`, `gebruiker_id`, `berichtinhoud`, `tijd`) VALUES (NULL, '".$token."', '0', '".$msg."', CURRENT_TIME()); ";
+			   $conn->query($sql);
+		   }
+	   }
+	
+	
+	
 
-#echo checkLoginPerms($conn,1,1234);
+
+
+}
+
+echo '<div class=\'container\'><h3>WWI Chat</h3>
+<div class="form-group">
+<iframe class="form-control" src="viewchat.php" style="height: 350px"></iframe>
+</div>
+<form method="post">
+  <div class="form-group">
+    <label for="bericht">Bericht</label>
+    <textarea class="form-control" name="msg" placeholder="Typ hier uw bericht" rows="2" cols="50"></textarea>
+    <small id="chatHelp" class="form-text text-muted">U hoeft niet in te loggen om de chat te kunnen gebruiken. Berichten in deze chat zijn mogelijk leesbaar voor anderen. Gebruik geen persoonlijke gegevens in de chat.</small>
+  </div>
+  <button type="Verzenden" class="btn btn-primary">Submit</button>
+</form>
+
+';
+echo '<br><br><small id="chatId" class="form-text text-muted">ChatId: ' . $token . '</small>';
