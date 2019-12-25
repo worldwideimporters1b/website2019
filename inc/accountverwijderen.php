@@ -42,12 +42,12 @@ function accountVerwijderen($emailadres, $conn){
 }
 
 if(isset($_POST["verwijderen"])){ //wanneer de knop "verwijderen" is geklikt;
-    if(isset($_POST['emailadres'])  && isset($_POST['wachtwoord'])){ //controleer of het email adres en wachtwoord is ingevoerd.
+    if(isset($_POST['emailadres'])  && isset($_POST['wachtwoord'])){        //controleer of het email adres en wachtwoord is ingevoerd.
 
-        $emailadres = $_POST['emailadres']; //het ingevoerde emailadres opslaan in $emailadres
-        $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST['wachtwoord']); //het ingevoerde wachtwoord vergelijken met de md5 hash. Vervolgens opslaan in $wachtwoord.
+        $emailadres = $_POST['emailadres'];                                 //het ingevoerde emailadres opslaan in $emailadres
+        $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST['wachtwoord']);     //het ingevoerde wachtwoord vergelijken met de md5 hash. Vervolgens opslaan in $wachtwoord.
 
-        controle($emailadres, $wachtwoord, $conn); //de controle uitvoeren of het gegeven mailadres bij het wachtwoord hoort.
+        controle($emailadres, $wachtwoord, $conn);                          //de controle uitvoeren of het gegeven mailadres bij het wachtwoord hoort.
 
     }
     else{

@@ -28,7 +28,7 @@
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#" tabindex="-1" aria-disabled="false">Chat</a>
+                        <a class="nav-link active" href="chat.php" tabindex="-1" aria-disabled="false">Chat</a>
 
                     </li>
                 </ul>
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <a href="accountoverzicht.php">
+        <a href="accountbekijken.php">
             <svg class="bi bi-person-fill" width="32px" height="32px" viewBox="0 0 20 20" fill="#FFFFFF"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M5 16s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H5zm5-6a3 3 0 100-6 3 3 0 000 6z"
