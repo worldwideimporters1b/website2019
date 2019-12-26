@@ -1,5 +1,6 @@
 <?php
-function voorbeeld($parameter1, $parameter2, $parameter3 = 'standaardwaarde (die kan worden overschreven in het aanroepen van de functie.)'){
+function voorbeeld($parameter1, $parameter2, $parameter3 = 'standaardwaarde (die kan worden overschreven in het aanroepen van de functie.)')
+{
 
     //code die iets doet
     $data = $parameter1 . $parameter2 . $parameter3;

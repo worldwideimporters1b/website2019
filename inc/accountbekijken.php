@@ -37,24 +37,23 @@ function gegevensOphalen($gebruikersid, $conn){
 <!-- Stukje HTML om de bovenstaande gegevens in een overzicht neer te zetten. -->
 
 <div class="container">
-<h3>Uw gegevens</h3>
-<br>
+    <h3>Uw gegevens</h3>
+    <br>
 </div>
 <div class="container">
-<table class="table">
-    <?php
-    // Hier geven we aan dat we van gebruiker met ID 1 de gegevens willen weergeven. Later veranderen naar Sessie ID o.i.d.
+    <table class="table">
+        <?php
+        // Hier geven we aan dat we van gebruiker met ID 1 de gegevens willen weergeven. Later veranderen naar Sessie ID o.i.d.
 
-    gegevensOphalen(3,$conn);
+        gegevensOphalen(3,$conn);
 
 
 
-    ?>
+        ?>
 
-</table>
+    </table>
 </div>
 <div class="container">
-<a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a>
-<a class="btn btn-outline-success" href="besteloverzicht.php" role="button">Plaats bestelling</a>
-</div>
+    <a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a>
 
+</div>
