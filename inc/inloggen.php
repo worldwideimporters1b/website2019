@@ -16,10 +16,8 @@ function databaseConnectie(){
 
 
 //hier checken we of de database wel goed is, is het niet leeg en wat zijn gebruikersnaam en wachtwoord?
-function inloggen(){
-if(!empty($_POST['gebruikersnaam']) && !empty($_POST['wachtwoord'])) {
-    $gebruikersnaam = $_POST['gebruikersnaam'];
-    $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST["wachtwoord"]);
+function inloggen($gebruikersnaam,$wachtwoord){
+if(!empty($gebruikersnaam) && !empty($wachtwoord)){
 
     $conn = databaseConnectie();
     $sql = "SELECT `gebruiker_id` FROM `gebruiker` WHERE `emailadres` = '$gebruikersnaam' and `wachtwoord` = '$wachtwoord'";
@@ -27,7 +25,7 @@ if(!empty($_POST['gebruikersnaam']) && !empty($_POST['wachtwoord'])) {
     $result = $conn->query($sql);
 
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-        $actief = $row['actief'];
+        #$actief = $row['actief'];
     }
 }
     else {
@@ -37,7 +35,7 @@ if(!empty($_POST['gebruikersnaam']) && !empty($_POST['wachtwoord'])) {
 }
     //hier doen we een simpel ding, indien result een geldige waarde heeft, dan komt deze terug met minimaal 1 regel. waardoor count dus 1 is.
 
-function inlogcheck(){
+function inlogcheck($count){
     //hier gebruiken we het resultaat van de count, om te checken of deze 1 is.
     if($count == 1) {
         $_SESSION["ingelogd"] = TRUE;
@@ -52,7 +50,14 @@ function inlogcheck(){
 }
 //start van de functies; hier word gecontroleerd of er op inloggen word geklikt. Dan begint de functie
 if (isset($_POST["inloggen"])){
-    inloggen();
+	
+	if (isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])) {
+    $gebruikersnaam = $_POST['gebruikersnaam'];
+    $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST["wachtwoord"]);
+	
+    inlogcheck(inloggen($gebruikersnaam,$wachtwoord));
+
+}
 }
 ?>
 
