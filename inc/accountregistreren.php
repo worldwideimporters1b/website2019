@@ -123,7 +123,7 @@ if (isset($_POST["registreren"])){
 print($gegevens[$message]);
 
 ?><br>
-<a class="btn btn-outline-primary" href="" role="button">Terug naar de inlogpagina</a>
+<a class="btn btn-outline-primary" href="inloggen.php" role="button">Terug naar de inlogpagina</a>
 </div>
 
 <?php

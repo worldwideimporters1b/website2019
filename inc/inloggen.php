@@ -1,4 +1,7 @@
 <?php
+include "header.php";
+include "head.php";
+
 session_start();
 
 function databaseConnectie(){
@@ -47,3 +50,20 @@ function inlogcheck(){
     }
 }
 ?>
+
+<html>
+<div class="container">
+    <h1>WWI</h1><br>
+    <h2>Mijn account</h2><br>
+    <form method="post" action="inloggen.php">
+        <input type="email" name="gebruikersnaam" class="form-control "value="" placeholder="E-mailadres" required/>
+        <br>
+        <input type="password" name="wachtwoord" class="form-control" value="" placeholder="Wachtwoord" required>
+        <br>
+        <input type="submit" class="btn btn-primary" name="inloggen" value="inloggen"/>
+        <br><br><br>
+        <h2> Ik ben nieuw hier</h2>
+        <br>
+        <a class="btn btn-primary" href="accountregistreren.php" role="button">Account registreren</a>
+
+</html>
