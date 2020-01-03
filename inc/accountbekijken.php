@@ -54,6 +54,7 @@ function gegevensOphalen($gebruikersid, $conn){
     </table>
 </div>
 <div class="container">
-    <a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a>
+    <a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a><br>
+    <a class="btn btn-outline-danger" href="logout.php" role="button">Uitloggen</a>
 
 </div>

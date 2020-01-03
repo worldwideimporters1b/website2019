@@ -2,7 +2,6 @@
 include "header.php";
 include "head.php";
 
-session_start();
 
 function databaseConnectie(){
     $conn = new mysqli('localhost','root','','world_wide_importers');
@@ -41,7 +40,7 @@ function inlogcheck($count){
         $_SESSION["ingelogd"] = TRUE;
         $_SESSION["gebruikersnaam"] = $_POST["gebruikersnaam"];
 //Nadat iemand is ingelogd, wil ik natuurlijk dat deze op de vorige pagina uit komt. Hoe kan ik dit realiseren? Uitzoeken
-    //header("location: search_display.php");
+    header("location: home.php");
     }
     else {
         echo "Helaas gebruikersnaam is niet goed.";
