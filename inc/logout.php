@@ -8,5 +8,6 @@ session_destroy();
 <div class="container">
 
     <p>U bent uitgelogd.</p>
+    <?php header("refresh:2;url = home.php"); ?>
 </div>
 </html>
