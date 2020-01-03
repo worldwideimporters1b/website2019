@@ -52,8 +52,9 @@ if (isset($_POST["inloggen"])){
 	
 	if (isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])) {
     $gebruikersnaam = $_POST['gebruikersnaam'];
-    $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST["wachtwoord"]);
-	
+//    $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST["wachtwoord"]);
+    $wachtwoord = hash('sha512',"a@sdiu#(*$1_41" . $_POST["wachtwoord"]);
+
     inlogcheck(inloggen($gebruikersnaam,$wachtwoord));
 
 }
