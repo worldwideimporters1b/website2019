@@ -61,7 +61,7 @@ $message = "melding";
 // Als de knop "registreren" is geklikt, haal met $_POST de gegevens op.
 if (isset($_POST['registreren'])) {
     if (strlen(($_POST[$wachtwoord])) < 6 || strlen(($_POST[$wachtwoord])) > 20 || !preg_match('@[A-Z]@', ($_POST[$wachtwoord])) || !preg_match('@[a-z]@', ($_POST[$wachtwoord]))
-        || !preg_match('@[^\w]@', ($_POST[$wachtwoord]))) {
+        || !preg_match('@[^\w]@', ($_POST[$wachtwoord]))) { //eisen stellen aan het ingevoerde wachtwoord
         echo "<blockquote class=\"blockquote text-center\">";
         echo "<p class=\"mb-0\"><strong>Het wachtwoord moet minimaal 6  en maximaal 20 tekens bevatten. Het wachtwoord moet bestaan uit een normale en hoofdletter. Het wachtwoord moet minstens 1 speciaal karakter bevatten.</strong></p>";
         echo "</blockquote>";
