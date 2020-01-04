@@ -1,4 +1,4 @@
-<?php
+<?php //door Lennard van Boven 1080997
 include_once 'head.php';
 include_once 'header.php';
 session_destroy();

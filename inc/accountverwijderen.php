@@ -20,7 +20,7 @@ function controle($emailadres, $wachtwoord, $conn){
 
     }else{
         echo "<blockquote class=\"blockquote text-center\">";
-        echo "<p class=\"mb-0\"><strong>E-mailadres of wachtwoord is onjuist.</strong></p>"; //feedback geven dat $row[0] == 0, oftewel emailadres en wachtwoord matchen niet.
+        echo "<p class=\"mb-0\"><strong>E-mailadres of wachtwoord is onjuist.</strong></p>"; //feedback geven dat $row[0] == 0 is, oftewel emailadres en wachtwoord matchen niet.
         echo "</blockquote>";
     }
 
@@ -33,11 +33,13 @@ function accountVerwijderen($emailadres, $conn){
 
     $result = $conn->query($sql); //query uitvoeren
 
-    if($result === TRUE) { //feedback geven aan de gebruiker.
-        echo "<blockquote class=\"blockquote text-center\">";
+    if($result === TRUE) {
+        echo "<blockquote class=\"blockquote text-center\">";           //feedback geven aan de gebruiker.
         echo "<p class=\"mb-0\"><strong>Uw account is verwijderd.</strong></p>";
         echo "</blockquote>";
+        session_destroy();                                              // sessie afsluiten en de gebruiker terug naar de homepage sturen als het account is verwijderd.
     }
+    header("refresh:1;url=home.php");
     return $result;
 }
 

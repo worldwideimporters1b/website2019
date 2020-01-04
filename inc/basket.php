@@ -63,4 +63,3 @@ echo '
         </div>
     </form>';
 echo "</div>";
-include_once('footer.php');

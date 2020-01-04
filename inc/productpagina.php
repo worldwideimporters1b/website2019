@@ -98,4 +98,3 @@ if (isset($_GET['id'])) {
 
 }
 echo "</div>";
-include_once('footer.php');

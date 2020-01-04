@@ -2,7 +2,7 @@
 <?php
 include "head.php";
 include "header.php";
-include "footer.php";
+
 include "Kortingscode.php";
 
 //database verbinding
