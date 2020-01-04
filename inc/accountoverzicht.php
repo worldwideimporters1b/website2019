@@ -43,10 +43,18 @@ function gegevensOphalen($gebruikersid, $conn){
 <div class="container">
 <table class="table">
     <?php
-    // Hier geven we aan dat we van gebruiker met ID 1 de gegevens willen weergeven. Later veranderen naar Sessie ID o.i.d.
 
-    gegevensOphalen(61,$conn);
+        if(!isset($_SESSION['ingelogd'])){
 
+            //wanneer de gebruiker niet is ingelogd, maar verder wil bestellen, sturen we de gebruiker naar de inlogpagina.
+            header( "refresh:0;url=inloggen.php" );
+
+        }else {
+            //anders is de gebruiker wel ingelogd, en halen we de gegevens op op basis van gebruiker_id
+            $gebruikersid = $_SESSION["gebruiker_id"];
+            gegevensOphalen($gebruikersid, $conn);
+
+        }
 
 
     ?>

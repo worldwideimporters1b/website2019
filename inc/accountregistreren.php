@@ -79,8 +79,8 @@ if (isset($_POST['registreren'])) {
                 $gegevens[$voornaam] = isset($_POST[$voornaam]) ? $_POST[$voornaam] : "";
                 $gegevens[$achternaam] = isset($_POST[$achternaam]) ? $_POST[$achternaam] : "";
                 $gegevens[$geslacht] = isset($_POST[$geslacht]) ? $_POST[$geslacht] : "";
-//                $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? md5("a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //md5 encryptie om het wachtwoord versleutelt op te slaan.
-                $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? hash('sha512',"a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //sha512 encryptie om het wachtwoord versleutelt op te slaan.
+                $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? md5("a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //md5 encryptie om het wachtwoord versleutelt op te slaan.
+ //               $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? hash('sha512',"a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //sha512 encryptie om het wachtwoord versleutelt op te slaan.
                 $gegevens[$adres] = isset($_POST[$adres]) ? $_POST[$adres] : "";
                 $gegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";
                 $gegevens[$postcode] = isset($_POST[$postcode]) ? $_POST[$postcode] : "";

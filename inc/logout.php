@@ -7,7 +7,9 @@ session_destroy();
 
 <div class="container">
 
-    <p>U bent uitgelogd.</p>
-    <?php header("refresh:2;url = home.php"); ?>
+    <blockquote class=\blockquote text-center\>
+        <p class=\"mb-0\"><strong>U bent uitgelogd.</strong></p></blockquote>
+
+    <?php header( "refresh:1;url=home.php" ); ?>
 </div>
 </html>

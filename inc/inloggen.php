@@ -39,11 +39,29 @@ function inlogcheck($count){
     if($count == 1) {
         $_SESSION["ingelogd"] = TRUE;
         $_SESSION["gebruikersnaam"] = $_POST["gebruikersnaam"];
-//Nadat iemand is ingelogd, wil ik natuurlijk dat deze op de vorige pagina uit komt. Hoe kan ik dit realiseren? Uitzoeken
-    header("location: home.php");
+
+        $gebruikersnaam = $_POST["gebruikersnaam"]; //gezien de gebruiker is ingelogd, halen we de overige gegevens uit de database op basis van emailadres.
+
+        $conn = databaseConnectie();
+        $sql = "SELECT * FROM `gebruiker` WHERE `emailadres` = '$gebruikersnaam'";
+        $result = $conn->query($sql);
+        $gegevens = $result->fetch_assoc();                     //de gegevens uit de database slaan we op in de sessie, zodat we deze kunnen hergebruiken.
+
+        $_SESSION["gebruiker_id"] = $gegevens['gebruiker_id'];
+        $_SESSION["voornaam"] = $gegevens['voornaam'];
+        $_SESSION["achternaam"] = $gegevens['achternaam'];
+        $_SESSION["geslacht"] = $gegevens['geslacht'];
+        $_SESSION["adres"] = $gegevens['adres'];
+        $_SESSION["postcode"] = $gegevens['postcode'];
+        $_SESSION["woonplaats"] = $gegevens['woonplaats'];
+        $_SESSION["geboortedatum"] = $gegevens['geboortedatum'];
+
+        header("refresh:0;url=home.php");                   // Nadat alle gegevens van de ingelogde gebruiker in de sessie zijn opgeslagen, sturen we de gebruiker naar de homepage.
     }
     else {
-        echo "Helaas gebruikersnaam is niet goed.";
+        echo "<blockquote class=\"blockquote text-center\">";
+        echo "<p class=\"mb-0\"><strong>Uw gebruikersnaam of wachtwoord is onjuist.</strong></p>";
+        echo "</blockquote>";
         //$inlogpoging;
     }
 }
@@ -52,8 +70,8 @@ if (isset($_POST["inloggen"])){
 	
 	if (isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])) {
     $gebruikersnaam = $_POST['gebruikersnaam'];
-//    $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST["wachtwoord"]);
-    $wachtwoord = hash('sha512',"a@sdiu#(*$1_41" . $_POST["wachtwoord"]);
+    $wachtwoord = md5("a@sdiu#(*$1_41" . $_POST["wachtwoord"]);
+ //   $wachtwoord = hash('sha512',"a@sdiu#(*$1_41" . $_POST["wachtwoord"]);
 
     inlogcheck(inloggen($gebruikersnaam,$wachtwoord));
 

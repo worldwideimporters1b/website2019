@@ -67,7 +67,7 @@ session_start();
         <?php
         }
         else{
-            echo ("Ingelogd als: ".$_SESSION["gebruikersnaam"]."");
+            echo ("Ingelogd als: ".$_SESSION["voornaam"]." ".$_SESSION["achternaam"]);
             echo ("<a href=\"accountbekijken.php\">");
             echo ("<svg class=\"bi bi-person-fill\" width=\"32px\" height=\"32px\" viewBox=\"0 0 20 20\" fill=\"#FFFFFF\"
                  xmlns=\"http://www.w3.org/2000/svg\">");
