@@ -31,7 +31,6 @@ function basketinfo($conn)
 {
     if (!isset($_SESSION['ingelogd'])) {
 
-        echo "Niet ingelogd";
 
 
         $winkelmandid = 0;
@@ -42,8 +41,6 @@ function basketinfo($conn)
 
     if (isset($_SESSION['ingelogd'])) {
         if ($_SESSION['ingelogd'] == 1) {
-
-            echo "Wel ingelogd";
 
             # INSERT INTO `betaling` (`betaling_id`, `betaalmethode`, `afrekenlink`, `betaalstatus`) VALUES (NULL, 'ideal', 'http://demolink/bladiebla', '0');
             # INSERT INTO `winkelmand` (`winkelmand_id`, `betaling_id`, `order_id`, `totaalprijs`, `kortingscode`, `waardebon`, `verwachte_leverdatum`, `gebruiker_id`) VALUES (NULL, '1', '', '', NULL, NULL, NULL, '68');

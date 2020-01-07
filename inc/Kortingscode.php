@@ -133,7 +133,7 @@ function kortingsCodeFeedback($kortingscode, $winkelmandid, $conn)
 function toonBestelOverzicht($winkelmandid, $conn)
 {
 
-    $sql = "SELECT `StockItemID`, `StockItemName`, `aantal`, `UnitPrice` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = " . $winkelmandid . ";";
+    $sql = "SELECT `StockItemID`, `naam`, `aantal`, `UnitPrice` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = " . $winkelmandid . ";";
     $result = $conn->query($sql);
 
     $html = '<table width="100%" class = "table-striped"><th>Nr</th><th>Artikel Nr.</th><th>Artikelnaam</th><th>Aantal</th><th>Prijs p/st</th>';
