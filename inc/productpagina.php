@@ -4,19 +4,17 @@
 include_once('head.php');
 include_once('header.php');
 echo "<div class='container'>";
-$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 function toonProductPagina($conn, $artikel_id = 'NULL')
 {
     if ($artikel_id == 'NULL') {
 
-		$sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
+        $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
                         FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
                         JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
-                        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID LIMIT 4";
+                        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID LIMIT 20";
         // Hier wordt de zoek functie aan geroepen indien de zoek functie is gebruikt.
-		
-		
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['btnSearch'])) {
                 $zoekstring = $_POST['zoekstring'];
@@ -28,9 +26,8 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
                         JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
                         JOIN `zoekwoorden_artikel` on artikel.artikel_id=zoekwoorden_artikel.artikel_id LIMIT 4
                         WHERE `zoekwoorden_artikel.zoekwoord` LIKE '%" . $name . "%'";
-            } 
+            }
         }
-
 
         $result = $conn->query($sql);
 
@@ -38,9 +35,10 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
         $html .= '<tr><th><h3>Product Overzicht</h3></th></tr>';
         foreach ($result as $regel) {
             $html .= "<tr>";
+            $artikel_id = $regel['artikel_id'];
             foreach ($regel as $veldnaam => $veld) {
                 if ($veldnaam == 'bestandslocatie') {
-                    $html .= "<td><img style='height: 150px; width: auto;' src='../" . $veld . "' class=\"rounded img-responsive thumbnail border border-white\"/></td>";
+                    $html .= "<td><a class='btn btn-secondary' href='productpagina.php?id=" . $artikel_id . "'><img style='height: 150px; width: auto;' src='../" . $veld . "' class=\"rounded img-responsive thumbnail border border-white\"/></a></td>";
                 }
 
                 if ($veldnaam == 'artikel_id') {
@@ -57,27 +55,128 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
         $html .= "</table>";
     } else {
 
+        $imagesquery = "
+        SELECT `bestandslocatie`
+        FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
+        JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
+        WHERE `art`.`artikel_id` = '" . $artikel_id . "' LIMIT 50 OFFSET 1
+        ";
+
+        $images = $conn->query($imagesquery);
+
         $sql = "SELECT bestandslocatie, unitprice prijs, naam, herkomst, productieproces, ingredienten, afmetingen, gewicht, art.omschrijving FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID WHERE `art`.`artikel_id` = '" . $artikel_id . "' LIMIT 1";
 
         $result = $conn->query($sql);
 
         $html = '<table class="table table-hover">';
         foreach ($result as $regel) {
-            $html .= "<tr><td></td><td><a class='btn btn-secondary'href='basket.php?add=" . $artikel_id . "'>Toevoegen</a></td></tr>";
+            $html .= "<tr><td></td><td><a class='btn btn-secondary'href='productpagina.php?add&aid=" . $artikel_id . "&amt=1&id=" . $artikel_id . "'>Toevoegen</a></td></tr>";
             foreach ($regel as $veldnaam => $veld) {
                 if ($veldnaam == 'bestandslocatie') {
-                    $html .= "<tr><td><img src='../" . $veld . "' height='200' width='200'/></td></tr>";
+                    $html .= "<tr><td>
+
+                        <div style='position: relative; width: 80%;' id='carouselExampleControls' class='carousel slide' data-ride='carousel'>
+                          <div class='carousel-inner'>
+                          
+                          <div class='carousel-item active' >
+                             <img style='margin-left: auto; margin-right: auto; max-width: 200px;' src = '../" . $veld . "' class='d-block w-100 rounded img-responsive thumbnail border border-white' >
+                          </div >";
+
+                    foreach ($images as $image) {
+                        $html .= "
+                                <div class='carousel-item' >
+                                    <img style='margin-left: auto; margin-right: auto; max-width: 200px;' src = '../" . $image['bestandslocatie'] . "' class='d-block w-100 rounded img-responsive thumbnail border border-white' >
+                                </div >";
+                    };
+
+                    $html .= "
+                            </div>
+                            <a class='carousel-control-prev' href='#carouselExampleControls' role='button' data-slide='prev'>
+                            <span class='carousel-control-prev-icon' aria-hidden='true'><span>
+                            <span class='sr-only'>Previous</span>
+                            </a>
+                            <a class='carousel-control-next' href='#carouselExampleControls' role='button' data-slide='next'>
+                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                            <span class='sr-only'>Next</span>
+                            </a>
+                            </div>
+                      </td></tr>";
                 } else {
                     $html .= "<tr><td>" . $veldnaam . "</td><td>" . $veld . "</td></tr>";
                 }
             }
-
-
         }
         $html .= "</table><a class='btn btn-secondary' href='productpagina.php'>Terug naar overzicht</a>";
 
 
     }
+
+///GERELATEERDE ARTIKELEN BEGIN
+
+
+    $findcategorie_id = "
+        SELECT `categorie_id` 
+        FROM `artikel_categorie` 
+        WHERE `artikel_categorie`.`artikel_id` = '" . $artikel_id . "' LIMIT 1;
+    ";
+
+
+    $categorie_id = $conn->query($findcategorie_id);
+
+    foreach ($categorie_id as $id) {
+        $id = $id;
+
+    }
+
+    $findartikel_ids = "
+
+    SELECT `artikel_id` 
+        FROM `artikel_categorie` 
+        WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;   
+    ";
+
+    $artikel_ids = $conn->query($findartikel_ids);
+
+    $artikelen = array();
+
+    $html .= "<div class='row'>";
+
+    foreach ($artikel_ids as $artikel_id) {
+        $artikelen[] = $artikel_id;
+
+        $relatedarticle = "
+        SELECT `bestandslocatie` , `naam`,  `art`.`artikel_id` 
+        FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
+        JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
+        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID 
+        WHERE `art`.`artikel_id` = '" . $artikel_id['artikel_id'] . "' LIMIT 1;
+        ";
+
+        $artikel = $conn->query($relatedarticle);
+
+        foreach ($artikel as $artikels) {
+
+            $relatedartikel = $artikels;
+
+        }
+
+        $html .= "
+        
+        <div class='col-md-4 col-sm-4 col-8'>
+        <img style='height: 150px; width: auto;' src='../" . $relatedartikel['bestandslocatie'] . "' class=\"rounded img-responsive thumbnail border border-white\"/>
+        <a class='btn btn-secondary' href='productpagina.php?id=" . $relatedartikel['artikel_id'] . "'>Bekijk Product</a>
+        </div>
+        
+        
+        
+        ";
+
+    }
+
+    $html .= "</div>";
+
+    ///EIND GERELATEERDE ARTIKELEN
+
 
     return $html;
 }
@@ -98,4 +197,5 @@ if (isset($_GET['id'])) {
 
 }
 echo "</div>";
+
 include_once('footer.php');

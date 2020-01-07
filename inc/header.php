@@ -1,5 +1,31 @@
 <?php
 session_start();
+include_once('functies.php');
+$basketinfo = toonWinkelstats(basketinfo($conn), $conn);
+$winkelmandid = basketinfo($conn);
+$prijs = number_format($basketinfo['Prijs'], 2, '.', '');
+
+if(isset($_GET['add'])){
+    $winkelmandid = basketinfo($conn);
+
+    if(isset($_GET['aid']) AND isset($_GET['amt'])){
+
+        $artikelid = secureInt($_GET['aid']);
+        $aantal = secureInt($_GET['amt']);
+
+        updateProductAantal($winkelmandid,$artikelid,$aantal,$conn);
+
+    }
+
+
+
+
+
+}
+
+
+
+
 ?>
 
 <div class="subheader">
@@ -40,7 +66,7 @@ session_start();
                     <input class="form-control mr-sm-2" type="search" placeholder="Zoek artikel" aria-label="Search">
                     <button class="btn btn-primary" type="submit">Zoek</button>
                 </form><div style="width: 20px"></div>
-                <a href="basket.php"><span><b>€ 0,00</b></span>
+                <a href="basket.php"><span><b>€ <?php echo $prijs ?></b></span>
                 <svg version="1.1" id="Capa_1" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg"
                      xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="24px" height="24px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;"
@@ -67,7 +93,7 @@ session_start();
         <?php
         }
         else{
-            echo ("Ingelogd als: ".$_SESSION["gebruikersnaam"]."");
+            echo $_SESSION["voornaam"]." ".$_SESSION["achternaam"];
             echo ("<a href=\"accountbekijken.php\">");
             echo ("<svg class=\"bi bi-person-fill\" width=\"32px\" height=\"32px\" viewBox=\"0 0 20 20\" fill=\"#FFFFFF\"
                  xmlns=\"http://www.w3.org/2000/svg\">");

@@ -22,7 +22,7 @@ function registreren($gegevens) {
            $result geeft een 1 terug in de functie accountRegistreren, als de database succesvol een insert heeft uitgevoerd.*/
 
         echo "<blockquote class=\"blockquote text-center\">";
-        echo "<p class=\"mb-0\"><strong>Uw account is geregistreerd. <br> Klik op onderstaande knop om in te loggen.<br></p></strong>";
+        echo "<p class=\"mb-0\"><strong>Uw account is geregistreerd. <br> </p></strong>";
         echo "</blockquote>";
     }
 
@@ -80,6 +80,7 @@ if (isset($_POST['registreren'])) {
                 $gegevens[$achternaam] = isset($_POST[$achternaam]) ? $_POST[$achternaam] : "";
                 $gegevens[$geslacht] = isset($_POST[$geslacht]) ? $_POST[$geslacht] : "";
                 $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? md5("a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //md5 encryptie om het wachtwoord versleutelt op te slaan.
+ //               $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? hash('sha512',"a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //sha512 encryptie om het wachtwoord versleutelt op te slaan.
                 $gegevens[$adres] = isset($_POST[$adres]) ? $_POST[$adres] : "";
                 $gegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";
                 $gegevens[$postcode] = isset($_POST[$postcode]) ? $_POST[$postcode] : "";
@@ -102,33 +103,34 @@ if (isset($_POST['registreren'])) {
 <div class="container">
 <h1>WWI</h1><br>
 <h2>Account registreren</h2><br>
+    <p><small>Velden met een * zijn verplicht.</small></p>
 <form method="post" action="accountregistreren.php">
 
 <!-- Selfhandling formulier weergeven op het scherm, zodat de klant zijn of haar gegevens kan registreren. Alle velden zijn verplicht, op geslacht en geb. datum na. -->
 
     <input type="email" name="emailadres" class="form-control "value="<?php
-    if(isset($_POST['registreren'])){ echo $_POST['emailadres']; }?>" placeholder="E-mail adres" required/>
+    if(isset($_POST['registreren'])){ echo $_POST['emailadres']; }?>" placeholder="* E-mail adres" required/>
     <br>
     <input type="text" name="voornaam" class="form-control "value="<?php
-    if(isset($_POST['registreren'])){ echo $_POST['voornaam']; }?>" placeholder="Voornaam" required/>
+    if(isset($_POST['registreren'])){ echo $_POST['voornaam']; }?>" placeholder="* Voornaam" required/>
     <br>
     <input type="text" name="achternaam" class="form-control "value="<?php
-    if(isset($_POST['registreren'])){ echo $_POST['achternaam']; }?>" placeholder="Achternaam"required/>
+    if(isset($_POST['registreren'])){ echo $_POST['achternaam']; }?>" placeholder="* Achternaam"required/>
     <br>
     <input type="text" name="geslacht" class="form-control "value="<?php
     if(isset($_POST['registreren'])){ echo $_POST['geslacht']; }?>" placeholder="Geslacht (optioneel)"/>
     <br>
     <input type="password" name="wachtwoord" class="form-control" value="<?php
-    if(isset($_POST['registreren'])){ echo $_POST['wachtwoord']; }?>" placeholder="Wachtwoord" required>
+    if(isset($_POST['registreren'])){ echo $_POST['wachtwoord']; }?>" placeholder="* Wachtwoord" required>
     <br>
     <input type="text" name="adres" class="form-control" value="<?php
-    if(isset($_POST['registreren'])){ echo $_POST['adres']; }?>" placeholder="Adres" required/>
-    <br>
-    <input type="text" name="woonplaats" class="form-control" value="<?php
-    if(isset($_POST['registreren'])){ echo $_POST['woonplaats']; }?>" placeholder="Woonplaats" required/>
+    if(isset($_POST['registreren'])){ echo $_POST['adres']; }?>" placeholder="* Adres" required/>
     <br>
     <input type="text" name="postcode" class="form-control" value="<?php
-    if(isset($_POST['registreren'])){ echo $_POST['postcode']; }?>" placeholder="Postcode" required/>
+    if(isset($_POST['registreren'])){ echo $_POST['postcode']; }?>" placeholder="* Postcode" required/>
+    <br>
+    <input type="text" name="woonplaats" class="form-control" value="<?php
+    if(isset($_POST['registreren'])){ echo $_POST['woonplaats']; }?>" placeholder="* Woonplaats" required/>
     <br>
     <input type="text" name="geboortedatum" class="form-control "value="<?php
     if(isset($_POST['registreren'])){ echo $_POST['geboortedatum']; }?>" placeholder="Geboortedatum yyyy-mm-dd (optioneel)"/>

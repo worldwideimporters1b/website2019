@@ -55,6 +55,6 @@ echo "<div class='container'>
 </div> 
 
 <img class='checkoutidealimage' style='width: 50%; height: 50%' src='../img/ideal.png'/></div>";
-include('footer.php');
+
 
 ?>

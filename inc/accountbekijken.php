@@ -1,8 +1,8 @@
 <?php
 // Door Lennard S1080997 WIP
-
-include "header.php";
 include "head.php";
+include "header.php";
+
 
 
 //met $conn roepen we de verbinding met de database aan.
@@ -17,14 +17,14 @@ function gegevensOphalen($gebruikersid, $conn){
 
     foreach ($result as $gegevens) {
         print("<th>");
-        print("<tr>" . $gegevens["emailadres"] . "</tr><br>");
-        print("<tr>" . $gegevens["voornaam"] . "</tr><br>");
-        print("<tr>" . $gegevens["achternaam"] . "</tr><br>");
-        print("<tr>" . $gegevens["geslacht"] . "</tr><br>");
-        print("<tr>" . $gegevens["adres"] . "</tr><br>");
-        print("<tr>" . $gegevens["postcode"] . "</tr><br>");
-        print("<tr>" . $gegevens["woonplaats"] . "</tr><br>");
-        print("<tr>" . $gegevens["geboortedatum"] . "</tr><br>");
+        print("<tr><strong>E-mail adres:</strong><br>" . $gegevens["emailadres"] . "</tr><br>");
+        print("<tr><strong>Voornaam:</strong><br>" . $gegevens["voornaam"] . "</tr><br>");
+        print("<tr><strong>Achternaam:</strong><br>" . $gegevens["achternaam"] . "</tr><br>");
+        print("<tr><strong>Geslacht:</strong><br>" . $gegevens["geslacht"] . "</tr><br>");
+        print("<tr><strong>Adres:</strong><br>" . $gegevens["adres"] . "</tr><br>");
+        print("<tr><strong>Postcode:</strong><br>" . $gegevens["postcode"] . "</tr><br>");
+        print("<tr><strong>Woonplaats:</strong><br>" . $gegevens["woonplaats"] . "</tr><br>");
+        print("<tr><strong>Geboorte datum:</strong><br>" . $gegevens["geboortedatum"] . "</tr><br>");
         print("</th>");
 
         return $gegevens;
@@ -44,8 +44,10 @@ function gegevensOphalen($gebruikersid, $conn){
     <table class="table">
         <?php
         // Hier geven we aan dat we van gebruiker met ID 1 de gegevens willen weergeven. Later veranderen naar Sessie ID o.i.d.
+        //print_r($_SESSION);
 
-        gegevensOphalen(3,$conn);
+        $gebruikersid = $_SESSION["gebruiker_id"];
+        gegevensOphalen($gebruikersid,$conn);
 
 
 
@@ -55,6 +57,7 @@ function gegevensOphalen($gebruikersid, $conn){
 </div>
 <div class="container">
     <a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a><br>
+    <a class="btn btn-outline-warning" href="wachtwoordwijzigen.php" role="button">Wachtwoord wijzigen</a><br>
     <a class="btn btn-outline-danger" href="logout.php" role="button">Uitloggen</a>
 
 </div>

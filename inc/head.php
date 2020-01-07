@@ -1,3 +1,6 @@
+<?php
+$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
+?>
 <!doctype html>
 <html lang="en">
 <head>
