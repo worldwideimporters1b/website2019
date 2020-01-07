@@ -2,6 +2,7 @@
 include_once 'head.php';
 include_once 'header.php';
 session_destroy();
+header("refresh:1;url=home.php");
 ?>
 <html>
 
@@ -10,6 +11,5 @@ session_destroy();
     <blockquote class=\blockquote text-center\>
         <p class=\"mb-0\"><strong>U bent uitgelogd.</strong></p></blockquote>
 
-    <?php header( "refresh:1;url=home.php" ); ?>
 </div>
 </html>
