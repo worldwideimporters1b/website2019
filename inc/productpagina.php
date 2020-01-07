@@ -111,6 +111,8 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 
     }
 
+///GERELATEERDE ARTIKELEN BEGIN
+
 
     $findcategorie_id = "
         SELECT `categorie_id` 
@@ -172,6 +174,9 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
     }
 
     $html .= "</div>";
+
+    ///EIND GERELATEERDE ARTIKELEN
+
 
     return $html;
 }
