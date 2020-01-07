@@ -2,6 +2,7 @@
 session_start();
 include_once('functies.php');
 $basketinfo = toonWinkelstats(basketinfo($conn), $conn);
+$winkelmandid = basketinfo($conn);
 $prijs = number_format($basketinfo['Prijs'], 2, '.', '');
 
 if(isset($_GET['add'])){

@@ -7,9 +7,6 @@ include('header.php');
 echo "<div class='container'>";
 echo toonWinkelmand(basketinfo($conn), $conn);
 
-
-echo updateProductAantal(basketinfo($conn), 1, 1, $conn);
-
 echo '
 <form method="get" target="accountoverzicht.php">
         <div class="form-group">

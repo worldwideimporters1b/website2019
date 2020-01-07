@@ -3,7 +3,6 @@
 //PrijsVanBestelling geeft de uiteindelijk te betalen prijs. Voor de winkelmand totaalprijs zonder korting en verzendkosten kan de functie totaalprijszonderverzendkosten worden gebruikt
 
 //database verbinding opbouwen
-$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 //functies benodigd voor de Kortingscode:
 

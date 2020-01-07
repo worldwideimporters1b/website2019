@@ -5,16 +5,13 @@ include "header.php";
 
 include "Kortingscode.php";
 
-//database verbinding
-$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
-
 //variabelen aanmaken voor deze pagina
 $kortingscode = ' ';
-$winkelmandid = '1'; //tijdelijke id voor testen
+#$winkelmandid = '1'; //tijdelijke id voor testen
 
 if (isset($_GET["Kortingtoepassen"])) { //kortingscode ophalen uit formulier
     $kortingscode = $_GET["kortingscode"];
-    $prijs = prijsVanBestelling($winkelmandid,$kortingscode,$conn);
+    $prijs = prijsVanBestelling($winkelmandid, $kortingscode, $conn);
     //$kortingnaam = kortingsNaamTonen($kortingscode, $conn); //naam van de korting ophalen
 }
 
@@ -33,26 +30,30 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
     <table width="100%" class="table">
         <tr>
             <th scope="row">Totaal artikelen:</th>
-            <td>€<?php echo totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn);?></td>
+            <td>€<?php echo totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn); ?></td>
         </tr>
-        <?php $kortingbedrag1 = kortingsBedragTonen($winkelmandid,$conn); if ($kortingbedrag1 > 0){
-            echo "<th scope=\"row\">Korting:</th><td> € -$kortingbedrag1 </td>";} ?>
+        <?php $kortingbedrag1 = kortingsBedragTonen($winkelmandid, $conn);
+        if ($kortingbedrag1 > 0) {
+            echo "<th scope=\"row\">Korting:</th><td> € -$kortingbedrag1 </td>";
+        } ?>
         <tr>
             <th scope="row">BTW (21%):</th>
-            <td>€<?php echo BtwTonen($kortingscode,$winkelmandid, $conn);?></td>
+            <td>€<?php echo BtwTonen($kortingscode, $winkelmandid, $conn); ?></td>
         </tr>
         <tr>
             <th scope="row">Verzendkosten:</th>
-            <td>€<?php $kostenverzending = verzendkostenBerkenen($winkelmandid, $conn); //bij gratis verzendkosten wordt hier informatie over getoond
-                if($kostenverzending == '0'){
-                    echo $kostenverzending ."<br><small id = 'verzendkostenbericht' class='font-weight-light'>" . "  Verzendkosten voor bestellingen boven de €30 zijn gratis" . "</small>";
+            <td>
+                €<?php $kostenverzending = verzendkostenBerkenen($winkelmandid, $conn); //bij gratis verzendkosten wordt hier informatie over getoond
+                if ($kostenverzending == '0') {
+                    echo $kostenverzending . "<br><small id = 'verzendkostenbericht' class='font-weight-light'>" . "  Verzendkosten voor bestellingen boven de €30 zijn gratis" . "</small>";
+                } else {
+                    echo $kostenverzending;
                 }
-                else{ echo $kostenverzending;}
                 ?></td>
         </tr>
         <tr>
             <th scope="row">Te betalen bedrag:</th>
-            <td>€<?php echo prijsVanBestelling($winkelmandid,$kortingscode,$conn);?></td>
+            <td>€<?php echo prijsVanBestelling($winkelmandid, $kortingscode, $conn); ?></td>
         </tr>
     </table>
 </div>
@@ -68,11 +69,13 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
         </div>
     </form>
     <small id="kortingantwoord"
-           class="form-text text-muted"><?php if(isset($_GET["Kortingtoepassen"])){
-            echo kortingsCodeFeedback($kortingscode, $winkelmandid, $conn); }
-               else{ echo 'Voer eventueel een geldige kortingscode in';} ?></small>
+           class="form-text text-muted"><?php if (isset($_GET["Kortingtoepassen"])) {
+            echo kortingsCodeFeedback($kortingscode, $winkelmandid, $conn);
+        } else {
+            echo 'Voer eventueel een geldige kortingscode in';
+        } ?></small>
     <br>
-    <?php echo "U bestelling wordt naar dit adres verstuurt: ". klantNAWgegevens($winkelmandid, $conn);?>
+    <?php echo "Uw bestelling wordt naar dit adres verstuurd: " . klantNAWgegevens($winkelmandid, $conn); ?>
     <br>
     <form method="get">
         <div class="form-group">
