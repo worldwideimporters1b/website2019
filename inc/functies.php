@@ -77,6 +77,7 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
 {
 
     $sql = "SELECT order_id FROM `winkelmand` WHERE winkelmand_id = " . $winkelmandid . " LIMIT 1";
+
     $result = $conn->query($sql);
 
 
@@ -87,18 +88,43 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
         foreach ($result as $order) {
             $orderid = $order['order_id'];
             var_dump($orderid);
-            $sql = "SELECT `artikel_id` FROM `orderregel` WHERE order_id = " . $orderid . "";
+            $sql = "SELECT `artikel_id` FROM `orderregel` WHERE `winkelmand_id` = " . $winkelmandid . "";
             $result = $conn->query($sql);
 
-            if ($result->num_rows == 0) {
-                // mand is leeg
-                echo "LEGE MAND";
-            }
+            $artikelen = array();
 
             if ($result->num_rows !== 0) {
-                // er zit iets in de mand
 
-                echo "BINGO";
+                // er zit iets in de mand YAY!
+
+
+                //controleren of te wijzigen product in huidige mand zit
+                foreach($result as $artikel){
+
+                    array_push($artikelen, $artikel['artikel_id']);
+
+                }
+
+                if (in_array($artikelid, $artikelen)) {
+                    // update
+                    if($aantal == 0){
+                        $sql = "DELETE FROM `orderregel` WHERE `winkelmand_id` = " . $winkelmandid . " AND `artikel_id` = " . $artikelid . "";
+                        $result = $conn->query($sql);
+                    }
+                    if($aantal !== 0) {
+                        $sql = "UPDATE `orderregel` SET `aantal` = " . $aantal . " WHERE `winkelmand_id` = " . $winkelmandid . " AND `artikel_id` = " . $artikelid . "";
+                        $result = $conn->query($sql);
+                    }
+
+
+                }
+                else
+                {
+                    $sql = "INSERT INTO `orderregel` (`order_id`, `artikel_id`, `aantal`, `winkelmand_id`) VALUES (NULL, $artikelid, $aantal, $winkelmandid)";
+                    $result = $conn->query($sql);
+                }
+
+
             }
 
 
