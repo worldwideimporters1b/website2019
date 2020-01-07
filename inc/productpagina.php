@@ -4,7 +4,6 @@
 include_once('head.php');
 include_once('header.php');
 echo "<div class='container'>";
-$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 function toonProductPagina($conn, $artikel_id = 'NULL')
 {
@@ -71,7 +70,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 
         $html = '<table class="table table-hover">';
         foreach ($result as $regel) {
-            $html .= "<tr><td></td><td><a class='btn btn-secondary'href='basket.php?add=" . $artikel_id . "'>Toevoegen</a></td></tr>";
+            $html .= "<tr><td></td><td><a class='btn btn-secondary'href='productpagina.php?add&aid=" . $artikel_id . "&amt=1&id=" . $artikel_id . "'>Toevoegen</a></td></tr>";
             foreach ($regel as $veldnaam => $veld) {
                 if ($veldnaam == 'bestandslocatie') {
                     $html .= "<tr><td>
@@ -88,7 +87,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
                                 <div class='carousel-item' >
                                     <img style='margin-left: auto; margin-right: auto; max-width: 200px;' src = '../" . $image['bestandslocatie'] . "' class='d-block w-100 rounded img-responsive thumbnail border border-white' >
                                 </div >";
-                        };
+                    };
 
                     $html .= "
                             </div>
