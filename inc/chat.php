@@ -3,88 +3,83 @@
 include_once('head.php');
 include_once('header.php');
 
-if(isset($_POST['msg'])){
-	
-	$msg = filter_var(htmlspecialchars(strip_tags($_POST['msg'])),FILTER_SANITIZE_STRING);
-	
+if (isset($_POST['msg'])) {
+
+    $msg = filter_var(htmlspecialchars(strip_tags($_POST['msg'])), FILTER_SANITIZE_STRING);
+
 }
 
-$ua = $_SERVER['HTTP_USER_AGENT']??null;
+$ua = $_SERVER['HTTP_USER_AGENT'] ?? null;
 $ip = $_SERVER['REMOTE_ADDR'];
 $algo = 'sha256';
 $medewerker = 1;
 
+function checkLoginPerms($conn, $userid, $sessieid)
+{
 
-
-
-$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
-
-function checkLoginPerms($conn,$userid,$sessieid){
-
-   $sql = "SELECT * FROM `gebruiker` JOIN `gebruikersessie` AS `sessie` ON `sessie`.`gebruiker_id` = `gebruiker`.`gebruiker_id` WHERE `sessie`.`sessie_id` = '".$sessieid."' AND `gebruiker`.`gebruiker_id` = '".$userid."'";
+    $sql = "SELECT * FROM `gebruiker` JOIN `gebruikersessie` AS `sessie` ON `sessie`.`gebruiker_id` = `gebruiker`.`gebruiker_id` WHERE `sessie`.`sessie_id` = '" . $sessieid . "' AND `gebruiker`.`gebruiker_id` = '" . $userid . "'";
 
     $result = $conn->query($sql);
-       if ($result) {
+    if ($result) {
 
-           if ($result->num_rows !== 1) {
-               return 0;
-           }
+        if ($result->num_rows !== 1) {
+            return 0;
+        }
 
-           if ($result->num_rows == 1) {
-               return 1;
-           }
-       }
-
-}
-
-function anonymousChat($conn,$token){
-
- // check if user is logged in.
+        if ($result->num_rows == 1) {
+            return 1;
+        }
+    }
 
 }
 
-function createToken($ua,$ip,$algo){
+function anonymousChat($conn, $token)
+{
 
-return hash($algo, ($ua . $ip . date('Y-m-d')));
+    // check if user is logged in.
 
 }
 
-function validateToken($ua,$ip,$token,$algo){
+function createToken($ua, $ip, $algo)
+{
+
+    return hash($algo, ($ua . $ip . date('Y-m-d')));
+
+}
+
+function validateToken($ua, $ip, $token, $algo)
+{
 
     $crypt = hash($algo, ($ua . $ip . date('Y-m-d')));
-    if ($crypt !== $token){
+    if ($crypt !== $token) {
         return 0;
     }
-    if ($crypt == $token){
+    if ($crypt == $token) {
         return 1;
     }
 
 }
 
-$token = createToken($ua,$ip,$algo);
+$token = createToken($ua, $ip, $algo);
 
-if (isset($msg)){
-	
-$sql = "SELECT * FROM `chat` WHERE `chat_id` = '".$token."'";
-	
-	
-	   $result = $conn->query($sql);
-       if ($result) {
-		
-           if ($result->num_rows !== 1) {
-               $sql = "INSERT INTO `chat` (`chat_id`, `starttijd`) VALUES ('".$token."', CURRENT_TIME());";
-			   $conn->query($sql);
-			   header("Location: chat.php");
-           }
-           if ($result->num_rows == 1) {
-               $sql = "INSERT INTO `chatregel` (`chatregel_id`, `chat_id`, `gebruiker_id`, `berichtinhoud`, `tijd`) VALUES (NULL, '".$token."', '0', '".$msg."', CURRENT_TIME()); ";
-			   $conn->query($sql);
-		   }
-	   }
-	
-	
-	
+if (isset($msg)) {
 
+    $sql = "SELECT * FROM `chat` WHERE `chat_id` = '" . $token . "'";
+
+
+    $result = $conn->query($sql);
+    if ($result) {
+
+        if ($result->num_rows !== 1) {
+            $sql = "INSERT INTO `chat` (`chat_id`, `starttijd`) VALUES ('" . $token . "', CURRENT_TIME());";
+            $conn->query($sql);
+            header("Location: chat.php");
+        }
+        if ($result->num_rows == 1) {
+            $sql = "INSERT INTO `chatregel` (`chatregel_id`, `chat_id`, `gebruiker_id`, `berichtinhoud`, `tijd`) VALUES (NULL, '" . $token . "', '0', '" . $msg . "', CURRENT_TIME()); ";
+            $conn->query($sql);
+        }
+    }
 
 
 }

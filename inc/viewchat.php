@@ -2,36 +2,34 @@
 include_once('head.php');
 echo '<head><meta http-equiv="refresh" content="10"></head> ';
 
-$ua = $_SERVER['HTTP_USER_AGENT']??null;
+$ua = $_SERVER['HTTP_USER_AGENT'] ?? null;
 $ip = $_SERVER['REMOTE_ADDR'];
 $algo = 'sha256';
 
-$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
+function createToken($ua, $ip, $algo)
+{
 
-function createToken($ua,$ip,$algo){
-
-return hash($algo, ($ua . $ip . date('Y-m-d')));
+    return hash($algo, ($ua . $ip . date('Y-m-d')));
 
 }
 
-$chat_id = createToken($ua,$ip,$algo);
+$chat_id = createToken($ua, $ip, $algo);
 
-$sql = "SELECT * FROM `chat` JOIN `chatregel` ON `chat`.`chat_id` = `chatregel`.`chat_id` JOIN `gebruiker` ON `chatregel`.`gebruiker_id` = `gebruiker`.`gebruiker_id` WHERE `chat`.`chat_id` = '".$chat_id."' ORDER by `tijd` ASC";
+$sql = "SELECT * FROM `chat` JOIN `chatregel` ON `chat`.`chat_id` = `chatregel`.`chat_id` JOIN `gebruiker` ON `chatregel`.`gebruiker_id` = `gebruiker`.`gebruiker_id` WHERE `chat`.`chat_id` = '" . $chat_id . "' ORDER by `tijd` ASC";
 
 $result = $conn->query($sql);
 
 $chat = '';
 
-foreach($result as $msg){
-	
-	
-	
-	if ($msg['gebruiker_id'] !== 0){
-		$gebruiker = $msg['voornaam'];
-		$chat .= '<span class="badge badge-info">'.$gebruiker."</span> " . $msg['berichtinhoud'] . '<br>';
-	}
-	
-	
+foreach ($result as $msg) {
+
+
+    if ($msg['gebruiker_id'] !== 0) {
+        $gebruiker = $msg['voornaam'];
+        $chat .= '<span class="badge badge-info">' . $gebruiker . "</span> " . $msg['berichtinhoud'] . '<br>';
+    }
+
+
 }
 
 echo "<div class=\"alert alert-primary\" role=\"alert\">Begin van de chat</div>";
