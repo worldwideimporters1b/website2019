@@ -3,7 +3,27 @@ session_start();
 include_once('functies.php');
 $basketinfo = toonWinkelstats(basketinfo($conn), $conn);
 $prijs = number_format($basketinfo['Prijs'], 2, '.', '');
-#var_dump($basketinfo);
+
+if(isset($_GET['add'])){
+    $winkelmandid = basketinfo($conn);
+
+    if(isset($_GET['aid']) AND isset($_GET['amt'])){
+
+        $artikelid = secureInt($_GET['aid']);
+        $aantal = secureInt($_GET['amt']);
+
+        updateProductAantal($winkelmandid,$artikelid,$aantal,$conn);
+
+    }
+
+
+
+
+
+}
+
+
+
 
 ?>
 

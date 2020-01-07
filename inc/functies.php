@@ -34,8 +34,7 @@ function basketinfo($conn)
         echo "Niet ingelogd";
 
 
-
-            $winkelmandid = 0;
+        $winkelmandid = 0;
 
 
     }
@@ -87,9 +86,20 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
     } else {
         foreach ($result as $order) {
             $orderid = $order['order_id'];
-
+            var_dump($orderid);
             $sql = "SELECT `artikel_id` FROM `orderregel` WHERE order_id = " . $orderid . "";
             $result = $conn->query($sql);
+
+            if ($result->num_rows == 0) {
+                // mand is leeg
+                echo "LEGE MAND";
+            }
+
+            if ($result->num_rows !== 0) {
+                // er zit iets in de mand
+
+                echo "BINGO";
+            }
 
 
             //hieronder bouwen we de query naar de database op, met daarin de parameters op de juiste plekken.
@@ -166,5 +176,12 @@ function toonWinkelstats($winkelmandid, $conn)
     return $basketinfo;
 }
 
-
+function secureInt($int)
+{
+    if (!filter_var($int, FILTER_VALIDATE_INT) === false) {
+        return $int;
+        } else {
+        return 0;
+    }
+}
 // Sander

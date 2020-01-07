@@ -38,9 +38,10 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
         $html .= '<tr><th><h3>Product Overzicht</h3></th></tr>';
         foreach ($result as $regel) {
             $html .= "<tr>";
+            $artikel_id = $regel['artikel_id'];
             foreach ($regel as $veldnaam => $veld) {
                 if ($veldnaam == 'bestandslocatie') {
-                    $html .= "<td><img style='height: 150px; width: auto;' src='../" . $veld . "' class=\"rounded img-responsive thumbnail border border-white\"/></td>";
+                    $html .= "<td><a class='btn btn-secondary' href='productpagina.php?id=" . $artikel_id . "'><img style='height: 150px; width: auto;' src='../" . $veld . "' class=\"rounded img-responsive thumbnail border border-white\"/></a></td>";
                 }
 
                 if ($veldnaam == 'artikel_id') {
