@@ -2,17 +2,42 @@
 
 // Sander
 
+function getgebruikerid()
+{
+    if (!isset($_SESSION['ingelogd'])) {
+
+
+        $gebruikerid = 0;
+
+
+    }
+
+
+    if (isset($_SESSION['ingelogd'])) {
+        if ($_SESSION['ingelogd'] == 1) {
+
+            $gebruikerid = $_SESSION['gebruiker_id'];
+
+        }
+    }
+
+
+    return $gebruikerid;
+
+}
+
+
 function basketinfo($conn)
 {
     if (!isset($_SESSION['ingelogd'])) {
 
         echo "Niet ingelogd";
 
-        if ($_SESSION['ingelogd'] == 1) {
+
 
             $winkelmandid = 0;
 
-        }
+
     }
 
 
@@ -45,14 +70,14 @@ function basketinfo($conn)
         }
     }
 
-    return  $winkelmandid;
+    return $winkelmandid;
 
 }
 
 function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
 {
 
-    $sql = "SELECT order_id FROM `winkelmand` WHERE winkelmand_id = ".$winkelmandid." LIMIT 1";
+    $sql = "SELECT order_id FROM `winkelmand` WHERE winkelmand_id = " . $winkelmandid . " LIMIT 1";
     $result = $conn->query($sql);
 
 
@@ -63,9 +88,8 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
         foreach ($result as $order) {
             $orderid = $order['order_id'];
 
-            $sql = "SELECT `artikel_id` FROM `orderregel` WHERE order_id = ".$orderid."";
+            $sql = "SELECT `artikel_id` FROM `orderregel` WHERE order_id = " . $orderid . "";
             $result = $conn->query($sql);
-
 
 
             //hieronder bouwen we de query naar de database op, met daarin de parameters op de juiste plekken.
@@ -86,7 +110,6 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
             }
         }
     }
-
 
 
     return $artikelid;

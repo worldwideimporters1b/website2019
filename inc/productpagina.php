@@ -13,7 +13,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 		$sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
                         FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
                         JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
-                        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID LIMIT 4";
+                        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID LIMIT 20";
         // Hier wordt de zoek functie aan geroepen indien de zoek functie is gebruikt.
 		
 		

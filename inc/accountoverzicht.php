@@ -1,8 +1,8 @@
 <?php
 // Door Lennard S1080997 WIP
-
-include "header.php";
 include "head.php";
+include "header.php";
+
 
 
 //met $conn roepen we de verbinding met de database aan.

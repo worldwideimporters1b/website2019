@@ -3,6 +3,10 @@
 include_once('head.php');
 include_once('header.php');
 
+$gebruikerid = getgebruikerid();
+
+
+
 if (isset($_POST['msg'])) {
 
     $msg = filter_var(htmlspecialchars(strip_tags($_POST['msg'])), FILTER_SANITIZE_STRING);
@@ -76,7 +80,22 @@ if (isset($msg)) {
             header("Location: chat.php");
         }
         if ($result->num_rows == 1) {
-            $sql = "INSERT INTO `chatregel` (`chatregel_id`, `chat_id`, `gebruiker_id`, `berichtinhoud`, `tijd`) VALUES (NULL, '" . $token . "', '0', '" . $msg . "', CURRENT_TIME()); ";
+            $sql = "INSERT INTO `chatregel` (
+                                                `chatregel_id`, 
+                                                `chat_id`, 
+                                                `gebruiker_id`, 
+                                                `berichtinhoud`, 
+                                                `tijd`
+                                            ) 
+                                            
+                                            VALUES 
+                                            
+                                            (
+                                                NULL, 
+                                                '" . $token . "',
+                                                '".$gebruikerid."',
+                                                '" . $msg . "', 
+                                                CURRENT_TIME()); ";
             $conn->query($sql);
         }
     }
@@ -92,7 +111,16 @@ echo '<div class=\'container\'><h3>WWI Chat</h3>
   <div class="form-group">
     <label for="bericht">Bericht</label>
     <textarea class="form-control" name="msg" placeholder="Typ hier uw bericht" rows="2" cols="50"></textarea>
-    <small id="chatHelp" class="form-text text-muted">U hoeft niet in te loggen om de chat te kunnen gebruiken. Berichten in deze chat zijn mogelijk leesbaar voor anderen. Gebruik geen persoonlijke gegevens in de chat.</small>
+    <small id="chatHelp" class="form-text text-muted">';
+
+
+if ($gebruikerid == 0){
+                            echo "U hoeft niet in te loggen om de chat te kunnen gebruiken. ";
+                        }
+echo 'Berichten in deze chat zijn mogelijk leesbaar voor anderen. Gebruik geen persoonlijke gegevens in de chat.</small>
+
+
+
   </div>
   <button type="Verzenden" class="btn btn-primary">Submit</button>
 </form>
