@@ -10,13 +10,12 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 {
     if ($artikel_id == 'NULL') {
 
-		$sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
+        $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
                         FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
                         JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
                         JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID LIMIT 20";
         // Hier wordt de zoek functie aan geroepen indien de zoek functie is gebruikt.
-		
-		
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['btnSearch'])) {
                 $zoekstring = $_POST['zoekstring'];
@@ -28,9 +27,8 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
                         JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
                         JOIN `zoekwoorden_artikel` on artikel.artikel_id=zoekwoorden_artikel.artikel_id LIMIT 4
                         WHERE `zoekwoorden_artikel.zoekwoord` LIKE '%" . $name . "%'";
-            } 
+            }
         }
-
 
         $result = $conn->query($sql);
 
@@ -58,6 +56,15 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
         $html .= "</table>";
     } else {
 
+        $imagesquery = "
+        SELECT `bestandslocatie`
+        FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
+        JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
+        WHERE `art`.`artikel_id` = '" . $artikel_id . "' LIMIT 50 OFFSET 1
+        ";
+
+        $images = $conn->query($imagesquery);
+
         $sql = "SELECT bestandslocatie, unitprice prijs, naam, herkomst, productieproces, ingredienten, afmetingen, gewicht, art.omschrijving FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID WHERE `art`.`artikel_id` = '" . $artikel_id . "' LIMIT 1";
 
         $result = $conn->query($sql);
@@ -67,13 +74,38 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
             $html .= "<tr><td></td><td><a class='btn btn-secondary'href='basket.php?add=" . $artikel_id . "'>Toevoegen</a></td></tr>";
             foreach ($regel as $veldnaam => $veld) {
                 if ($veldnaam == 'bestandslocatie') {
-                    $html .= "<tr><td><img src='../" . $veld . "' height='200' width='200'/></td></tr>";
+                    $html .= "<tr><td>
+
+                        <div style='position: relative; width: 80%;' id='carouselExampleControls' class='carousel slide' data-ride='carousel'>
+                          <div class='carousel-inner'>
+                          
+                          <div class='carousel-item active' >
+                             <img style='margin-left: auto; margin-right: auto; max-width: 200px;' src = '../" . $veld . "' class='d-block w-100 rounded img-responsive thumbnail border border-white' >
+                          </div >";
+
+                    foreach ($images as $image) {
+                        $html .= "
+                                <div class='carousel-item' >
+                                    <img style='margin-left: auto; margin-right: auto; max-width: 200px;' src = '../" . $image['bestandslocatie'] . "' class='d-block w-100 rounded img-responsive thumbnail border border-white' >
+                                </div >";
+                        };
+
+                    $html .= "
+                            </div>
+                            <a class='carousel-control-prev' href='#carouselExampleControls' role='button' data-slide='prev'>
+                            <span class='carousel-control-prev-icon' aria-hidden='true'><span>
+                            <span class='sr-only'>Previous</span>
+                            </a>
+                            <a class='carousel-control-next' href='#carouselExampleControls' role='button' data-slide='next'>
+                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                            <span class='sr-only'>Next</span>
+                            </a>
+                            </div>
+                      </td></tr>";
                 } else {
                     $html .= "<tr><td>" . $veldnaam . "</td><td>" . $veld . "</td></tr>";
                 }
             }
-
-
         }
         $html .= "</table><a class='btn btn-secondary' href='productpagina.php'>Terug naar overzicht</a>";
 
@@ -99,3 +131,5 @@ if (isset($_GET['id'])) {
 
 }
 echo "</div>";
+
+include_once('footer.php');
