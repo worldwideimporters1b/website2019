@@ -3,7 +3,7 @@ session_start();
 include_once('functies.php');
 $basketinfo = toonWinkelstats(basketinfo($conn), $conn);
 $prijs = number_format($basketinfo['Prijs'], 2, '.', '');
-var_dump($basketinfo);
+#var_dump($basketinfo);
 
 ?>
 

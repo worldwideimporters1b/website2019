@@ -50,7 +50,7 @@ function basketinfo($conn)
 }
 
 function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
-{ // de 3 dingen die hier opgesomd staan met een $ ervoor, zijn ####parameters####, deze stuur je mee als je de functie aanroept
+{
 
     $sql = "SELECT order_id FROM `winkelmand` WHERE winkelmand_id = ".$winkelmandid." LIMIT 1";
     $result = $conn->query($sql);
