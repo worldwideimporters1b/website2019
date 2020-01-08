@@ -89,7 +89,7 @@ function basketinfo($conn)
 
 
             if ($result->num_rows == 0) {
-                echo "Er zijn nog geen producten toegevoegd aan het winkelmandje";
+               # echo "Er zijn nog geen producten toegevoegd aan het winkelmandje";
             } else {
                 foreach ($result as $user) {
 
@@ -118,7 +118,7 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
         // winkelmand is leeg
 
         $sql = "INSERT INTO `orderregel` (`order_id`, `artikel_id`, `aantal`, `winkelmand_id`) VALUES (NULL, $artikelid, $aantal, $winkelmandid)";
-        echo $sql;
+        #echo $sql;
         $result = $conn->query($sql);
 
     } else {
@@ -157,8 +157,10 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
                 }
                 else
                 {
-                    $sql = "INSERT INTO `orderregel` (`order_id`, `artikel_id`, `aantal`, `winkelmand_id`) VALUES (NULL, $artikelid, $aantal, $winkelmandid)";
-                    $result = $conn->query($sql);
+                    if($aantal !== 0) {
+                        $sql = "INSERT INTO `orderregel` (`order_id`, `artikel_id`, `aantal`, `winkelmand_id`) VALUES (NULL, $artikelid, $aantal, $winkelmandid)";
+                        $result = $conn->query($sql);
+                    }
                 }
 
 
@@ -192,7 +194,7 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
 function toonWinkelmand($winkelmandid, $conn)
 {
 
-    $sql = "SELECT `winkelmand_id`,`naam`, `unitprice`, `aantal` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = " . $winkelmandid . ";";
+    $sql = "SELECT `winkelmand_id`,`naam`, `unitprice`, `aantal`, `orderregel`.`artikel_id` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = " . $winkelmandid . ";";
 
     $result = $conn->query($sql);
 
@@ -200,22 +202,49 @@ function toonWinkelmand($winkelmandid, $conn)
     $html = '<table class="table">';
     $html .= "<tr><th>Bestelnummer</th><th>Product</th><th>Prijs</th><th>Aantal</th></tr>";
     foreach ($result as $regel) {
-
+    $aid = $regel['artikel_id'];
         $html .= "<tr>"; // tr is table row
         foreach ($regel as $veldnaam => $veld) {
             if ($veldnaam == 'unitprice') {
                 $html .= "<td>€ " .  $veld . "</td>";
             }
-            else {
+            if ($veldnaam == 'artikel_id') {
+                $pid = $veld;
+            }
+            if ($veldnaam == 'aantal'){
+               $html .= "<td>" . toonPullDown($veld,$aid) . "</td>";
+            }
+            if ($veldnaam !== 'artikel_id' AND $veldnaam !== 'unitprice' AND $veldnaam !== 'aantal') {
                 $html .= "<td>" . $veld . "</td>"; // td is table data
             }
         }
 
-        $html .= "<td>Prullenbakje Placeholder</td></tr>";
+        $html .= "<td><a href='".$_SERVER["PHP_SELF"] ."?add&aid=".$pid."&amt=0'>Verwijderen</a></td></tr>";
     }
     $html .= '</table>';
     return $html;
 }
+
+function toonPullDown($aantal,$aid) {
+
+    $html = "<form method='GET' action='basket.php' class='form-inline'><select class=\"form-control\" name='amt' id='amt'>\n";
+
+    for ($i=1; $i<=99; $i++)
+    {
+        if($aantal == $i) {
+            $html .= "      <option value='" . $i . "' selected>" . $i . "</option>";
+        }
+        else
+        {
+            $html .= "      <option value='" . $i . "'>" . $i . "</option>";
+        }
+    }
+
+    $html .= "</select><input type='hidden' name='aid' id='aid' value='".$aid."'><input type='hidden' name='add'> <input type=\"submit\" class=\"btn btn-primary\" value='Wijzig'></form>\n";
+
+    return $html;
+}
+
 
 function toonWinkelstats($winkelmandid, $conn)
 {
