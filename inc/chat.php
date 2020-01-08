@@ -6,7 +6,6 @@ include_once('header.php');
 $gebruikerid = getgebruikerid();
 
 
-
 if (isset($_POST['msg'])) {
 
     $msg = filter_var(htmlspecialchars(strip_tags($_POST['msg'])), FILTER_SANITIZE_STRING);
@@ -93,7 +92,7 @@ if (isset($msg)) {
                                             (
                                                 NULL, 
                                                 '" . $token . "',
-                                                '".$gebruikerid."',
+                                                '" . $gebruikerid . "',
                                                 '" . $msg . "', 
                                                 CURRENT_TIME()); ";
             $conn->query($sql);
@@ -114,9 +113,9 @@ echo '<div class=\'container\'><h3>WWI Chat</h3>
     <small id="chatHelp" class="form-text text-muted">';
 
 
-if ($gebruikerid == 0){
-                            echo "U hoeft niet in te loggen om de chat te kunnen gebruiken. ";
-                        }
+if ($gebruikerid == 0) {
+    echo "U hoeft niet in te loggen om de chat te kunnen gebruiken. ";
+}
 echo 'Berichten in deze chat zijn mogelijk leesbaar voor anderen. Gebruik geen persoonlijke gegevens in de chat.</small>
 
 

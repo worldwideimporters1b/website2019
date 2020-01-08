@@ -4,14 +4,14 @@ include "head.php";
 include "header.php";
 
 
-
 //met $conn roepen we de verbinding met de database aan.
-$conn = new mysqli('localhost','root','','world_wide_importers');
+$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 //met functie  halen we de juiste gegevens aan de hand van gebruikersID naar boven.
-function gegevensOphalen($gebruikersid, $conn){
+function gegevensOphalen($gebruikersid, $conn)
+{
 
-    $sql = "SELECT * FROM `gebruiker` WHERE `gebruiker_id` = ".$gebruikersid.";";  //Met deze sql query geven we aan dat we alle gegevens van de tabel gebruiker willen hebben.
+    $sql = "SELECT * FROM `gebruiker` WHERE `gebruiker_id` = " . $gebruikersid . ";";  //Met deze sql query geven we aan dat we alle gegevens van de tabel gebruiker willen hebben.
 
     $result = $conn->query($sql); // Hiermee voeren we de bovenstaande query uitvoeren
 
@@ -37,19 +37,19 @@ function gegevensOphalen($gebruikersid, $conn){
 <!-- Stukje HTML om de bovenstaande gegevens in een overzicht neer te zetten. -->
 
 <div class="container">
-<h3>Uw gegevens</h3>
-<br>
+    <h3>Uw gegevens</h3>
+    <br>
 </div>
 <div class="container">
-<table class="table">
-    <?php
+    <table class="table">
+        <?php
 
-        if(!isset($_SESSION['ingelogd'])){
+        if (!isset($_SESSION['ingelogd'])) {
 
             //wanneer de gebruiker niet is ingelogd, maar verder wil bestellen, sturen we de gebruiker naar de inlogpagina.
-            header( "refresh:0;url=inloggen.php" );
+            header("refresh:0;url=inloggen.php");
 
-        }else {
+        } else {
             //anders is de gebruiker wel ingelogd, en halen we de gegevens op op basis van gebruiker_id
             $gebruikersid = $_SESSION["gebruiker_id"];
             gegevensOphalen($gebruikersid, $conn);
@@ -57,12 +57,12 @@ function gegevensOphalen($gebruikersid, $conn){
         }
 
 
-    ?>
+        ?>
 
-</table>
+    </table>
 </div>
 <div class="container">
-<a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a>
-<a class="btn btn-outline-success" href="besteloverzicht.php" role="button">Plaats bestelling</a>
+    <a class="btn btn-outline-warning" href="accountwijzigen.php" role="button">Wijzig gegevens</a>
+    <a class="btn btn-outline-success" href="besteloverzicht.php" role="button">Plaats bestelling</a>
 </div>
 

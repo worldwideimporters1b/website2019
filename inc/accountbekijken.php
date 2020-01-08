@@ -4,14 +4,14 @@ include "head.php";
 include "header.php";
 
 
-
 //met $conn roepen we de verbinding met de database aan.
-$conn = new mysqli('localhost','root','','world_wide_importers');
+$conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
 
 //met functie  halen we de juiste gegevens aan de hand van gebruikersID naar boven.
-function gegevensOphalen($gebruikersid, $conn){
+function gegevensOphalen($gebruikersid, $conn)
+{
 
-    $sql = "SELECT * FROM `gebruiker` WHERE `gebruiker_id` = ".$gebruikersid.";";  //Met deze sql query geven we aan dat we alle gegevens van de tabel gebruiker willen hebben.
+    $sql = "SELECT * FROM `gebruiker` WHERE `gebruiker_id` = " . $gebruikersid . ";";  //Met deze sql query geven we aan dat we alle gegevens van de tabel gebruiker willen hebben.
 
     $result = $conn->query($sql); // Hiermee voeren we de bovenstaande query uitvoeren
 
@@ -47,8 +47,7 @@ function gegevensOphalen($gebruikersid, $conn){
         //print_r($_SESSION);
 
         $gebruikersid = $_SESSION["gebruiker_id"];
-        gegevensOphalen($gebruikersid,$conn);
-
+        gegevensOphalen($gebruikersid, $conn);
 
 
         ?>
