@@ -55,17 +55,9 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
         $html .= "</table>";
     } else {
 
-        $imagesquery = "
-        SELECT `bestandslocatie`
-        FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
-        JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
-        WHERE `art`.`artikel_id` = '" . $artikel_id . "' LIMIT 50 OFFSET 1
-        ";
-
+        $imagesquery = "SELECT `bestandslocatie` FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` WHERE `art`.`artikel_id` = '" . $artikel_id . "' LIMIT 50 OFFSET 1";
         $images = $conn->query($imagesquery);
-
         $sql = "SELECT bestandslocatie, unitprice prijs, naam, herkomst, productieproces, ingredienten, afmetingen, gewicht, art.omschrijving FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID WHERE `art`.`artikel_id` = '" . $artikel_id . "' LIMIT 1";
-
         $result = $conn->query($sql);
 
         $html = '<table class="table table-hover">';
@@ -128,12 +120,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 
     }
 
-    $findartikel_ids = "
-
-    SELECT `artikel_id` 
-        FROM `artikel_categorie` 
-        WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;   
-    ";
+    $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;";
 
     $artikel_ids = $conn->query($findartikel_ids);
 
@@ -144,13 +131,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
     foreach ($artikel_ids as $artikel_id) {
         $artikelen[] = $artikel_id;
 
-        $relatedarticle = "
-        SELECT `bestandslocatie` , `naam`,  `art`.`artikel_id` 
-        FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
-        JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
-        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID 
-        WHERE `art`.`artikel_id` = '" . $artikel_id['artikel_id'] . "' LIMIT 1;
-        ";
+        $relatedarticle = "SELECT `bestandslocatie` , `naam`,  `art`.`artikel_id` FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID WHERE `art`.`artikel_id` = '" . $artikel_id['artikel_id'] . "' LIMIT 1;";
 
         $artikel = $conn->query($relatedarticle);
 

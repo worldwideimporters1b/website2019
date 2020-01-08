@@ -26,6 +26,42 @@ function getgebruikerid()
 
 }
 
+function getbasketid($conn)
+
+{
+    $sql = "SELECT `winkelmand_id` FROM `winkelmand`";
+
+    if (!isset($_SESSION['ingelogd'])) {
+        $winkelmandid = 0;
+    }
+
+    if (isset($_SESSION['ingelogd'])) {
+        if ($_SESSION['ingelogd'] == 1) {
+
+            $winkelmandid = 1;
+
+            $sql = "SELECT `winkelmand_id` FROM `winkelmand` WHERE `winkelmand`.`gebruiker_id` = '" . $_SESSION["gebruiker_id"] . "' LIMIT 1";
+
+            $result = $conn->query($sql);
+
+
+            if ($result->num_rows == 0) {
+                echo "Er is geen winkelmand";
+            } else {
+                foreach ($result as $user) {
+
+                    $winkelmandid = $user['winkelmand_id'];
+
+                }
+            }
+
+        }
+    }
+
+    return $winkelmandid;
+
+
+}
 
 function basketinfo($conn)
 {
@@ -73,14 +109,18 @@ function basketinfo($conn)
 function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
 {
 
-    $sql = "SELECT order_id FROM `winkelmand` WHERE winkelmand_id = " . $winkelmandid . " LIMIT 1";
-
+    $sql = "SELECT order_id FROM `orderregel` WHERE winkelmand_id = " . $winkelmandid . " LIMIT 1";
+    #echo $sql;
     $result = $conn->query($sql);
 
 
     if ($result->num_rows == 0) {
-        echo "Er is een technische fout opgetreden.";
-        exit;
+        // winkelmand is leeg
+
+        $sql = "INSERT INTO `orderregel` (`order_id`, `artikel_id`, `aantal`, `winkelmand_id`) VALUES (NULL, $artikelid, $aantal, $winkelmandid)";
+        echo $sql;
+        $result = $conn->query($sql);
+
     } else {
         foreach ($result as $order) {
             $orderid = $order['order_id'];

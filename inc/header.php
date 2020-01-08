@@ -6,7 +6,7 @@ $winkelmandid = basketinfo($conn);
 $prijs = number_format($basketinfo['Prijs'], 2, '.', '');
 
 if (isset($_GET['add'])) {
-    $winkelmandid = basketinfo($conn);
+    $winkelmandid = getbasketid($conn);
 
     if (isset($_GET['aid']) AND isset($_GET['amt'])) {
 

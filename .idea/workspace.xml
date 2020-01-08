@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="028cef39-14d5-4250-a9a5-4de7e1f23304" name="Default Changelist" comment="Leipe shit ouwe">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inc/checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/inc/checkout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/functies.php" beforeDir="false" afterPath="$PROJECT_DIR$/inc/functies.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/inc/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/productpagina.php" beforeDir="false" afterPath="$PROJECT_DIR$/inc/productpagina.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,22 +27,15 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1UHeay4qkfFEx6XaZDtIHLZ8mTZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="C:/xampp/php" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager">
     <configuration name="basket.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/inc/basket.php">
@@ -53,6 +47,18 @@
         <item itemvalue="PHP Script.basket.php" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -71,6 +77,7 @@
       <workItem from="1576244642215" duration="2811000" />
       <workItem from="1576783268207" duration="751000" />
       <workItem from="1576833061135" duration="1212000" />
+      <workItem from="1578513138186" duration="2844000" />
     </task>
     <task id="LOCAL-00001" summary="Leipe shit ouwe">
       <created>1575018254358</created>
@@ -148,5 +155,11 @@
     <MESSAGE value="Winkelmandje klaar" />
     <MESSAGE value="typo :D" />
     <option name="LAST_COMMIT_MESSAGE" value="typo :D" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="92" y="92" width="1736" height="866" key="DiffContextDialog" timestamp="1578513912641">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="92" y="92" width="1736" height="866" key="DiffContextDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1578513912641" />
   </component>
 </project>
