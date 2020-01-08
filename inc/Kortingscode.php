@@ -6,7 +6,8 @@
 
 //functies benodigd voor de Kortingscode:
 
-function kortingsCodeBestaat($kortingscode, $conn){ //functie die controleerd of code bestaat
+function kortingsCodeBestaat($kortingscode, $conn)
+{ //functie die controleerd of code bestaat
     //Bouwen query op veilige manier op.
     $statement = mysqli_prepare($conn, "SELECT `korting_id` FROM `korting` WHERE `kortingscode` = ?;");
     mysqli_stmt_bind_param($statement, 's', $kortingscode); // i = integer; s = string;
@@ -37,7 +38,8 @@ function alKortingsCodeGebruikt($winkelmandid, $conn)
     return $kortingalgebruikt;
 }
 
-function kortingsCodeToepassen($kortingscode, $winkelmandid, $conn){ //deze functie past een kortingscode toe en berekend een nieuwe totaalprijs
+function kortingsCodeToepassen($kortingscode, $winkelmandid, $conn)
+{ //deze functie past een kortingscode toe en berekend een nieuwe totaalprijs
     $codebestaat1 = kortingsCodeBestaat($kortingscode, $conn); //variabele die aangeeft of code bestaat
     $kortingalgebruikt1 = alKortingsCodeGebruikt($winkelmandid, $conn); //variable die aangeeft of code al is gebruikt
     $opgehaaldeprijs = totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn);//de totaalprijs van de winkelwagen ophalen zonder verzendkosten
@@ -60,11 +62,9 @@ function kortingsCodeToepassen($kortingscode, $winkelmandid, $conn){ //deze func
         $statement = mysqli_prepare($conn, "UPDATE `winkelmand` SET `kortingscode` = ? WHERE `winkelmand_id` = '$winkelmandid';");
         mysqli_stmt_bind_param($statement, 's', $kortingscode); // i = integer; s = string;
         mysqli_stmt_execute($statement);
-    }
-    elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 1) {//korting is al gebruikt en code bestaat
+    } elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 1) {//korting is al gebruikt en code bestaat
         $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
-    }
-    elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 0) {//korting is al gebruikt en code bestaat niet
+    } elseif ($kortingalgebruikt1 == 1 && $codebestaat1 == 0) {//korting is al gebruikt en code bestaat niet
         $nieuweprijs = (1 - ($percentage2 / 100)) * $opgehaaldeprijs; //kortingspercentage toepassen van de korting in de database
     } else {
         $nieuweprijs = $opgehaaldeprijs; //alle andere combinaties leveren geen wijziging in de nieuweprijs
@@ -90,7 +90,8 @@ function kortingsNaamTonen($winkelmandid, $conn)
     return $naam;
 }
 
-function KortingsPercentageTonen($winkelmandid, $conn){//functie laat kortingcode zien die bij winkelwagen hoort
+function KortingsPercentageTonen($winkelmandid, $conn)
+{//functie laat kortingcode zien die bij winkelwagen hoort
     $percentage = 0; //variabele percentage aanmaken
     $sql = "SELECT `percentage` FROM `korting` WHERE `kortingscode` in (SELECT `kortingscode` FROM `winkelmand` where `winkelmand_id` = '$winkelmandid');"; //het kortingspercentage ophalen
     $result1 = $conn->query($sql); //het kortingspercentage uitlezen
@@ -100,7 +101,8 @@ function KortingsPercentageTonen($winkelmandid, $conn){//functie laat kortingcod
     return $percentage;
 }
 
-function kortingsBedragTonen($winkelmandid,$conn){ //deze functie berekend aan de hand van de kortingscode de korting in euro's
+function kortingsBedragTonen($winkelmandid, $conn)
+{ //deze functie berekend aan de hand van de kortingscode de korting in euro's
     $percentage = KortingsPercentageTonen($winkelmandid, $conn); //variabele percentage aanmaken
     $opgehaaldeprijs = totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn);//de totaalprijs van de winkelwagen ophalen zonder verzendkosten
     $kortingsbedrag = $opgehaaldeprijs * ($percentage / 100);
@@ -115,7 +117,7 @@ function kortingsCodeFeedback($kortingscode, $winkelmandid, $conn)
     if ($kcbestaat == 1 && $kcalgebruikt == 0) {//de kortingscode is geldig en er is nog geen code toegepast
         $kortingfeedback = 'De kortingscode ' . kortingsNaamTonen($winkelmandid, $conn) . 'bestaat';
     } Elseif ($kcbestaat == 1 && $kcalgebruikt == 1) {//de code is geldig maar er is al een code toegepast
-        $kortingfeedback = 'De kortingscode ' . kortingsNaamTonen($winkelmandid, $conn) . ' is toegepast met '. KortingsPercentageTonen($winkelmandid, $conn) . '% korting op de bestelling.';
+        $kortingfeedback = 'De kortingscode ' . kortingsNaamTonen($winkelmandid, $conn) . ' is toegepast met ' . KortingsPercentageTonen($winkelmandid, $conn) . '% korting op de bestelling.';
     } Elseif ($kcbestaat == 0 && $kcalgebruikt == 1) {// de code is ongeldig en er is al een andere code toegepast
         $kortingfeedback = 'Voer een geldige code in';
     } Elseif ($kcbestaat == 0 && $kcalgebruikt == 0) { //de ingevoerde code is niet goed en er is nog geen code toegepast
@@ -125,7 +127,6 @@ function kortingsCodeFeedback($kortingscode, $winkelmandid, $conn)
     }
     return $kortingfeedback;
 }
-
 
 
 //hier volgen de functies die benodigd zijn voor het besteloverzicht:
@@ -172,28 +173,32 @@ function totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn)
         FROM `wideworldimporters`.`stockitems` where `StockItemID` in (select `artikel_id` FROM `world_wide_importers`.`orderregel` where `order_id` = '$opgehaaldeartikel');";
         $result2 = $conn->query($sql2);
         while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) { //per orderregel wordt het aantal vermenigvuldigd met de prijs
-            $orderregelprijs = $row2["prijs"];}
+            $orderregelprijs = $row2["prijs"];
+        }
         $prijswinkelmand += $orderregelprijs; //elke totaalprijs van een orderregel wordt opgeteld tot het totaal van de winkelwagen
     }
-    return round($prijswinkelmand,2);
+    return round($prijswinkelmand, 2);
 }
 
-function prijsVanBestelling($winkelmandid, $kortingscode, $conn){ //Deze functie berekend de daadwerkelijke prijs van de bestelling inclusief kortingen en verzendkosten
+function prijsVanBestelling($winkelmandid, $kortingscode, $conn)
+{ //Deze functie berekend de daadwerkelijke prijs van de bestelling inclusief kortingen en verzendkosten
     $verzendkosten = verzendkostenBerkenen($winkelmandid, $conn);
     $nieuwprijs = kortingsCodeToepassen($kortingscode, $winkelmandid, $conn);
-    $bestellingprijs = round(($nieuwprijs + $verzendkosten),2);
+    $bestellingprijs = round(($nieuwprijs + $verzendkosten), 2);
 
     return $bestellingprijs;
 }
 
-function BtwTonen($kortingscode, $winkelmandid, $conn){ //deze functie toont het btw bedrag van het bestelbedrag zonder de verzendkosten
+function BtwTonen($kortingscode, $winkelmandid, $conn)
+{ //deze functie toont het btw bedrag van het bestelbedrag zonder de verzendkosten
     $nieuwprijs = kortingsCodeToepassen($kortingscode, $winkelmandid, $conn); //het totaalbedrag ophalen zonder verzendkosten
     $btwpercentage = 21;
-    $btwprijs = round((($btwpercentage / 100)) * $nieuwprijs,2);
+    $btwprijs = round((($btwpercentage / 100)) * $nieuwprijs, 2);
     return $btwprijs;
 }
 
-Function klantNAWgegevens($winkelmandid, $conn){ // functie om de NAW gegevens van een klant te tonen
+Function klantNAWgegevens($winkelmandid, $conn)
+{ // functie om de NAW gegevens van een klant te tonen
     $sql = "Select `adres`, `postcode`, `woonplaats` FROM `gebruiker` Where `gebruiker_id` IN (select `gebruiker_id` From `winkelmand` where `winkelmand_id` = '$winkelmandid');"; //de klantgegevens ophalen
     $result = $conn->query($sql);
 

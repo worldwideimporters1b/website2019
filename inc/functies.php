@@ -84,7 +84,7 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
     } else {
         foreach ($result as $order) {
             $orderid = $order['order_id'];
-            var_dump($orderid);
+
             $sql = "SELECT `artikel_id` FROM `orderregel` WHERE `winkelmand_id` = " . $winkelmandid . "";
             $result = $conn->query($sql);
 
@@ -162,10 +162,13 @@ function toonWinkelmand($winkelmandid, $conn)
     foreach ($result as $regel) {
 
         $html .= "<tr>"; // tr is table row
-        foreach ($regel as $veld) {
-
-            $html .= "<td>" . $veld . "</td>"; // td is table data
-
+        foreach ($regel as $veldnaam => $veld) {
+            if ($veldnaam == 'unitprice') {
+                $html .= "<td>€ " .  $veld . "</td>";
+            }
+            else {
+                $html .= "<td>" . $veld . "</td>"; // td is table data
+            }
         }
 
         $html .= "<td>Prullenbakje Placeholder</td></tr>";

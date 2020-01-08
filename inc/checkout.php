@@ -25,13 +25,15 @@ function pay($amount, $orderid, $customerid)
 }
 
 
-function renderIdeal($amount, $shopid, $orderid){
-$idealresult = 0;
+function renderIdeal($amount, $shopid, $orderid)
+{
+    $idealresult = 0;
 
 // do something
 
-return $idealresult;
+    return $idealresult;
 }
+
 $idealresult = 1;
 if ($idealresult == 0) {
     $paymentresult = 0;
