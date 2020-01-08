@@ -57,9 +57,11 @@ if (isset($_GET['add'])) {
 
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Zoek artikel" aria-label="Search">
-                    <button class="btn btn-primary" type="submit">Zoek</button>
+                <form class="form-inline my-2 my-lg-0" method="GET" action="productpagina.php">
+                    <!--<input class="form-control mr-sm-2" type="search" placeholder="Zoek artikel" aria-label="Search">
+                    <input type="submit" class="btn btn-outline-success" name="btnSearch" value="zoekstring"/> -->
+                    <input type="text" name="zoekstring" class="form-control mr-sm-2" value="" placeholder="Zoek artikel" aria-label="Search"/>
+                    <input type="submit" class="btn btn-primary" name="btnSearch" value="zoeken"/>
                 </form>
                 <div style="width: 20px"></div>
                 <a href="basket.php"><span><b>€ <?php echo $prijs ?></b></span>

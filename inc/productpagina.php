@@ -15,17 +15,17 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
                         JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID LIMIT 20";
         // Hier wordt de zoek functie aan geroepen indien de zoek functie is gebruikt.
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['btnSearch'])) {
-                $zoekstring = $_POST['zoekstring'];
-                var_dump($zoekstring);
-                die();
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            if (isset($_GET['btnSearch'])) {
+                $zoekstring = $_GET['zoekstring'];
+                #var_dump($zoekstring);
+                #die();
                 $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
                         FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
                         JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
                         JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
-                        JOIN `zoekwoorden_artikel` on artikel.artikel_id=zoekwoorden_artikel.artikel_id LIMIT 4
-                        WHERE `zoekwoorden_artikel.zoekwoord` LIKE '%" . $name . "%'";
+                        JOIN `zoekwoorden_artikel` on `art`.`artikel_id`=`zoekwoorden_artikel`.`artikel_id` 
+                        WHERE `zoekwoorden_artikel`.`zoekwoord` LIKE '%" . $zoekstring . "%' LIMIT 4";
             }
         }
 
@@ -124,7 +124,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
     $categorie_id = $conn->query($findcategorie_id);
 
     foreach ($categorie_id as $id) {
-        $id = $id;
+        echo $id;
 
     }
 
