@@ -13,43 +13,32 @@
 
     <h2>Wie zijn wij?</h2>
     <p>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum."
+        "Wide World Importers heeft zijn diensten geopend voor de Nederlandse markt.
+        Onze producten kun je als klant gemakkelijk vanuit thuis bestellen en worden deze tot aan de deur bezorgd.
+        Onze doelgroep is breed, we bieden producten aan voor zowel jongeren als oudere klanten.
+        U kunt kiezen tussen een breed aanbod van verschillende gekoelde chocolade en gadgets."
+
     </p>
     <br>
 
-    <h2>Wie zijn wij?</h2>
+    <h2>Geschiedenis WWI</h2>
     <p>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum."
+        "Wide World Importers is een importeur en groothandel die producten levert aan verschillende warenhuizen en supermarkten in de Verenigde Staten.
+        Ook levert WWI producten door aan weer andere groothandels.
+        Incidenteel verkocht WWI producten rechtstreeks aan consumenten.
+        WWI werkt met een groot netwerk aan vertegenwoordigers die het land doortrekken om hun producten in de markt te krijgen."
     </p>
     <br>
 
-    <h2>Wie zijn wij?</h2>
+    <h2>Visie WWI</h2>
     <p>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum."
+        “Wij zijn WWI.
+        We zijn trots op onze producten en geloven in kwaliteit.
+        In ieder huis vindt een product van WWI zijn thuis.
+        Ondanks onze grootte zien klanten ons als kleinschalig en betrokken.
+        Persoonlijk klantcontact staat bij ons hoog in het vaandel.”
     </p>
-    <br>
 
-    <h2>Wie zijn wij?</h2>
-    <p>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum."
-    </p>
-    <br>
 
 </div>
 </body>
