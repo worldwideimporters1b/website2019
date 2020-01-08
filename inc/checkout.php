@@ -56,7 +56,9 @@ echo "<div class='container'>
   </select>
 </div> 
 
-<img class='checkoutidealimage' style='width: 50%; height: 50%' src='../img/ideal.png'/></div>";
+<img class='checkoutidealimage' style='width: 50%; height: 50%' src='../img/ideal.png'/>
+<a class='btn btn-primary pull-right' id='right-panel-link' href='bestelmail.php' role='button'>Betalen</a> </div>
+";
 
 
 ?>
