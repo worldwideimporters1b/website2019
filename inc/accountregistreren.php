@@ -61,41 +61,46 @@ $message = "melding";
 
 // Als de knop "registreren" is geklikt, haal met $_POST de gegevens op.
 if (isset($_POST['registreren'])) {
-    if (strlen(($_POST[$wachtwoord])) < 6 || strlen(($_POST[$wachtwoord])) > 20 || !preg_match('@[A-Z]@', ($_POST[$wachtwoord])) || !preg_match('@[a-z]@', ($_POST[$wachtwoord]))
-        || !preg_match('@[^\w]@', ($_POST[$wachtwoord]))) { //eisen stellen aan het ingevoerde wachtwoord
+    if (!preg_match('/^\W*[1-9]{1}[0-9]{3}\W*[a-zA-Z]{2}\W*$/', ($_POST[$postcode]))) { //controle op een geldig postcode
         echo "<blockquote class=\"blockquote text-center\">";
-        echo "<p class=\"mb-0\"><strong>Het wachtwoord moet minimaal 6  en maximaal 20 tekens bevatten. Het wachtwoord moet bestaan uit een normale en hoofdletter. Het wachtwoord moet minstens 1 speciaal karakter bevatten.</strong></p>";
+        echo "<p class=\"mb-0\"><strong>Uw postcode is ongeldig.</strong></p>";
         echo "</blockquote>";
-    } else {
-        $emailadres = $_POST['emailadres'];
-        $conn = databaseConnectie();
-        $sql = "SELECT COUNT(*) FROM gebruiker WHERE `emailadres` = '$emailadres';";  //Met deze sql query controleren we of het emailadres al in gebruik is.
-        $result = $conn->query($sql);           //Wanneer de query word uitgevoerd, komt er 0 of 1 uit als resultaat.
-        $row = $result->fetch_row();             // Het resultaat komt in de vorm van een array. Deze array slaan we op in $row
-
-        if ($row[0] == 0) {                 //Op plek 0 van de array $row staat een 0 of 1. 0 betekend of het emailadres nog niet in gebruik is.
-            //Als plek 0 van $row een 0 staat, mag het account gemaakt worden.
-
-            $gegevens['emailadres'] = $_POST['emailadres'];
-            $gegevens[$voornaam] = isset($_POST[$voornaam]) ? $_POST[$voornaam] : "";
-            $gegevens[$achternaam] = isset($_POST[$achternaam]) ? $_POST[$achternaam] : "";
-            $gegevens[$geslacht] = isset($_POST[$geslacht]) ? $_POST[$geslacht] : "";
-            $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? md5("a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //md5 encryptie om het wachtwoord versleutelt op te slaan.
-            //               $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? hash('sha512',"a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //sha512 encryptie om het wachtwoord versleutelt op te slaan.
-            $gegevens[$adres] = isset($_POST[$adres]) ? $_POST[$adres] : "";
-            $gegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";
-            $gegevens[$postcode] = isset($_POST[$postcode]) ? $_POST[$postcode] : "";
-            $gegevens[$geboortedatum] = isset($_POST[$geboortedatum]) ? $_POST[$geboortedatum] : "";
-            $gegevens = registreren($gegevens);
-
-        } else {
+    }else {
+        if (strlen(($_POST[$wachtwoord])) < 6 || strlen(($_POST[$wachtwoord])) > 20 || !preg_match('@[A-Z]@', ($_POST[$wachtwoord])) || !preg_match('@[a-z]@', ($_POST[$wachtwoord]))
+            || !preg_match('@[^\w]@', ($_POST[$wachtwoord]))) { //eisen stellen aan het ingevoerde wachtwoord
             echo "<blockquote class=\"blockquote text-center\">";
-            echo "<p class=\"mb-0\"><strong>Dit emailadres is al in gebruik</p></strong>";
+            echo "<p class=\"mb-0\"><strong>Het wachtwoord moet minimaal 6  en maximaal 20 tekens bevatten. Het wachtwoord moet bestaan uit een normale en hoofdletter. Het wachtwoord moet minstens 1 speciaal karakter bevatten.</strong></p>";
             echo "</blockquote>";
+        } else {
+            $emailadres = $_POST['emailadres'];
+            $conn = databaseConnectie();
+            $sql = "SELECT COUNT(*) FROM gebruiker WHERE `emailadres` = '$emailadres';";  //Met deze sql query controleren we of het emailadres al in gebruik is.
+            $result = $conn->query($sql);           //Wanneer de query word uitgevoerd, komt er 0 of 1 uit als resultaat.
+            $row = $result->fetch_row();             // Het resultaat komt in de vorm van een array. Deze array slaan we op in $row
+
+            if ($row[0] == 0) {                 //Op plek 0 van de array $row staat een 0 of 1. 0 betekend of het emailadres nog niet in gebruik is.
+                //Als plek 0 van $row een 0 staat, mag het account gemaakt worden.
+
+                $gegevens['emailadres'] = $_POST['emailadres'];
+                $gegevens[$voornaam] = isset($_POST[$voornaam]) ? $_POST[$voornaam] : "";
+                $gegevens[$achternaam] = isset($_POST[$achternaam]) ? $_POST[$achternaam] : "";
+                $gegevens[$geslacht] = isset($_POST[$geslacht]) ? $_POST[$geslacht] : "";
+                $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? md5("a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //md5 encryptie om het wachtwoord versleutelt op te slaan.
+                //               $gegevens[$wachtwoord] = isset($_POST[$wachtwoord]) ? hash('sha512',"a@sdiu#(*$1_41" . $_POST[$wachtwoord]) : ""; //sha512 encryptie om het wachtwoord versleutelt op te slaan.
+                $gegevens[$adres] = isset($_POST[$adres]) ? $_POST[$adres] : "";
+                $gegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";
+                $gegevens[$postcode] = isset($_POST[$postcode]) ? $_POST[$postcode] : "";
+                $gegevens[$geboortedatum] = isset($_POST[$geboortedatum]) ? $_POST[$geboortedatum] : "";
+                $gegevens = registreren($gegevens);
+
+            } else {
+                echo "<blockquote class=\"blockquote text-center\">";
+                echo "<p class=\"mb-0\"><strong>Dit emailadres is al in gebruik</p></strong>";
+                echo "</blockquote>";
+            }
+
         }
-
     }
-
 }
 
 
