@@ -38,14 +38,17 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
             $artikel_id = $regel['artikel_id'];
             foreach ($regel as $veldnaam => $veld) {
                 if ($veldnaam == 'bestandslocatie') {
-                    $html .= "<td><a class='btn btn-secondary' href='productpagina.php?id=" . $artikel_id . "'><img style='height: 150px; width: auto;' src='../" . $veld . "' class=\"rounded img-responsive thumbnail border border-white\"/></a></td>";
+                    $html .= "<td><a class='btn btn-secondary' href='productpagina.php?id=" . $artikel_id . "'><img style='height: 100px; width: auto;' src='../" . $veld . "' class=\"rounded img-responsive thumbnail border border-white\"/></a></td>";
                 }
 
                 if ($veldnaam == 'artikel_id') {
                     $html .= "<td><a class='btn btn-secondary' href='productpagina.php?id=" . $veld . "'>Bekijk Product</a></td>";
                 }
+                if ($veldnaam == 'prijs') {
+                    $html .= "<td><h4>€" . $veld . "</h4></td>";
+                }
 
-                if ($veldnaam !== 'bestandslocatie' AND $veldnaam !== 'artikel_id') {
+                if ($veldnaam !== 'bestandslocatie' AND $veldnaam !== 'artikel_id' AND $veldnaam !== 'prijs') {
                     $html .= "<td><h4>" . $veld . "</h4></td>";
                 }
             }
@@ -94,7 +97,13 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
                             </div>
                       </td></tr>";
                 } else {
-                    $html .= "<tr><td>" . $veldnaam . "</td><td>" . $veld . "</td></tr>";
+                    if ($veldnaam == 'prijs') {
+                        $html .= "<td></td><td>€ " . $veld . "</td>";
+                    }
+                    if ($veldnaam !== 'prijs') {
+                        $html .= "<tr></td><td>" . $veldnaam . "</td><td>" . $veld . "</td></tr>";
+
+                    }
                 }
             }
         }
@@ -120,7 +129,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
 
     }
 
-    $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;";
+    @$findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;";
 
     $artikel_ids = $conn->query($findartikel_ids);
 
