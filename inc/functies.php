@@ -118,7 +118,6 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
         // winkelmand is leeg
 
         $sql = "INSERT INTO `orderregel` (`order_id`, `artikel_id`, `aantal`, `winkelmand_id`) VALUES (NULL, $artikelid, $aantal, $winkelmandid)";
-        #echo $sql;
         $result = $conn->query($sql);
 
     } else {
@@ -166,29 +165,12 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
 
             }
 
-
-            //hieronder bouwen we de query naar de database op, met daarin de parameters op de juiste plekken.
-            $sql = "UPDATE `" . $aantal . " WHERE `artikelid` = " . $artikelid . " AND `winkelmandid` = " . $winkelmandid . ";";
-
-            #INSERT INTO `orderregel` (`order_id`, `artikel_id`, `aantal`, `korting_id`, `voorraadstatu`, `winkelmand_id`) VALUES ('1', '1', '1', '1', '1', '2');
-
-            // hieronder voeren we de query uit
-
-
-            // het stuk hieronder is een voorbeeld van het uitlezen van de query (of het gelukt is of niet)
-
-            if ($result) // controleer of er een resultaat is
-            {
-                $status = 1; // toevoegen is gelukt
-            } else {
-                $status = 0; // toevoegen is niet gelukt
-            }
         }
     }
 
 
-    return $artikelid;
-    #return $status; // we melden aan onze applicatie (webshop) 0 of 1 de webshop weet dan voldoende.
+    refreshpage();
+
 }
 
 function toonWinkelmand($winkelmandid, $conn)
@@ -219,7 +201,15 @@ function toonWinkelmand($winkelmandid, $conn)
             }
         }
 
-        $html .= "<td><a href='".$_SERVER["PHP_SELF"] ."?add&aid=".$pid."&amt=0'>Verwijderen</a></td></tr>";
+        $html .= "<td><form class='form-inline' action='".$_SERVER['PHP_SELF']."'>
+                <input type='hidden' name='aid' id='aid' value='".$aid."'>
+                <input type='hidden' name='add'>
+                <input type='hidden' name='amt' id='amt' value='0'>
+                <input type=\"submit\" class=\"btn btn-primary\" value='Verwijder'>
+                 </form>
+
+
+</td></tr>";
     }
     $html .= '</table>';
     return $html;
@@ -245,6 +235,9 @@ function toonPullDown($aantal,$aid) {
     return $html;
 }
 
+function refreshpage(){
+    header("Location: " . $_SERVER['PHP_SELF']);
+}
 
 function toonWinkelstats($winkelmandid, $conn)
 {
