@@ -148,6 +148,34 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
         $html .= "</table><a class='btn btn-secondary' href='productpagina.php'>Terug naar overrzicht</a>";
 
 
+/// GERELATEERDE PRODUCT VIDEOS BEGIN
+        $artikelvideos = "
+        SELECT `vid` . `bestandslocatie` ,  `art` .`artikel_id` , `art`.`artikel_id` 
+                        FROM `video` as `video` 
+                        JOIN `artikel_video` AS `art_vid` on `art_vid`.`video_id` = `art_vid`.`video_id` 
+                        JOIN `video` AS `vid` on `vid`.`video_id` = `vid`.`video_id` 
+                        
+                        JOIN `artikel` as `art` ON `art` . `artikel_id` =  `art` . `artikel_id`
+                        WHERE `art` . `artikel_id` = '" . $artikel_id . "' 
+        ";
+
+        $artikelvids = $conn->query($artikelvideos);
+
+        $html .= "<br><br><h3>Product video links:</h3><br>";
+
+        foreach ($artikelvids as $video){
+            $vid = $video;
+            $html .= "
+            <td><a target='_blank' href='".  $vid['bestandslocatie'] . "'> ". $vid['bestandslocatie'] . "</a></td>
+            ";
+        }
+
+/// GERELATEERDE PRODUCT VIDEOS EIND
+
+
+
+
+
 ///GERELATEERDE ARTIKELEN BEGIN
 
 

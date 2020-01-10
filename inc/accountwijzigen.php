@@ -32,8 +32,8 @@ function accountWijzigen($accountgegevens)
     if (updateAccount($accountgegevens["emailadres"], $accountgegevens["voornaam"], $accountgegevens["achternaam"], $accountgegevens["geslacht"], $accountgegevens["adres"],
             $accountgegevens["woonplaats"], $accountgegevens["postcode"], $accountgegevens["geboortedatum"], $conn) == 1)
 
-        $accountgegevens["melding"] = "<blockquote class='blockquote text-center'><p><strong>Uw accountgegevens zijn bijgewerkt.</strong></p></blockquote>";
-    else $accountgegevens["melding"] = "<blockquote class='blockquote text-center'><p><strong>Het bijwerken is mislukt. Probeer het nog eens.</strong></p></blockquote>";
+        echo "<blockquote class='blockquote text-center'><p><strong>Uw accountgegevens zijn bijgewerkt.</strong></p></blockquote>";
+    else echo "<blockquote class='blockquote text-center'><p><strong>Het bijwerken is mislukt. Probeer het nog eens.</strong></p></blockquote>";
 
     return $accountgegevens;
 }
@@ -60,49 +60,42 @@ $adres = "adres";
 $woonplaats = "woonplaats";
 $postcode = "postcode";
 $geboortedatum = "geboortedatum";
-$message = "melding";
+//$message = "melding";
 
 
 // Als de knop "Bijwerken" is geklikt, haal met POST de gegevens op.
 if (isset($_POST["bijwerken"])) {
-    $accountgegevens[$emailadres] = isset($_POST[$emailadres]) ? $_POST[$emailadres] : "";
-    $accountgegevens[$voornaam] = isset($_POST[$voornaam]) ? $_POST[$voornaam] : "";
-    $accountgegevens[$achternaam] = isset($_POST[$achternaam]) ? $_POST[$achternaam] : "";
-    $accountgegevens[$geslacht] = isset($_POST[$geslacht]) ? $_POST[$geslacht] : "";
-    $accountgegevens[$adres] = isset($_POST[$adres]) ? $_POST[$adres] : "";
-    $accountgegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";
-    $accountgegevens[$postcode] = isset($_POST[$postcode]) ? $_POST[$postcode] : "";
-    $accountgegevens[$geboortedatum] = isset($_POST[$geboortedatum]) ? $_POST[$geboortedatum] : "";
-    $accountgegevens = accountWijzigen($accountgegevens);
+    if (!preg_match('/^\W*[1-9]{1}[0-9]{3}\W*[a-zA-Z]{2}\W*$/', ($_POST[$postcode]))) { //controle op een geldig postcode
+        echo "<blockquote class=\"blockquote text-center\">";
+        echo "<p class=\"mb-0\"><strong>Uw postcode is ongeldig.</strong></p>";
+        echo "</blockquote>";
+    }
+        else{
+            $accountgegevens[$emailadres] = isset($_POST[$emailadres]) ? $_POST[$emailadres] : "";
+            $accountgegevens[$voornaam] = isset($_POST[$voornaam]) ? $_POST[$voornaam] : "";
+            $accountgegevens[$achternaam] = isset($_POST[$achternaam]) ? $_POST[$achternaam] : "";
+            $accountgegevens[$geslacht] = isset($_POST[$geslacht]) ? $_POST[$geslacht] : "";
+            $accountgegevens[$adres] = isset($_POST[$adres]) ? $_POST[$adres] : "";
+            $accountgegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";
+            $accountgegevens[$postcode] = isset($_POST[$postcode]) ? $_POST[$postcode] : "";
+            $accountgegevens[$geboortedatum] = isset($_POST[$geboortedatum]) ? $_POST[$geboortedatum] : "";
+            $accountgegevens = accountWijzigen($accountgegevens);
 
-    $_SESSION["gebruikersnaam"] = $_POST[$emailadres];  // Gezien met $_POST de nieuwe gegevens in het formulier zijn ingevult,
-    $_SESSION["voornaam"] = $_POST[$voornaam];          // voeren we de gegevens opnieuw in de sessie, zodat de gebruiker de wijzigingen direct ziet.
-    $_SESSION["achternaam"] = $_POST[$achternaam];
-    $_SESSION["geslacht"] = $_POST[$geslacht];
-    $_SESSION["adres"] = $_POST[$adres];
-    $_SESSION["woonplaats"] = $_POST[$woonplaats];
-    $_SESSION["postcode"] = $_POST[$postcode];
-    $_SESSION["geboortedatum"] = $_POST[$geboortedatum];
-} else {
-    //als een veld niet is ingevult:
-    $accountgegevens[$emailadres] = "";
-    $accountgegevens[$voornaam] = "";
-    $accountgegevens[$achternaam] = "";
-    $accountgegevens[$geslacht] = "";
-    $accountgegevens[$adres] = "";
-    $accountgegevens[$woonplaats] = "";
-    $accountgegevens[$postcode] = "";
-    $accountgegevens[$geboortedatum] = "";
-    $accountgegevens[$message] = "";
+            $_SESSION["gebruikersnaam"] = $_POST[$emailadres];  // Gezien met $_POST de nieuwe gegevens in het formulier zijn ingevult,
+            $_SESSION["voornaam"] = $_POST[$voornaam];          // voeren we de gegevens opnieuw in de sessie, zodat de gebruiker de wijzigingen direct ziet.
+            $_SESSION["achternaam"] = $_POST[$achternaam];
+            $_SESSION["geslacht"] = $_POST[$geslacht];
+            $_SESSION["adres"] = $_POST[$adres];
+            $_SESSION["woonplaats"] = $_POST[$woonplaats];
+            $_SESSION["postcode"] = $_POST[$postcode];
+            $_SESSION["geboortedatum"] = $_POST[$geboortedatum];
+        }
+
 }
+
 ?>
-
-
 <div class="container">
     <h3>Uw gegevens</h3><br>
-    <?php
-    print("$accountgegevens[$message]");
-    ?>
     <form method="post" action="accountwijzigen.php">
 
         <div class="col-sm-10">
