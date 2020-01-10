@@ -182,17 +182,17 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
             $id = $cat_id;
         }
 
-        if ($id['categorie_id']){
-            $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;";
+        if (@$id['categorie_id']){
+            $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . @$id['categorie_id'] . "' LIMIT 4;";
     }
-        $artikel_ids = $conn->query($findartikel_ids);
+        @$artikel_ids = $conn->query($findartikel_ids);
 
         $artikelen = array();
 
         $html .= "<br><br><br>";
 
         $html .= "<div class='row'>";
-
+/**
         foreach ($artikel_ids as $artikel_id) {
             $artikelen = $artikel_id;
 
@@ -232,7 +232,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
         ";
 
         }
-
+**/
         $html .= "</div>";
 
         ///EIND GERELATEERDE ARTIKELEN
