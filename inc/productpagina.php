@@ -5,15 +5,51 @@ include_once('head.php');
 include_once('header.php');
 echo "<div class='container'>";
 
-function toonProductPagina($conn, $artikel_id = 'NULL')
+function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
 {
-    if ($artikel_id == 'NULL') {
+    if ($categorie_id == 'NULL' && $artikel_id == 'NULL') {
+
+        $sql = "SELECT `categorienaam`, `categorie_id` 
+                        FROM `categorie` ";
+
+        $result = $conn->query($sql);
+
+        $html = '<table class="table rounded">';
+        $html .= '<tr><th><h3>Categorieën Overzicht</h3></th></tr>';
+
+
+
+        foreach ($result as $regel) {
+            $html .= "<tr>";
+            $categorie_id = $regel['categorie_id'];
+            $categorienaam = $regel['categorienaam'];
+            foreach ($regel as $veldnaam => $veld) {
+
+                if ($veldnaam == 'categorie_id') {
+                    $html .= "<td><a class='btn btn-secondary' href='productpagina.php?id=" . $artikel_id . "&amp;cat_id=" . $categorie_id . "'>Bekijk $categorienaam</a></td>";
+                }
+
+            }
+            $html .= "</tr>";
+
+        }
+
+
+
+        $html .= "</table>";
+
+
+    } elseif ($artikel_id == 'NULL' && $categorie_id != 'NULL') {
 
         $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
                         FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
                         JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
-                        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID LIMIT 20";
+                        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
+                        JOIN `artikel_categorie` as `cat` ON `cat` . `artikel_id` =  `art` . `artikel_id`
+                        WHERE `cat` . `categorie_id` = '" . $categorie_id . "' LIMIT 20";
         // Hier wordt de zoek functie aan geroepen indien de zoek functie is gebruikt.
+
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['btnSearch'])) {
@@ -29,7 +65,9 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
             }
         }
 
+
         $result = $conn->query($sql);
+
 
         $html = '<table class="table rounded">';
         $html .= '<tr><th><h3>Product Overzicht</h3></th></tr>';
@@ -110,7 +148,6 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
         $html .= "</table><a class='btn btn-secondary' href='productpagina.php'>Terug naar overrzicht</a>";
 
 
-
 ///GERELATEERDE ARTIKELEN BEGIN
 
 
@@ -182,11 +219,19 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
         ///EIND GERELATEERDE ARTIKELEN
 
 
-    }
+}
 
 
     return $html;
 }
+
+
+    if (isset($_GET['cat_id']) && is_numeric($_GET['cat_id'])) {
+        $id = 'NULL';
+        $categorie_id = $_GET['cat_id'];
+        echo toonProductPagina($conn, $id, $categorie_id);
+    }
+
 
 if (isset($_GET['id'])) {
 
@@ -197,7 +242,6 @@ if (isset($_GET['id'])) {
         echo toonProductPagina($conn, $id);
 
     }
-
 } else {
 
     echo toonProductPagina($conn);
