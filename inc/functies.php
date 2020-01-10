@@ -68,7 +68,6 @@ function basketinfo($conn)
     if (!isset($_SESSION['ingelogd'])) {
 
 
-
         $winkelmandid = 0;
 
 
@@ -89,7 +88,7 @@ function basketinfo($conn)
 
 
             if ($result->num_rows == 0) {
-               # echo "Er zijn nog geen producten toegevoegd aan het winkelmandje";
+                # echo "Er zijn nog geen producten toegevoegd aan het winkelmandje";
             } else {
                 foreach ($result as $user) {
 
@@ -135,7 +134,7 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
 
 
                 //controleren of te wijzigen product in huidige mand zit
-                foreach($result as $artikel){
+                foreach ($result as $artikel) {
 
                     array_push($artikelen, $artikel['artikel_id']);
 
@@ -143,20 +142,18 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
 
                 if (in_array($artikelid, $artikelen)) {
                     // update
-                    if($aantal == 0){
+                    if ($aantal == 0) {
                         $sql = "DELETE FROM `orderregel` WHERE `winkelmand_id` = " . $winkelmandid . " AND `artikel_id` = " . $artikelid . "";
                         $result = $conn->query($sql);
                     }
-                    if($aantal !== 0) {
+                    if ($aantal !== 0) {
                         $sql = "UPDATE `orderregel` SET `aantal` = " . $aantal . " WHERE `winkelmand_id` = " . $winkelmandid . " AND `artikel_id` = " . $artikelid . "";
                         $result = $conn->query($sql);
                     }
 
 
-                }
-                else
-                {
-                    if($aantal !== 0) {
+                } else {
+                    if ($aantal !== 0) {
                         $sql = "INSERT INTO `orderregel` (`order_id`, `artikel_id`, `aantal`, `winkelmand_id`) VALUES (NULL, $artikelid, $aantal, $winkelmandid)";
                         $result = $conn->query($sql);
                     }
@@ -184,25 +181,25 @@ function toonWinkelmand($winkelmandid, $conn)
     $html = '<table class="table">';
     $html .= "<tr><th>Bestelnummer</th><th>Product</th><th>Prijs</th><th>Aantal</th></tr>";
     foreach ($result as $regel) {
-    $aid = $regel['artikel_id'];
+        $aid = $regel['artikel_id'];
         $html .= "<tr>"; // tr is table row
         foreach ($regel as $veldnaam => $veld) {
             if ($veldnaam == 'unitprice') {
-                $html .= "<td>€ " .  $veld . "</td>";
+                $html .= "<td>€ " . $veld . "</td>";
             }
             if ($veldnaam == 'artikel_id') {
                 $pid = $veld;
             }
-            if ($veldnaam == 'aantal'){
-               $html .= "<td>" . toonPullDown($veld,$aid) . "</td>";
+            if ($veldnaam == 'aantal') {
+                $html .= "<td>" . toonPullDown($veld, $aid) . "</td>";
             }
             if ($veldnaam !== 'artikel_id' AND $veldnaam !== 'unitprice' AND $veldnaam !== 'aantal') {
                 $html .= "<td>" . $veld . "</td>"; // td is table data
             }
         }
 
-        $html .= "<td><form class='form-inline' action='".$_SERVER['PHP_SELF']."'>
-                <input type='hidden' name='aid' id='aid' value='".$aid."'>
+        $html .= "<td><form class='form-inline' action='" . $_SERVER['PHP_SELF'] . "'>
+                <input type='hidden' name='aid' id='aid' value='" . $aid . "'>
                 <input type='hidden' name='add'>
                 <input type='hidden' name='amt' id='amt' value='0'>
                 <input type=\"submit\" class=\"btn btn-primary\" value='Verwijder'>
@@ -215,27 +212,26 @@ function toonWinkelmand($winkelmandid, $conn)
     return $html;
 }
 
-function toonPullDown($aantal,$aid) {
+function toonPullDown($aantal, $aid)
+{
 
     $html = "<form method='GET' action='basket.php' class='form-inline'><select class=\"form-control\" name='amt' id='amt'>\n";
 
-    for ($i=1; $i<=99; $i++)
-    {
-        if($aantal == $i) {
+    for ($i = 1; $i <= 99; $i++) {
+        if ($aantal == $i) {
             $html .= "      <option value='" . $i . "' selected>" . $i . "</option>";
-        }
-        else
-        {
+        } else {
             $html .= "      <option value='" . $i . "'>" . $i . "</option>";
         }
     }
 
-    $html .= "</select><input type='hidden' name='aid' id='aid' value='".$aid."'><input type='hidden' name='add'> <input type=\"submit\" class=\"btn btn-primary\" value='Wijzig'></form>\n";
+    $html .= "</select><input type='hidden' name='aid' id='aid' value='" . $aid . "'><input type='hidden' name='add'> <input type=\"submit\" class=\"btn btn-primary\" value='Wijzig'></form>\n";
 
     return $html;
 }
 
-function refreshpage(){
+function refreshpage()
+{
     header("Location: " . $_SERVER['PHP_SELF']);
 }
 
@@ -268,7 +264,7 @@ function secureInt($int)
 {
     if (!filter_var($int, FILTER_VALIDATE_INT) === false) {
         return $int;
-        } else {
+    } else {
         return 0;
     }
 }
