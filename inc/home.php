@@ -1,48 +1,53 @@
-<!doctype html>
-
-<?php include 'head.php'; ?>
-
-<?php include 'header.php' ?>
+<?php // Lennard S1080997
+include 'head.php';
+include 'header.php'?>
 
 <body>
+<br><br>
 <div class="container">
-
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <!--- Placeholder USB rocketlauncher -->
-                <a href="productpagina.php">
-                    <img class="rounded mx-auto d-block" src="../img/prd/art1.jpg" alt="First slide">
-
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="https://via.placeholder.com/1115x500/808080/fff.png" alt="Second slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="https://via.placeholder.com/1110x500/777777/fff.png" alt="Third slide">
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+    <div class="container">
+        <blockquote class="blockquote text-center">
+    <h2><strong>ACTIES</strong></h2>
+        </blockquote>
     </div>
-
-
-    <div class="seperator"></div>
     <div class="row">
-        <div class="col-md-6">
-            <img src="https://via.placeholder.com/560x500/777777e/fff.png">
+        <div class="container">
+            <div class="carousel-item">
+                <a href="productpagina.php?id=1">
+                    <img class="d-block w-100" src="../img/prd/art1.jpg" width="380" height="380" alt="USB launcher">
+            </div>
         </div>
+        <div class="container">
+            <img src="../img/prd/art1.jpg" width="380" height="380" alt="USB launcher">
+            <h6>Nu USB ROCKET launcher voor maar €25,-!</h6>
+        </div>
+
+            <div class="carousel-item">
+                <a href="productpagina.php?id=5">
+                    <img class="d-block w-100" src="../img/prd/christmas_power_bank.jpg" width="380" height="380" alt="kerstpowerbank">
+            </div>
+
         <div class="col-md-6">
-            <img src="https://via.placeholder.com/560x500/777777e/fff.png">
+            <img src="../img/prd/christmas_power_bank.jpg" width="380" height="380" alt="kerstpowerbank">
+            <h6>Kerstmis powerbank actie; slechts €32,-!</h6>
+        </div>
+
+        <div class="container">
+            <div class="carousel-item">
+                <a href="productpagina.php?id=10">
+                    <img class="d-block w-100" src="../img/prd/tonychocolonely.jpg" width="380" height="380" alt="Tonychoco">
+            </div>
+        </div>
+        <div class="container">
+            <img src="../img/prd/tonychocolonely.jpg" width="380" height="380" alt="Tonychoco">
+            <h6>Nu: Tony chocolade €25,-!</h6>
         </div>
     </div>
-    <div class="seperator"></div>
+
+
+
+
+
 </div>
 </body>
 
