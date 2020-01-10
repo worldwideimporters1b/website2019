@@ -156,17 +156,14 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
 
         $html .= "<br><br><h3>Product video links:</h3><br>";
 
-        foreach ($artikelvids as $video){
+        foreach ($artikelvids as $video) {
             $vid = $video;
             $html .= "
-            <td><a target='_blank' href='".  $vid['bestandslocatie'] . "'> ". $vid['bestandslocatie'] . "</a></td>
+            <td><a target='_blank' href='" . $vid['bestandslocatie'] . "'> " . $vid['bestandslocatie'] . "</a></td>
             ";
         }
 
 /// GERELATEERDE PRODUCT VIDEOS EIND
-
-
-
 
 
 ///GERELATEERDE ARTIKELEN BEGIN
@@ -185,14 +182,9 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
             $id = $cat_id;
         }
 
-        if(!isset($id)){
-
-            $id['categorie_id'] = '1 OR 2'; // als er geen categorie_id bekend is.
-
-        }
-
-        $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;";
-
+        if ($id['categorie_id']){
+            $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;";
+    }
         $artikel_ids = $conn->query($findartikel_ids);
 
         $artikelen = array();
