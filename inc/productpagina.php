@@ -107,7 +107,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
                 }
             }
         }
-        $html .= "</table><a class='btn btn-secondary' href='productpagina.php'>Terug naar overzicht</a>";
+        $html .= "</table><a class='btn btn-secondary' href='productpagina.php'>Terug naar overrzicht</a>";
 
 
     }
@@ -125,36 +125,51 @@ function toonProductPagina($conn, $artikel_id = 'NULL')
     $categorie_id = $conn->query($findcategorie_id);
 
     foreach ($categorie_id as $id) {
-        echo $id;
-
+        $id = $id;
     }
 
-    @$findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;";
+    $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;";
 
     $artikel_ids = $conn->query($findartikel_ids);
 
     $artikelen = array();
 
+    $html .= "<br><br><br>";
+
     $html .= "<div class='row'>";
 
     foreach ($artikel_ids as $artikel_id) {
-        $artikelen[] = $artikel_id;
+        $artikelen = $artikel_id;
 
         $relatedarticle = "SELECT `bestandslocatie` , `naam`,  `art`.`artikel_id` FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID WHERE `art`.`artikel_id` = '" . $artikel_id['artikel_id'] . "' LIMIT 1;";
 
         $artikel = $conn->query($relatedarticle);
 
-        foreach ($artikel as $artikels) {
+        foreach ($artikelen as $artikels) {
 
             $relatedartikel = $artikels;
 
         }
 
+        $sqlbestandslocatie = "
+        SELECT `bestandslocatie` , `art`.`artikel_id` FROM `artikel` as `art`
+        JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id`
+        JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id`
+        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
+        WHERE `art`.`artikel_id` = '" . $relatedartikel . "' LIMIT 1;";
+
+
+        $bestandslocatie = $conn->query($sqlbestandslocatie);
+
+        foreach ($bestandslocatie as $bestand) {
+            $file = $bestand;
+        }
+
         $html .= "
         
         <div class='col-md-4 col-sm-4 col-8'>
-        <img style='height: 150px; width: auto;' src='../" . $relatedartikel['bestandslocatie'] . "' class=\"rounded img-responsive thumbnail border border-white\"/>
-        <a class='btn btn-secondary' href='productpagina.php?id=" . $relatedartikel['artikel_id'] . "'>Bekijk Product</a>
+        <img style='height: 150px; width: auto;' src='../" . $file['bestandslocatie'] . "' class=\"rounded img-responsive thumbnail border border-white\"/>
+        <a class='btn btn-secondary' href='productpagina.php?id=" . $relatedartikel . "'>Bekijk Product</a>
         </div>
         
         
