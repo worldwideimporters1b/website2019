@@ -1,5 +1,7 @@
 <?php
 include_once('head.php');
+error_reporting(E_ALL);
+
 echo '<head><meta http-equiv="refresh" content="10"></head> ';
 
 $ua = $_SERVER['HTTP_USER_AGENT'] ?? null;
