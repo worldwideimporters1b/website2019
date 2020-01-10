@@ -1,6 +1,6 @@
 <?php //door Lennard van Boven 1080997 WIP
-include 'header.php';
-include 'head.php';
+include "head.php";
+include "header.php";
 
 function databaseConnectie()
 {
