@@ -7,17 +7,13 @@ echo "<div class='container'>";
 
 function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
 {
-    if ($categorie_id == 'NULL' && $artikel_id == 'NULL') {
-
+    if ($categorie_id == 'NULL' && $artikel_id == 'NULL' && !isset($_GET['btnSearch'])) {
         $sql = "SELECT `categorienaam`, `categorie_id` 
                         FROM `categorie` ";
-
         $result = $conn->query($sql);
 
         $html = '<table class="table rounded">';
         $html .= '<tr><th><h3>Categorieën Overzicht</h3></th></tr>';
-
-
 
         foreach ($result as $regel) {
             $html .= "<tr>";
@@ -31,15 +27,12 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
 
             }
             $html .= "</tr>";
-
         }
-
-
 
         $html .= "</table>";
 
-
-    } elseif ($artikel_id == 'NULL' && $categorie_id != 'NULL') {
+    } elseif ($artikel_id == 'NULL') {
+        // && $categorie_id != 'NULL'
 
         $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
                         FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
@@ -54,8 +47,8 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['btnSearch'])) {
                 $zoekstring = $_GET['zoekstring'];
-                #var_dump($zoekstring);
-                #die();
+//                var_dump($zoekstring);
+//                die();
                 $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
                         FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
                         JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
