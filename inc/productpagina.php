@@ -161,7 +161,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
 
         $artikelvids = $conn->query($artikelvideos);
 
-        $html .= "<h3>Product video links:</h3>";
+        $html .= "<br><br><h3>Product video links:</h3><br>";
 
         foreach ($artikelvids as $video){
             $vid = $video;
