@@ -165,10 +165,12 @@ WHERE (
         $html .= "<br><br><h3>Product video links:</h3><br>";
 
         foreach ($artikelvids as $video) {
-            $vid = $video;
-            $html .= "
-            <td><a target='_blank' href='" . $vid['bestandslocatie'] . "'> " . $vid['bestandslocatie'] . "</a></td>
-            ";
+
+            $html .= '
+
+
+            <td></td><td><iframe width="560" height="315" src="'.$video["bestandslocatie"].'" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+            ';
         }
 
 /// GERELATEERDE PRODUCT VIDEOS EIND

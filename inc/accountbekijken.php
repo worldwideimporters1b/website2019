@@ -28,7 +28,6 @@ function gegevensOphalen($gebruikersid, $conn)
         print("</table>");
 
 
-
         return $gegevens;
 
     }

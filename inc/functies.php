@@ -1,6 +1,11 @@
 <?php
 
 // Sander
+function formatprijs($prijs){
+    $prettyformatted = number_format($prijs, 2, ',', '.');
+
+    return " € " . $prettyformatted;
+}
 
 function getgebruikerid()
 {
@@ -82,8 +87,8 @@ function basketinfo($conn)
 
             $winkelmandid = 1;
 
-            $sql = "SELECT `winkelmand_id` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` LEFT JOIN `gebruiker` on `gebruiker`.`gebruiker_id` = `gebruiker_id` WHERE `gebruiker`.`gebruiker_id` = '" . $_SESSION["gebruiker_id"] . "' LIMIT 1";
-
+            $sql = "SELECT `winkelmand_id` FROM `winkelmand` JOIN `gebruiker` ON `gebruiker`.`gebruiker_id` = `winkelmand`.`gebruiker_id` WHERE `gebruiker`.`gebruiker_id` = '". $_SESSION["gebruiker_id"] . "' LIMIT 1";
+            echo $sql;
             $result = $conn->query($sql);
 
 

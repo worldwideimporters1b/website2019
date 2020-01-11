@@ -29,6 +29,7 @@ function gegevensOphalen($gebruikersid, $conn)
         return $gegevens;
     }
 }
+
 if (!isset($_SESSION['ingelogd'])) {
     //wanneer de gebruiker niet is ingelogd, maar verder wil bestellen, sturen we de gebruiker naar de inlogpagina.
     header('Location: inloggen.php');
@@ -42,7 +43,7 @@ if (!isset($_SESSION['ingelogd'])) {
 <div class="container">
     <table class="table">
         <?php
-        if(isset($_SESSION['ingelogd'])){
+        if (isset($_SESSION['ingelogd'])) {
             //anders is de gebruiker wel ingelogd, en halen we de gegevens op op basis van gebruiker_id
             $gebruikersid = $_SESSION["gebruiker_id"];
             gegevensOphalen($gebruikersid, $conn);

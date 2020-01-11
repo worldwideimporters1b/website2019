@@ -106,7 +106,7 @@ function kortingsBedragTonen($winkelmandid, $conn)
     $percentage = KortingsPercentageTonen($winkelmandid, $conn); //variabele percentage aanmaken
     $opgehaaldeprijs = totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn);//de totaalprijs van de winkelwagen ophalen zonder verzendkosten
     $kortingsbedrag = $opgehaaldeprijs * ($percentage / 100);
-    return $kortingsbedrag; // de korting in euros
+    return -1 * abs($kortingsbedrag); // de korting in euros
 }
 
 function kortingsCodeFeedback($kortingscode, $winkelmandid, $conn)
@@ -143,12 +143,17 @@ function toonBestelOverzicht($winkelmandid, $conn)
         $i++;
         $html .= "<tr>"; // tr is table row
         $html .= "<td>" . $i . "</td>";
-        foreach ($regel as $veld) {
-            $html .= "<td>" . $veld . "</td>"; // td is table data
+        foreach ($regel as $veldnaam => $veld) {
+            if ($veldnaam == "UnitPrice") {
+                $html .= "<td>" . formatprijs($veld) . "</td>";
+            }
+            if ($veldnaam !== "UnitPrice") {
+                $html .= "<td>" . $veld . "</td>";
+            }
         }
     }
     //$html .= "<td>" . $regel['aantal'] . "</td>";
-    $html .= "</tr></table>";
+    $html .= "</tr>";
     return $html;
 }
 
@@ -157,7 +162,7 @@ function verzendkostenBerkenen($winkelmandid, $conn)
     $verzendkosten = 0; //0 euro verzendkosten
     $opgehaaldeprijs1 = totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn);
     if ($opgehaaldeprijs1 < 30) {// als het totaalbedrag kleiner is dan 30 euro dan kost de verzending 3 euro anders 0
-        $verzendkosten = 3;
+        $verzendkosten = 2.95;
     }
     return $verzendkosten;
 }

@@ -65,7 +65,7 @@ if (isset($_POST['registreren'])) {
         echo "<blockquote class=\"blockquote text-center\">";
         echo "<p class=\"mb-0\"><strong>Uw postcode is ongeldig.</strong></p>";
         echo "</blockquote>";
-    }else {
+    } else {
         if (strlen(($_POST[$wachtwoord])) < 6 || strlen(($_POST[$wachtwoord])) > 20 || !preg_match('@[A-Z]@', ($_POST[$wachtwoord])) || !preg_match('@[a-z]@', ($_POST[$wachtwoord]))
             || !preg_match('@[^\w]@', ($_POST[$wachtwoord]))) { //eisen stellen aan het ingevoerde wachtwoord
             echo "<blockquote class=\"blockquote text-center\">";
