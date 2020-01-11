@@ -88,7 +88,7 @@ function basketinfo($conn)
             $winkelmandid = 1;
 
             $sql = "SELECT `winkelmand_id` FROM `winkelmand` JOIN `gebruiker` ON `gebruiker`.`gebruiker_id` = `winkelmand`.`gebruiker_id` WHERE `gebruiker`.`gebruiker_id` = '". $_SESSION["gebruiker_id"] . "' LIMIT 1";
-            echo $sql;
+
             $result = $conn->query($sql);
 
 

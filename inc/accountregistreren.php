@@ -5,17 +5,10 @@ include "head.php";
 include "header.php";
 
 
-//database verbinding
-function databaseConnectie()
-{
-    $conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
-    return $conn;
-}
-
 //deze functie zal de de registratie functie aanroepen, en controleren of het account is geregistreerd in de database.
-function registreren($gegevens)
+function registreren($gegevens,$conn)
 {
-    $conn = databaseConnectie();
+
 
     if (accountregistreren($gegevens['emailadres'], $gegevens["voornaam"], $gegevens["achternaam"], $gegevens["geslacht"], $gegevens["wachtwoord"],
             $gegevens["adres"], $gegevens["woonplaats"], $gegevens["postcode"], $gegevens["geboortedatum"], $conn) == 1) {
@@ -39,10 +32,22 @@ function registreren($gegevens)
 function accountregistreren($emailadres, $voornaam, $achternaam, $geslacht, $wachtwoord, $adres, $woonplaats, $postcode, $geboortedatum, $conn)
 {
     //met een INSERT voegen we de nieuwe klantgegevens toe aan de database
-    $sql = "INSERT INTO gebruiker (emailadres, voornaam, achternaam, geslacht, wachtwoord, adres, woonplaats, postcode, geboortedatum) 
-            VALUES('$emailadres','$voornaam', '$achternaam', '$geslacht', '$wachtwoord','$adres','$woonplaats','$postcode','$geboortedatum')";
-
+    $sql = "INSERT INTO gebruiker (emailadres, voornaam, achternaam, geslacht, wachtwoord, adres, woonplaats, postcode, geboortedatum)VALUES('$emailadres','$voornaam', '$achternaam', '$geslacht', '$wachtwoord','$adres','$woonplaats','$postcode','$geboortedatum')";
     $result = $conn->query($sql);
+    $usersql = "SELECT LAST_INSERT_ID(gebruiker_id) AS `gebruiker_id` FROM `gebruiker` ORDER BY `gebruiker_id` DESC LIMIT 1";
+    $userid = $conn->query($usersql);
+    foreach($userid as $uid){
+        $uid = $uid['gebruiker_id'];
+        $paysql = "INSERT INTO `betaling` (`betaling_id`, `betaalmethode`, `afrekenlink`, `betaalstatus`) VALUES (NULL, 'ideal', 'http://ideal.nl/user/".$uid."', '0');";
+        $conn->query($paysql);
+        $paysql = "SELECT LAST_INSERT_ID(betaling_id) AS `betaling_id` FROM `betaling` ORDER BY `betaling_id` DESC LIMIT 1 ";
+        $payid = $conn->query($paysql);
+        foreach($payid as $payment){
+            $payid = $payment['betaling_id'];
+        }
+        $basketsql = "INSERT INTO `winkelmand` (`winkelmand_id`, `betaling_id`, `order_id`, `totaalprijs`, `kortingscode`, `waardebon`, `verwachte_leverdatum`, `gebruiker_id`) VALUES (NULL, '".$payid."', '', '', NULL, NULL, NULL, '".$uid."');";
+        $conn->query($basketsql);
+    }
 
     return $result;
 }
@@ -73,7 +78,7 @@ if (isset($_POST['registreren'])) {
             echo "</blockquote>";
         } else {
             $emailadres = $_POST['emailadres'];
-            $conn = databaseConnectie();
+
             $sql = "SELECT COUNT(*) FROM gebruiker WHERE `emailadres` = '$emailadres';";  //Met deze sql query controleren we of het emailadres al in gebruik is.
             $result = $conn->query($sql);           //Wanneer de query word uitgevoerd, komt er 0 of 1 uit als resultaat.
             $row = $result->fetch_row();             // Het resultaat komt in de vorm van een array. Deze array slaan we op in $row
@@ -91,7 +96,7 @@ if (isset($_POST['registreren'])) {
                 $gegevens[$woonplaats] = isset($_POST[$woonplaats]) ? $_POST[$woonplaats] : "";
                 $gegevens[$postcode] = isset($_POST[$postcode]) ? $_POST[$postcode] : "";
                 $gegevens[$geboortedatum] = isset($_POST[$geboortedatum]) ? $_POST[$geboortedatum] : "";
-                $gegevens = registreren($gegevens);
+                $gegevens = registreren($gegevens,$conn);
 
             } else {
                 echo "<blockquote class=\"blockquote text-center\">";
