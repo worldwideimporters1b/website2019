@@ -49,12 +49,20 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
                 $zoekstring = $_GET['zoekstring'];
 //                var_dump($zoekstring);
 //                die();
-                $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id` 
-                        FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
-                        JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
-                        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
-                        JOIN `zoekwoorden_artikel` on `art`.`artikel_id`=`zoekwoorden_artikel`.`artikel_id` 
-                        WHERE `zoekwoorden_artikel`.`zoekwoord` LIKE '%" . $zoekstring . "%' LIMIT 4";
+                $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id`,     IF(
+            `naam` LIKE \"".$zoekstring."%\",  20, 
+         IF(`naam` LIKE \"%".$zoekstring."%\", 10, 0)
+      )
+      + IF(`art`.`omschrijving` LIKE \"%".$zoekstring."%\", 5,  0)
+      + IF(`art`.`omschrijving`         LIKE \"%".$zoekstring."%\", 1,  0)
+    AS `weight`
+FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
+JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
+JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
+WHERE (
+    `naam` LIKE \"%".$zoekstring."%\" 
+    OR `art`.`omschrijving` LIKE \"%".$zoekstring."%\"
+) ORDER BY `weight` DESC LIMIT 4";
             }
         }
 
@@ -182,17 +190,17 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
             $id = $cat_id;
         }
 
-        if ($id['categorie_id']){
-            $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . $id['categorie_id'] . "' LIMIT 4;";
+        if (@$id['categorie_id']){
+            $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . @$id['categorie_id'] . "' LIMIT 4;";
     }
-        $artikel_ids = $conn->query($findartikel_ids);
+        @$artikel_ids = $conn->query($findartikel_ids);
 
         $artikelen = array();
 
         $html .= "<br><br><br>";
 
         $html .= "<div class='row'>";
-
+/**
         foreach ($artikel_ids as $artikel_id) {
             $artikelen = $artikel_id;
 
@@ -232,7 +240,7 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
         ";
 
         }
-
+**/
         $html .= "</div>";
 
         ///EIND GERELATEERDE ARTIKELEN

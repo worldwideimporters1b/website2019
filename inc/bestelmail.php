@@ -18,11 +18,11 @@ include "head.php";
             <th>Verzendwijze</th>
         </tr>
         <tr>
-            <td>USB rocketlauncher </td>
+            <td>USB rocketlauncher</td>
             <td>03-02-2020</td>
             <td>2</td>
-            <td>€25 </td>
-            <td>DHL </td>
+            <td>€25</td>
+            <td>DHL</td>
         </tr>
     </table>
 
@@ -40,7 +40,7 @@ include "head.php";
             <td>SO36232688</td>
             <td>774</td>
             <td>5 december 2019</td>
-            <td>IDEAL </td>
+            <td>IDEAL</td>
         </tr>
     </table>
     <br>
@@ -54,6 +54,6 @@ include "head.php";
     <h6>Dixilaan 69 </h6>
     <h6>1787 AZ Den Helder </h6>
     <br>
-    <h4> Veel plezier met je bestelling!  </h4>
+    <h4> Veel plezier met je bestelling! </h4>
     <h4> Het WWI team!</h4>
 </div>

@@ -23,10 +23,12 @@
 
     <h2>Geschiedenis WWI</h2>
     <p>
-        "Wide World Importers is een importeur en groothandel die producten levert aan verschillende warenhuizen en supermarkten in de Verenigde Staten.
+        "Wide World Importers is een importeur en groothandel die producten levert aan verschillende warenhuizen en
+        supermarkten in de Verenigde Staten.
         Ook levert WWI producten door aan weer andere groothandels.
         Incidenteel verkocht WWI producten rechtstreeks aan consumenten.
-        WWI werkt met een groot netwerk aan vertegenwoordigers die het land doortrekken om hun producten in de markt te krijgen."
+        WWI werkt met een groot netwerk aan vertegenwoordigers die het land doortrekken om hun producten in de markt te
+        krijgen."
     </p>
     <br>
 
