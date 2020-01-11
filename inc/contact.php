@@ -21,19 +21,14 @@
         <div class="col-md-9 mb-md-0 mb-5">
             <form id="contact-form" name="contact-form" action="contact.php" method="POST">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="md-form mb-0">
                             <input type="text" id="name" name="name" class="form-control">
                             <label for="name" class="">Uw naam</label>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="md-form mb-0">
-                            <input type="text" id="email" name="email" class="form-control">
-                            <label for="email" class="">Uw email</label>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="row">
