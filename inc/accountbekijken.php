@@ -16,18 +16,21 @@ function gegevensOphalen($gebruikersid, $conn)
     $result = $conn->query($sql); // Hiermee voeren we de bovenstaande query uitvoeren
 
     foreach ($result as $gegevens) {
-        print("<th>");
-        print("<tr><strong>E-mail adres:</strong><br>" . $gegevens["emailadres"] . "</tr><br>");
-        print("<tr><strong>Voornaam:</strong><br>" . $gegevens["voornaam"] . "</tr><br>");
-        print("<tr><strong>Achternaam:</strong><br>" . $gegevens["achternaam"] . "</tr><br>");
-        print("<tr><strong>Geslacht:</strong><br>" . $gegevens["geslacht"] . "</tr><br>");
-        print("<tr><strong>Adres:</strong><br>" . $gegevens["adres"] . "</tr><br>");
-        print("<tr><strong>Postcode:</strong><br>" . $gegevens["postcode"] . "</tr><br>");
-        print("<tr><strong>Woonplaats:</strong><br>" . $gegevens["woonplaats"] . "</tr><br>");
-        print("<tr><strong>Geboorte datum:</strong><br>" . $gegevens["geboortedatum"] . "</tr><br>");
-        print("</th>");
+        print("<table>");
+        print("<tr><td><strong>E-mail adres:</strong></td><td>" . $gegevens["emailadres"] . "</td></tr>");
+        print("<tr><td><strong>Voornaam:</strong></td><td>" . $gegevens["voornaam"] . "</td></tr>");
+        print("<tr><td><strong>Achternaam:</strong></td><td>" . $gegevens["achternaam"] . "</td></tr>");
+        print("<tr><td><strong>Geslacht:</strong></td><td>" . $gegevens["geslacht"] . "</td></tr>");
+        print("<tr><td><strong>Adres:</strong></td><td>" . $gegevens["adres"] . "</td></tr>");
+        print("<tr><td><strong>Postcode:</strong></td><td>" . $gegevens["postcode"] . "</td></tr>");
+        print("<tr><td><strong>Woonplaats:</strong></td><td>" . $gegevens["woonplaats"] . "</td></tr>");
+        print("<tr><td><strong>Geboorte datum:</strong></td><td>" . $gegevens["geboortedatum"] . "</td></tr>");
+        print("</table>");
+
+
 
         return $gegevens;
+
     }
 
 }
