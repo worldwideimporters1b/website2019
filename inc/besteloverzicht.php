@@ -28,6 +28,7 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
     <p><?php echo toonBestelOverzicht($winkelmandid, $conn); ?></p>
 
     <table width="100%" class="table-striped">
+        <h6>Overzicht prijsinhoud:</h6>
         <tr>
             <td></td><td></td><td></td><td>Totaal artikelen:</td><td>
             €<?php echo totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn); ?></td>
