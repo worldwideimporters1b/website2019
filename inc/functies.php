@@ -217,7 +217,7 @@ function toonPullDown($aantal, $aid)
 
     $html = "<form method='GET' action='basket.php' class='form-inline'><select class=\"form-control\" name='amt' id='amt'>\n";
 
-    for ($i = 1; $i <= 99; $i++) {
+    for ($i = 1; $i <= 10; $i++) {
         if ($aantal == $i) {
             $html .= "      <option value='" . $i . "' selected>" . $i . "</option>";
         } else {
