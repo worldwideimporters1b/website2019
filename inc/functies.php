@@ -170,7 +170,7 @@ function updateProductAantal($winkelmandid, $artikelid, $aantal, $conn)
 
 }
 
-function toonWinkelmand($winkelmandid, $conn)
+function toonWinkelmand($winkelmandid, $conn, $totalproducts = 0, $totalprice = 0 )
 {
 
     $sql = "SELECT `winkelmand_id`,`naam`, `unitprice`, `aantal`, `orderregel`.`artikel_id` FROM `orderregel` LEFT JOIN `artikel` on `orderregel`.`artikel_id` = `artikel`.`artikel_id` LEFT JOIN `wideworldimporters`.`stockitems` ON orderregel.artikel_id = `wideworldimporters`.`stockitems`.`StockItemID` WHERE `winkelmand_id` = " . $winkelmandid . ";";
@@ -208,7 +208,7 @@ function toonWinkelmand($winkelmandid, $conn)
 
 </td></tr>";
     }
-    $html .= '</table>';
+    $html .= "<tr><td></td><td><b>Totaal</b></td><td><b>€ $totalprice</b></td><td><b>$totalproducts Stuk(s)</b></td></tr></table>";
     return $html;
 }
 

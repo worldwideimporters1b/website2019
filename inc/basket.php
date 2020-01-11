@@ -5,7 +5,7 @@ include('head.php');
 include('header.php');
 
 echo "<div class='container'>";
-echo toonWinkelmand(basketinfo($conn), $conn);
+echo toonWinkelmand(basketinfo($conn), $conn,$aantalproducten,$prijs);
 
 echo '
 <form method="get" target="accountoverzicht.php">

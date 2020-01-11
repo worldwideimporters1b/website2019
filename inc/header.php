@@ -4,6 +4,7 @@ include_once('functies.php');
 $basketinfo = toonWinkelstats(basketinfo($conn), $conn);
 $winkelmandid = basketinfo($conn);
 $prijs = number_format($basketinfo['Prijs'], 2, '.', '');
+$aantalproducten = $basketinfo['Aantal'];
 
 if (isset($_GET['add'])) {
     $winkelmandid = getbasketid($conn);
