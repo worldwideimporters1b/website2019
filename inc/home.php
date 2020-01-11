@@ -18,7 +18,7 @@ include 'header.php'?>
             </div>
         </div>
         <div class="container">
-            <img src="../img/prd/art1.jpg" width="380" height="380" alt="USB launcher">
+            <img class="rounded img-responsive thumbnail border border-white" src="../img/prd/art1.jpg" width="380" height="380" alt="USB launcher">
             <h6>Nu USB ROCKET launcher voor maar €25,-!</h6>
         </div>
 
@@ -28,7 +28,7 @@ include 'header.php'?>
             </div>
 
         <div class="col-md-6">
-            <img src="../img/prd/christmas_power_bank.jpg" width="380" height="380" alt="kerstpowerbank">
+            <img class="rounded img-responsive thumbnail border border-white" src="../img/prd/christmas_power_bank.jpg" width="380" height="380" alt="kerstpowerbank">
             <h6>Kerstmis powerbank actie; slechts €32,-!</h6>
         </div>
 
@@ -39,7 +39,7 @@ include 'header.php'?>
             </div>
         </div>
         <div class="container">
-            <img src="../img/prd/tonychocolonely.jpg" width="380" height="380" alt="Tonychoco">
+            <img class="rounded img-responsive thumbnail border border-white" src="../img/prd/tonychocolonely.jpg" width="380" height="380" alt="Tonychoco">
             <h6>Nu: Tony chocolade €25,-!</h6>
         </div>
     </div>
