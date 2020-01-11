@@ -30,7 +30,7 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
     <table width="100%" class="table-striped">
         <h6>Overzicht prijsinhoud:</h6>
         <tr>
-            <td></td><td></td><td></td><td>Totaal artikelen:</td><td>
+            <td></td><td></td><td></td><td></td><td>Totaal artikelen:</td><td>
             €<?php echo totaalprijsZonderVerzendkostenTonen($winkelmandid, $conn); ?></td>
         </tr>
         <?php $kortingbedrag1 = kortingsBedragTonen($winkelmandid, $conn);
@@ -38,13 +38,13 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
             echo "<th scope=\"row\">Korting:</th><td> € -$kortingbedrag1 </td>";
         } ?>
         <tr>
-           <td></td><td></td><td></td><td>BTW</td><td>
+           <td></td><td></td><td></td><td></td><td>BTW</td><td>
                     €<?php echo BtwTonen($kortingscode, $winkelmandid, $conn); ?>
                 </td>
 <!--            <td>€--><?php //echo BtwTonen($kortingscode, $winkelmandid, $conn); ?><!--</td>-->
         </tr>
         <tr>
-            <td></td><td></td><td></td><td>Verzendkosten:</td><td>
+            <td></td><td></td><td></td><td></td><td>Verzendkosten:</td><td>
 
                 €<?php $kostenverzending = verzendkostenBerkenen($winkelmandid, $conn); //bij gratis verzendkosten wordt hier informatie over getoond
                 if ($kostenverzending == '0') {
@@ -55,7 +55,7 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
                 ?></td>
         </tr>
         <tr>
-            <td></td><td></td><td></td><td>Totaal te betalen bedrag:</td><td>
+            <td></td><td></td><td></td><td></td><td>Totaal te betalen bedrag:</td><td>
             €<?php echo prijsVanBestelling($winkelmandid, $kortingscode, $conn); ?></td>
         </tr>
     </table>
@@ -88,12 +88,11 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
         </div>
     </form>
 </div>
-<br>
 
 <div class="container">
     <button onclick="history.go(-1);" class="btn btn-primary">Terug</button>
 </div>
-
+<br>
 </body>
 
 </html>
