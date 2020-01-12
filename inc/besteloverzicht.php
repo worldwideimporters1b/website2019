@@ -46,6 +46,7 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
             <td></td>
             <td>BTW</td>
             <td>
+
                 <?php echo formatprijs(BtwTonen($kortingscode, $winkelmandid, $conn)); ?>
             </td>
             <!--            <td>€--><?php //echo BtwTonen($kortingscode, $winkelmandid, $conn); ?><!--</td>-->
