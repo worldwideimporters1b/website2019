@@ -198,7 +198,7 @@ function BtwTonen($kortingscode, $winkelmandid, $conn)
 { //deze functie toont het btw bedrag van het bestelbedrag zonder de verzendkosten
     $nieuwprijs = kortingsCodeToepassen($kortingscode, $winkelmandid, $conn); //het totaalbedrag ophalen zonder verzendkosten
     $btwpercentage = 21;
-    $btwprijs = round((($btwpercentage / 100)) * $nieuwprijs, 2);
+    $btwprijs = round(($btwpercentage / 100) * $nieuwprijs, 2);
     return $btwprijs;
 }
 
