@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="028cef39-14d5-4250-a9a5-4de7e1f23304" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inc/besteloverzicht.php" beforeDir="false" afterPath="$PROJECT_DIR$/inc/besteloverzicht.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/Kortingscode.php" beforeDir="false" afterPath="$PROJECT_DIR$/inc/Kortingscode.php" afterDir="false" />
     </list>
     <list id="bcb50cc0-9794-4e91-b8a4-4df9be74e30a" name="besteloverzicht" comment="" />
     <list id="e0b30445-2bf0-478b-aefa-d7bd6b05d1ab" name="besteloverzicht werkt niet op centos" comment="">
@@ -33,14 +33,6 @@
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/inc/besteloverzicht.php">
-      <ranges>
-        <range start1="48" end1="49" start2="48" end2="49" changelist="028cef39-14d5-4250-a9a5-4de7e1f23304" />
-        <range start1="50" end1="51" start2="50" end2="51" changelist="e0b30445-2bf0-478b-aefa-d7bd6b05d1ab" />
-      </ranges>
-    </file>
   </component>
   <component name="ProjectId" id="1UHeay4qkfFEx6XaZDtIHLZ8mTZ" />
   <component name="ProjectLevelVcsManager">
@@ -102,7 +94,7 @@
       <workItem from="1576783268207" duration="751000" />
       <workItem from="1576833061135" duration="1212000" />
       <workItem from="1578513138186" duration="29246000" />
-      <workItem from="1578771672216" duration="26855000" />
+      <workItem from="1578771672216" duration="27285000" />
     </task>
     <task id="LOCAL-00001" summary="Leipe shit ouwe">
       <created>1575018254358</created>
@@ -342,7 +334,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578846694186</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="test">
+      <created>1578846839595</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1578846839595</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -373,7 +372,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Leipe shit ouwe" />
     <MESSAGE value="checkout 1st commit" />
     <MESSAGE value="Voorbeeldje" />
     <MESSAGE value="Lena basket.php" />
@@ -398,17 +396,18 @@
     <MESSAGE value="database" />
     <MESSAGE value="besteloverzicht btw" />
     <MESSAGE value="besteloverzicht btw errors on" />
-    <option name="LAST_COMMIT_MESSAGE" value="besteloverzicht btw errors on" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="184" key="#Notifications" timestamp="1578840749472">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="184" key="#Notifications/0.0.1920.1050@0.0.1920.1050" timestamp="1578840749472" />
-    <state x="583" y="25" key="CommitChangelistDialog2" timestamp="1578846693181">
+    <state x="583" y="25" key="CommitChangelistDialog2" timestamp="1578846838402">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="583" y="25" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1578846693181" />
+    <state x="583" y="25" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1578846838402" />
     <state x="2503" y="37" key="CommitChangelistDialog2/1920.0.1920.1170/0.0.1920.1170@1920.0.1920.1170" timestamp="1578565857239" />
     <state x="92" y="92" width="1736" height="866" key="DiffContextDialog" timestamp="1578513912641">
       <screen x="0" y="0" width="1920" height="1050" />
@@ -438,10 +437,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="807" y="433" key="VCS.ChangelistChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1578845829234" />
-    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1578846704733">
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1578846852811">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1578846704733" />
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1578846852811" />
     <state x="2472" y="283" key="Vcs.Push.Dialog.v2/1920.0.1920.1170/0.0.1920.1170@1920.0.1920.1170" timestamp="1578565865346" />
     <state x="637" y="350" key="com.intellij.ide.util.TipDialog" timestamp="1578771874263">
       <screen x="0" y="0" width="1920" height="1050" />
