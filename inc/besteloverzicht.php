@@ -2,7 +2,7 @@
 <?php
 include "head.php";
 include "header.php";
-
+error_reporting(E_ALL);
 include "Kortingscode.php";
 
 //variabelen aanmaken voor deze pagina
