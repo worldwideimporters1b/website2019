@@ -9,9 +9,10 @@
 
 <body>
 <div class="container">
-    <h1 class="h1-responsive font-weight-bold text-center my-4">Over ons</h1>
+    <h3>Over ons</h3>
 
-    <h2>Wie zijn wij?</h2>
+    <h5>Wie zijn wij?</h5>
+    <img src="../img/promotional/schip.png" class="img-responsive rounded" style="width: 100%;"/><br><br>
     <p>
         "Wide World Importers heeft zijn diensten geopend voor de Nederlandse markt.
         Onze producten kun je als klant gemakkelijk vanuit thuis bestellen en worden deze tot aan de deur bezorgd.
@@ -21,7 +22,7 @@
     </p>
     <br>
 
-    <h2>Geschiedenis WWI</h2>
+    <h5>Geschiedenis WWI</h5>
     <p>
         "Wide World Importers is een importeur en groothandel die producten levert aan verschillende warenhuizen en
         supermarkten in de Verenigde Staten.
@@ -32,7 +33,7 @@
     </p>
     <br>
 
-    <h2>Visie WWI</h2>
+    <h5>Visie WWI</h5>
     <p>
         “Wij zijn WWI.
         We zijn trots op onze producten en geloven in kwaliteit.

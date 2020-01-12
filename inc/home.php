@@ -14,7 +14,7 @@ include 'header.php' ?>
         <div class="container">
             <div class="carousel-item">
                 <a href="productpagina.php?id=1">
-                    <img class="d-block w-100" src="../img/prd/art1.jpg" width="380" height="380" alt="USB launcher">
+                    <img class="d-block w-100 rounded" src="../img/prd/art1.jpg" width="380" height="380" alt="USB launcher">
             </div>
         </div>
         <div class="container">
@@ -25,7 +25,7 @@ include 'header.php' ?>
 
         <div class="carousel-item">
             <a href="productpagina.php?id=5">
-                <img class="d-block w-100" src="../img/prd/christmas_power_bank.jpg" width="380" height="380"
+                <img class="d-block w-100 rounded" src="../img/prd/christmas_power_bank.jpg" width="380" height="380"
                      alt="kerstpowerbank">
         </div>
 
@@ -38,7 +38,7 @@ include 'header.php' ?>
         <div class="container">
             <div class="carousel-item">
                 <a href="productpagina.php?id=10">
-                    <img class="d-block w-100" src="../img/prd/tonychocolonely.jpg" width="380" height="380"
+                    <img class="d-block w-100 rounded" src="../img/prd/tonychocolonely.jpg" width="380" height="380"
                          alt="Tonychoco">
             </div>
         </div>

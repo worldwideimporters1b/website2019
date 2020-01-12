@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 include('head.php');
 include('header.php');
 
-echo "<div class='container'>";
+echo "<div class='container'><h3>Mijn winkelmand</h3>";
 echo toonWinkelmand(basketinfo($conn), $conn, $aantalproducten, $prijs);
 
 echo '

@@ -12,17 +12,28 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
                         FROM `categorie` ";
         $result = $conn->query($sql);
 
-        $html = '<table class="table rounded">';
-        $html .= '<tr><th><h3>Categorieën Overzicht</h3></th></tr>';
+        $html = '<h3>Categorieën Overzicht</h3><table class="table rounded">';
+
 
         foreach ($result as $regel) {
+            $randimghtml = "";
             $html .= "<tr>";
             $categorie_id = $regel['categorie_id'];
+
+            $randomproductresultsquery = 'SELECT * FROM artikel_categorie as cat JOIN artikel_afbeelding as artafb ON cat.artikel_id = artafb.artikel_id JOIN afbeeldingen as afb ON artafb.artikel_afbeelding_id = afb.afbeelding_id WHERE cat.categorie_id = '.$categorie_id.' ORDER BY RAND() LIMIT 1';
+            $randomproductresults = $conn->query($randomproductresultsquery);
+
+            foreach ($randomproductresults as $randomproduct){
+
+                $randimghtml .= "<a title='".randomsuggestie($categorie_id,$conn)."' style='width: 200px' class='btn btn-secondary' href='productpagina.php?id=" . $randomproduct['categorie_id'] . "&amp;cat_id=" . $categorie_id . "'><img style='height: 100px; width: auto;' src='../".$randomproduct['bestandslocatie']."' class='rounded img-responsive thumbnail border border-white'/>";
+
+            }
+
             $categorienaam = $regel['categorienaam'];
             foreach ($regel as $veldnaam => $veld) {
 
                 if ($veldnaam == 'categorie_id') {
-                    $html .= "<td><a class='btn btn-secondary' href='productpagina.php?id=" . $artikel_id . "&amp;cat_id=" . $categorie_id . "'>Bekijk $categorienaam</a></td>";
+                    $html .= "<td>".$randimghtml."<br><br>Bekijk $categorienaam</a></td>";
                 }
 
             }
@@ -43,25 +54,24 @@ function toonProductPagina($conn, $artikel_id = 'NULL', $categorie_id = 'NULL')
         // Hier wordt de zoek functie aan geroepen indien de zoek functie is gebruikt.
 
 
-
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['btnSearch'])) {
                 $zoekstring = $_GET['zoekstring'];
 //                var_dump($zoekstring);
 //                die();
                 $sql = "SELECT `bestandslocatie` , `naam` , `unitprice` prijs, `art`.`artikel_id`,     IF(
-            `naam` LIKE \"".$zoekstring."%\",  20, 
-         IF(`naam` LIKE \"%".$zoekstring."%\", 10, 0)
+            `naam` LIKE \"" . $zoekstring . "%\",  20, 
+         IF(`naam` LIKE \"%" . $zoekstring . "%\", 10, 0)
       )
-      + IF(`art`.`omschrijving` LIKE \"%".$zoekstring."%\", 5,  0)
-      + IF(`art`.`omschrijving`         LIKE \"%".$zoekstring."%\", 1,  0)
+      + IF(`art`.`omschrijving` LIKE \"%" . $zoekstring . "%\", 5,  0)
+      + IF(`art`.`omschrijving`         LIKE \"%" . $zoekstring . "%\", 1,  0)
     AS `weight`
 FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` 
 JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` 
 JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
 WHERE (
-    `naam` LIKE \"%".$zoekstring."%\" 
-    OR `art`.`omschrijving` LIKE \"%".$zoekstring."%\"
+    `naam` LIKE \"%" . $zoekstring . "%\" 
+    OR `art`.`omschrijving` LIKE \"%" . $zoekstring . "%\"
 ) ORDER BY `weight` DESC LIMIT 4";
             }
         }
@@ -70,8 +80,8 @@ WHERE (
         $result = $conn->query($sql);
 
 
-        $html = '<table class="table rounded">';
-        $html .= '<tr><th><h3>Product Overzicht</h3></th></tr>';
+        $html = '<h3>Product Overzicht</h3><table class="table rounded">';
+
         foreach ($result as $regel) {
             $html .= "<tr>";
             $artikel_id = $regel['artikel_id'];
@@ -84,7 +94,7 @@ WHERE (
                     $html .= "<td><a class='btn btn-secondary' href='productpagina.php?id=" . $veld . "'>Bekijk Product</a></td>";
                 }
                 if ($veldnaam == 'prijs') {
-                    $html .= "<td><h4>€" . $veld . "</h4></td>";
+                    $html .= "<td><h4>" . formatprijs($veld) . "</h4></td>";
                 }
 
                 if ($veldnaam !== 'bestandslocatie' AND $veldnaam !== 'artikel_id' AND $veldnaam !== 'prijs') {
@@ -102,9 +112,9 @@ WHERE (
         $sql = "SELECT bestandslocatie, unitprice prijs, naam, herkomst, productieproces, ingredienten, afmetingen, gewicht, art.omschrijving FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID WHERE `art`.`artikel_id` = '" . $artikel_id . "' LIMIT 1";
         $result = $conn->query($sql);
 
-        $html = '<table class="table table-hover">';
+        $html = '<h3>Productdetails</h3><table class="table table-hover">';
         foreach ($result as $regel) {
-            $html .= "<tr><td></td><td><a class='btn btn-secondary'href='productpagina.php?add&aid=" . $artikel_id . "&amt=1&id=" . $artikel_id . "'>Toevoegen</a></td></tr>";
+
             foreach ($regel as $veldnaam => $veld) {
                 if ($veldnaam == 'bestandslocatie') {
                     $html .= "<tr><td>
@@ -133,14 +143,14 @@ WHERE (
                             <span class='carousel-control-next-icon' aria-hidden='true'></span>
                             <span class='sr-only'>Next</span>
                             </a>
-                            </div>
-                      </td></tr>";
+                            </div><br><a class='btn btn-secondary'href='productpagina.php?add&aid=" . $artikel_id . "&amt=1&id=" . $artikel_id . "'>Toevoegen</a><br><br>
+                      </td><td></td></tr>";
                 } else {
                     if ($veldnaam == 'prijs') {
-                        $html .= "<td></td><td>€ " . $veld . "</td>";
+                        $html .= "<td></td><td>" . formatprijs($veld) . "</td>";
                     }
                     if ($veldnaam !== 'prijs') {
-                        $html .= "<tr></td><td>" . $veldnaam . "</td><td>" . $veld . "</td></tr>";
+                        $html .= "<tr></td><td>" . ucfirst($veldnaam) . "</td><td>" . $veld . "</td></tr>";
 
                     }
                 }
@@ -151,25 +161,23 @@ WHERE (
 
 /// GERELATEERDE PRODUCT VIDEOS BEGIN
         $artikelvideos = "
-        SELECT `vid` . `bestandslocatie` ,  `art` .`artikel_id` , `art`.`artikel_id` 
+SELECT `video` . `bestandslocatie` ,  `art` .`artikel_id` , `art`.`artikel_id` 
                         FROM `video` as `video` 
-                        JOIN `artikel_video` AS `art_vid` on `art_vid`.`video_id` = `art_vid`.`video_id` 
-                        JOIN `video` AS `vid` on `vid`.`video_id` = `vid`.`video_id` 
-                        
-                        JOIN `artikel` as `art` ON `art` . `artikel_id` =  `art` . `artikel_id`
+                        JOIN `artikel_video` AS `art_vid` on `art_vid`.`video_id` = `video`.`video_id`                         
+                 		JOIN `artikel` as `art` ON `art` . `artikel_id` =  `art_vid` . `artikel_id`
                         WHERE `art` . `artikel_id` = '" . $artikel_id . "' 
         ";
 
         $artikelvids = $conn->query($artikelvideos);
 
-        $html .= "<br><br><h3>Product video links:</h3><br>";
+        $html .= "<br><br><h6>Product video(s)</h6><br>";
 
         foreach ($artikelvids as $video) {
 
             $html .= '
 
 
-            <td></td><td><iframe width="560" height="315" src="'.$video["bestandslocatie"].'" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+            <td></td><td><div class="iframeWrapper rounded"><iframe width="560" height="315" src="' . $video["bestandslocatie"] . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><br></td>
             ';
         }
 
@@ -192,9 +200,9 @@ WHERE (
             $id = $cat_id;
         }
 
-        if (@$id['categorie_id']){
+        if (@$id['categorie_id']) {
             $findartikel_ids = "SELECT `artikel_id` FROM `artikel_categorie` WHERE `artikel_categorie`.`categorie_id` = '" . @$id['categorie_id'] . "' LIMIT 4;";
-    }
+        }
         @$artikel_ids = $conn->query($findartikel_ids);
 
         $artikelen = array();
@@ -202,64 +210,64 @@ WHERE (
         $html .= "<br><br><br>";
 
         $html .= "<div class='row'>";
-/**
-        foreach ($artikel_ids as $artikel_id) {
-            $artikelen = $artikel_id;
-
-            $relatedarticle = "SELECT `bestandslocatie` , `naam`,  `art`.`artikel_id` FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID WHERE `art`.`artikel_id` = '" . $artikel_id['artikel_id'] . "' LIMIT 1;";
-
-            $artikel = $conn->query($relatedarticle);
-
-            foreach ($artikelen as $artikels) {
-
-                $relatedartikel = $artikels;
-
-            }
-
-            $sqlbestandslocatie = "
-        SELECT `bestandslocatie` , `art`.`artikel_id` FROM `artikel` as `art`
-        JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id`
-        JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id`
-        JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
-        WHERE `art`.`artikel_id` = '" . $relatedartikel . "' LIMIT 1;";
-
-
-            $bestandslocatie = $conn->query($sqlbestandslocatie);
-
-            foreach ($bestandslocatie as $bestand) {
-                $file = $bestand;
-            }
-
-            $html .= "
-        
-        <div class='col-md-4 col-sm-4 col-8'>
-        <img style='height: 150px; width: auto;' src='../" . $file['bestandslocatie'] . "' class=\"rounded img-responsive thumbnail border border-white\"/>
-        <a class='btn btn-secondary' href='productpagina.php?id=" . $relatedartikel . "'>Bekijk Product</a>
-        </div>
-        
-        
-        
-        ";
-
-        }
-**/
+        /**
+         * foreach ($artikel_ids as $artikel_id) {
+         * $artikelen = $artikel_id;
+         *
+         * $relatedarticle = "SELECT `bestandslocatie` , `naam`,  `art`.`artikel_id` FROM `artikel` as `art` JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id` JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id` JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID WHERE `art`.`artikel_id` = '" . $artikel_id['artikel_id'] . "' LIMIT 1;";
+         *
+         * $artikel = $conn->query($relatedarticle);
+         *
+         * foreach ($artikelen as $artikels) {
+         *
+         * $relatedartikel = $artikels;
+         *
+         * }
+         *
+         * $sqlbestandslocatie = "
+         * SELECT `bestandslocatie` , `art`.`artikel_id` FROM `artikel` as `art`
+         * JOIN `artikel_afbeelding` AS `afb` on `afb`.`artikel_id` = `art`.`artikel_id`
+         * JOIN `afbeeldingen` AS `img` on `img`.`afbeelding_id` = `afb`.`afbeelding_id`
+         * JOIN `wideworldimporters`.`stockitems` ON `art`.`artikel_id` =  `wideworldimporters`.`stockitems`.StockItemID
+         * WHERE `art`.`artikel_id` = '" . $relatedartikel . "' LIMIT 1;";
+         *
+         *
+         * $bestandslocatie = $conn->query($sqlbestandslocatie);
+         *
+         * foreach ($bestandslocatie as $bestand) {
+         * $file = $bestand;
+         * }
+         *
+         * $html .= "
+         *
+         * <div class='col-md-4 col-sm-4 col-8'>
+         * <img style='height: 150px; width: auto;' src='../" . $file['bestandslocatie'] . "' class=\"rounded img-responsive thumbnail border border-white\"/>
+         * <a class='btn btn-secondary' href='productpagina.php?id=" . $relatedartikel . "'>Bekijk Product</a>
+         * </div>
+         *
+         *
+         *
+         * ";
+         *
+         * }
+         **/
         $html .= "</div>";
 
         ///EIND GERELATEERDE ARTIKELEN
 
 
-}
+    }
 
 
     return $html;
 }
 
 
-    if (isset($_GET['cat_id']) && is_numeric($_GET['cat_id'])) {
-        $id = 'NULL';
-        $categorie_id = $_GET['cat_id'];
-        echo toonProductPagina($conn, $id, $categorie_id);
-    }
+if (isset($_GET['cat_id']) && is_numeric($_GET['cat_id'])) {
+    $id = 'NULL';
+    $categorie_id = $_GET['cat_id'];
+    echo toonProductPagina($conn, $id, $categorie_id);
+}
 
 
 if (isset($_GET['id'])) {

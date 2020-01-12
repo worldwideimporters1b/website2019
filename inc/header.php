@@ -3,7 +3,7 @@ session_start();
 include_once('functies.php');
 $basketinfo = toonWinkelstats(basketinfo($conn), $conn);
 $winkelmandid = basketinfo($conn);
-$prijs = formatprijs($basketinfo['Prijs']);
+$prijs = $basketinfo['Prijs'];
 $aantalproducten = $basketinfo['Aantal'];
 if (isset($_GET['add'])) {
     $winkelmandid = getbasketid($conn);
@@ -53,7 +53,7 @@ if (isset($_GET['add'])) {
                     <input type="submit" class="btn btn-primary" name="btnSearch" value="zoeken"/>
                 </form>
                 <div style="width: 20px"></div>
-                <a href="basket.php"><span><b class="basket"><?php echo $prijs; ?></b></span>
+                <a href="basket.php"><span><b class="basket"><?php echo formatprijs($prijs); ?></b></span>
                     <svg version="1.1" id="Capa_1" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg"
                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                          width="24px" height="24px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;"
@@ -79,14 +79,14 @@ if (isset($_GET['add'])) {
             </a>
             <?php
         } else {
-            echo $_SESSION["voornaam"] . " " . $_SESSION["achternaam"];
-            echo("<a href=\"accountbekijken.php\">");
-            echo("<svg class=\"bi bi-person-fill\" width=\"32px\" height=\"32px\" viewBox=\"0 0 20 20\" fill=\"#FFFFFF\"
-                 xmlns=\"http://www.w3.org/2000/svg\">");
-            echo("<path fill-rule=\"evenodd\" d=\"M5 16s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H5zm5-6a3 3 0 100-6 3 3 0 000 6z\"
-                      clip-rule=\"evenodd\"/>");
-            echo("</svg>");
-            echo("</a>");
+            echo "<span class='basket'>" . $_SESSION["voornaam"] . " " . $_SESSION["achternaam"] . "</span>" .
+            "<a href=\"accountbekijken.php\">
+            <svg class=\"bi bi-person-fill\" width=\"32px\" height=\"32px\" viewBox=\"0 0 20 20\" fill=\"#FFFFFF\"
+                 xmlns=\"http://www.w3.org/2000/svg\">
+            <path fill-rule=\"evenodd\" d=\"M5 16s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H5zm5-6a3 3 0 100-6 3 3 0 000 6z\"
+                      clip-rule=\"evenodd\"/>
+            </svg>
+            </a>";
         }
         ?>
     </nav>

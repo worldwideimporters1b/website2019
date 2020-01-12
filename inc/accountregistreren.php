@@ -4,6 +4,7 @@
 include "head.php";
 include "header.php";
 
+echo "<div class='container'>";
 
 //deze functie zal de de registratie functie aanroepen, en controleren of het account is geregistreerd in de database.
 function registreren($gegevens,$conn)
@@ -16,13 +17,9 @@ function registreren($gegevens,$conn)
         /*controle of het account succesvol is geregistreerd. Wanneer de webshop 1 terug geeft, is het gelukt.
            $result geeft een 1 terug in de functie accountRegistreren, als de database succesvol een insert heeft uitgevoerd.*/
 
-        echo "<blockquote class=\"blockquote text-center\">";
-        echo "<p class=\"mb-0\"><strong>Uw account is geregistreerd. <br> </p></strong>";
-        echo "</blockquote>";
+        echo "<div class=\"alert alert-success\" role=\"alert\">Uw account is succesvol geregistreerd</div>";
     } else {
-        echo "<blockquote class=\"blockquote text-center\">";
-        echo "<p class=\"mb-0\"><strong>Het registreren is mislukt. Probeer het nog eens.</strong></p>"; //anders word er onderstaande foutmelding gegeven.
-        echo "</blockquote>";
+        echo "<div class=\"alert alert-danger\" role=\"alert\">Het registreren van uw account is mislukt, controleer de ingevulde gegevens en probeer het nogmaals.</div>";
     }
 
     return $gegevens;
@@ -68,7 +65,7 @@ $message = "melding";
 if (isset($_POST['registreren'])) {
     if (!preg_match('/^\W*[1-9]{1}[0-9]{3}\W*[a-zA-Z]{2}\W*$/', ($_POST[$postcode]))) { //controle op een geldig postcode
         echo "<blockquote class=\"blockquote text-center\">";
-        echo "<p class=\"mb-0\"><strong>Uw postcode is ongeldig.</strong></p>";
+        echo "<div class=\"alert alert-danger\" role=\"alert\">De ingevulde postcode is ongeldig, vul uw postcode als voolgt in: \"1111AA\"</div>";
         echo "</blockquote>";
     } else {
         if (strlen(($_POST[$wachtwoord])) < 6 || strlen(($_POST[$wachtwoord])) > 20 || !preg_match('@[A-Z]@', ($_POST[$wachtwoord])) || !preg_match('@[a-z]@', ($_POST[$wachtwoord]))
@@ -99,9 +96,9 @@ if (isset($_POST['registreren'])) {
                 $gegevens = registreren($gegevens,$conn);
 
             } else {
-                echo "<blockquote class=\"blockquote text-center\">";
-                echo "<p class=\"mb-0\"><strong>Dit emailadres is al in gebruik</p></strong>";
-                echo "</blockquote>";
+
+                echo "<div class=\"alert alert-danger\" role=\"alert\">Dit emailadres is al in gebruik.</div>";
+                
             }
 
         }
@@ -171,4 +168,4 @@ if (isset($_POST['registreren'])) {
     <br>
     <a class="btn btn-outline-primary" href="inloggen.php" role="button">Terug naar de inlogpagina</a>
 </div>
-
+</div>

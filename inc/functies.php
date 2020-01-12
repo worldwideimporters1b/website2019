@@ -2,6 +2,7 @@
 
 // Sander
 function formatprijs($prijs){
+    #var_dump($prijs);
     $prettyformatted = number_format($prijs, 2, ',', '.');
 
     return " € " . $prettyformatted;
@@ -190,7 +191,7 @@ function toonWinkelmand($winkelmandid, $conn, $totalproducts = 0, $totalprice = 
         $html .= "<tr>"; // tr is table row
         foreach ($regel as $veldnaam => $veld) {
             if ($veldnaam == 'unitprice') {
-                $html .= "<td>€ " . $veld . "</td>";
+                $html .= "<td>" . formatprijs($veld) . "</td>";
             }
             if ($veldnaam == 'artikel_id') {
                 $pid = $veld;
@@ -213,7 +214,7 @@ function toonWinkelmand($winkelmandid, $conn, $totalproducts = 0, $totalprice = 
 
 </td></tr>";
     }
-    $html .= "<tr><td></td><td><b>Totaal</b></td><td><b>€ $totalprice</b></td><td><b>$totalproducts Stuk(s)</b></td></tr></table>";
+    $html .= "<tr><td></td><td><b>Totaal</b></td><td><b>".formatprijs($totalprice)."</b></td><td><b>$totalproducts Stuk(s)</b></td></tr></table>";
     return $html;
 }
 
@@ -272,5 +273,26 @@ function secureInt($int)
     } else {
         return 0;
     }
+}
+
+function randomsuggestie($cat,$conn){
+    $randomproductresultsquery = 'SELECT naam AS naam FROM artikel_categorie as cat JOIN artikel as art ON cat.artikel_id = art.artikel_id WHERE cat.categorie_id = '.$cat.' ORDER BY RAND() LIMIT 2';
+    $randomproductresults = $conn->query($randomproductresultsquery);
+    $producten = array();
+    foreach ($randomproductresults as $randomproduct){
+        array_push($producten, $randomproduct['naam'] );
+    }
+
+    $start = array('Wat je ook zoekt, al is het een ','Misschien wil je wel een ','Ben je misschien op zoek naar ','Wide World Importers heeft alles! Of je nou op zoek bent naar een ');
+    $startcount = count($start);
+    $randomstart = $start[rand(0,$startcount-1)];
+
+    $midden = ' of een ';
+
+    $einde = array(' bij Wide World Importers slaag je altijd',' bij ons vind je al wat je hart begeert', ' bij ons is het altijd voor de beste prijs', ' bij WWI weet je zeker dat je altijd de beste deal hebt.');
+    $eindecount = count($einde);
+    $randomeinde = $einde[rand(0,$eindecount-1)];
+
+    return $randomstart . $producten[0] .  $midden . $producten[1] . $randomeinde;
 }
 // Sander
