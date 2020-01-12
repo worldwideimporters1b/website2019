@@ -1,5 +1,5 @@
 <?php
-include "head.php";
+include "head.phpS";
 include "header.php";
 error_reporting(E_ALL);
 include "Kortingscode.php";
@@ -46,7 +46,7 @@ if (isset($_GET["Kortingverwijderen"])) { //kortingscode verwijderen
             <td>BTW</td>
             <td>
 
-                <?php /* echo BtwTonen($kortingscode, $winkelmandid, $conn); */ ?>
+                <?php echo formatprijs(BtwTonen($kortingscode, $winkelmandid, $conn)); ?>
             </td>
             <!--            <td>€--><?php //echo BtwTonen($kortingscode, $winkelmandid, $conn); ?><!--</td>-->
         </tr>
