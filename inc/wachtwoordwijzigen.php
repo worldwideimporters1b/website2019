@@ -22,7 +22,7 @@ function wachtwoordControle($oldpass, $newpass, $emailadres)
 
     } else {
         echo "<blockquote class=\"blockquote text-center\">
-         <p class=\"mb-0\"><strong>Het wachtwoord is onjuist.</strong></p> 
+         <div class=\"alert alert-danger\" role=\"alert\">Het wachtwoord is onjuist.</div> 
          </blockquote>";
     }
 
@@ -38,7 +38,7 @@ function wachtwoordWijzigen($newpass, $emailadres, $conn)
     $result = $conn->query($sql);
 
     echo "<blockquote class=\"blockquote text-center\">
-         <p class=\"mb-0\"><strong>Het wachtwoord is bijgewerkt.</strong></p> 
+         <div class=\"alert alert-success\" role=\"alert\">Het wachtwoord is bijgewerkt</div> 
          </blockquote>";
 
     return $result;
@@ -49,7 +49,7 @@ if (isset($_POST["bijwerken"])) {
     if (strlen(($_POST['wachtwoordnieuw'])) < 6 || strlen(($_POST['wachtwoordnieuw'])) > 20 || !preg_match('@[A-Z]@', ($_POST['wachtwoordnieuw'])) || !preg_match('@[a-z]@', ($_POST['wachtwoordnieuw']))
         || !preg_match('@[^\w]@', ($_POST['wachtwoordnieuw']))) { //eisen stellen aan het ingevoerde wachtwoord
         echo "<blockquote class=\"blockquote text-center\">";
-        echo "<p class=\"mb-0\"><strong>Het wachtwoord moet minimaal 6  en maximaal 20 tekens bevatten. Het wachtwoord moet bestaan uit een normale en hoofdletter. Het wachtwoord moet minstens 1 speciaal karakter bevatten.</strong></p>";
+        echo "<div class=\"alert alert-danger\" role=\"alert\">Het wachtwoord moet minimaal 6  en maximaal 20 tekens bevatten. Het wachtwoord moet bestaan uit een normale en hoofdletter.<br> Het wachtwoord moet minstens 1 speciaal karakter bevatten.</div>";
         echo "</blockquote>";
     } else {
         $emailadres = $_SESSION["gebruikersnaam"];

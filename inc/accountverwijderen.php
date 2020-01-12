@@ -1,8 +1,8 @@
 <?php
 // Door Lennard S1080997 WIP
 
-@include "head.php";
-@include "header.php";
+include "head.php";
+include "header.php";
 
 //verbinding met de database maken
 $conn = new mysqli('localhost', 'root', '', 'world_wide_importers');
@@ -21,7 +21,7 @@ function controle($emailadres, $wachtwoord, $conn)
 
     } else {
         echo "<blockquote class=\"blockquote text-center\">";
-        echo "<p class=\"mb-0\"><strong>E-mailadres of wachtwoord is onjuist.</strong></p>"; //feedback geven dat $row[0] == 0 is, oftewel emailadres en wachtwoord matchen niet.
+        echo "<div class=\"alert alert-danger\" role=\"alert\">E-mailadres of wachtwoord is onjuist.</div>"; //feedback geven dat $row[0] == 0 is, oftewel emailadres en wachtwoord matchen niet.
         echo "</blockquote>";
     }
 
@@ -36,12 +36,13 @@ function accountVerwijderen($emailadres, $conn)
     $result = $conn->query($sql); //query uitvoeren
 
     if ($result === TRUE) {
+        header("refresh:1;url=home.php");
         echo "<blockquote class=\"blockquote text-center\">";           //feedback geven aan de gebruiker.
-        echo "<p class=\"mb-0\"><strong>Uw account is verwijderd.</strong></p>";
+        echo "<div class=\"alert alert-success\" role=\"alert\">Uw account is verwijderd.</div>";
         echo "</blockquote>";
         session_destroy();                                              // sessie afsluiten en de gebruiker terug naar de homepage sturen als het account is verwijderd.
     }
-    header("refresh:1;url=home.php");
+
     return $result;
 }
 
@@ -59,9 +60,7 @@ if (isset($_POST["verwijderen"])) { //wanneer de knop "verwijderen" is geklikt;
     }
 
 }
-
 ?>
-
 <html> <!-- stukje HTML voor het formulier -->
 <div class="container">
     <form method="post" action="accountverwijderen.php">

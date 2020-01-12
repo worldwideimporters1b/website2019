@@ -1,7 +1,7 @@
 <?php
 
-include "head.php";
-include "header.php";
+include_once "head.php";
+include_once "header.php";
 
 
 function databaseConnectie()
@@ -30,7 +30,7 @@ function inloggen($gebruikersnaam, $wachtwoord)
             #$actief = $row['actief'];
         }
     } else {
-        echo "Helaas, het inloggen is mislukt";
+        echo "<div class=\"alert alert-danger\" role=\"alert\">Het inloggen is mislukt. Probeer het opnieuw.</div>";
     }
     return $count = mysqli_num_rows($result);
 }
@@ -63,7 +63,7 @@ function inlogcheck($count)
         header("refresh:0;url=home.php");                   // Nadat alle gegevens van de ingelogde gebruiker in de sessie zijn opgeslagen, sturen we de gebruiker naar de homepage.
     } else {
         echo "<blockquote class=\"blockquote text-center\">";
-        echo "<p class=\"mb-0\"><strong>Uw gebruikersnaam of wachtwoord is onjuist.</strong></p>";
+        echo "<div class=\"alert alert-danger\" role=\"alert\">Uw gebruikersnaam of wachtwoord is onjuist.</div>";
         echo "</blockquote>";
         //$inlogpoging;
     }
