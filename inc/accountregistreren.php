@@ -1,5 +1,5 @@
 <?php
-// Door Lennard S1080997 WIP
+// Door Lennard S1080997
 
 include "head.php";
 include "header.php";
@@ -65,13 +65,13 @@ $message = "melding";
 if (isset($_POST['registreren'])) {
     if (!preg_match('/^\W*[1-9]{1}[0-9]{3}\W*[a-zA-Z]{2}\W*$/', ($_POST[$postcode]))) { //controle op een geldig postcode
         echo "<blockquote class=\"blockquote text-center\">";
-        echo "<div class=\"alert alert-danger\" role=\"alert\">De ingevulde postcode is ongeldig, vul uw postcode als voolgt in: \"1111AA\"</div>";
+        echo "<div class=\"alert alert-danger\" role=\"alert\">De ingevulde postcode is ongeldig, vul uw postcode als volgt in: \"1111AA\"</div>";
         echo "</blockquote>";
     } else {
         if (strlen(($_POST[$wachtwoord])) < 6 || strlen(($_POST[$wachtwoord])) > 20 || !preg_match('@[A-Z]@', ($_POST[$wachtwoord])) || !preg_match('@[a-z]@', ($_POST[$wachtwoord]))
             || !preg_match('@[^\w]@', ($_POST[$wachtwoord]))) { //eisen stellen aan het ingevoerde wachtwoord
             echo "<blockquote class=\"blockquote text-center\">";
-            echo "<p class=\"mb-0\"><strong>Het wachtwoord moet minimaal 6  en maximaal 20 tekens bevatten. Het wachtwoord moet bestaan uit een normale en hoofdletter. Het wachtwoord moet minstens 1 speciaal karakter bevatten.</strong></p>";
+            echo "<div class=\"alert alert-danger\" role=\"alert\">Het wachtwoord moet minimaal 6  en maximaal 20 tekens bevatten. Het wachtwoord moet bestaan uit een normale en hoofdletter.<br> Het wachtwoord moet minstens 1 speciaal karakter bevatten.</div>";
             echo "</blockquote>";
         } else {
             $emailadres = $_POST['emailadres'];

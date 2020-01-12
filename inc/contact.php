@@ -17,7 +17,7 @@ $contactinfo = '<ul class="list-unstyled mb-0">
                 </li>
             </ul>';
 ?>
-<body>
+
 <div class="container">
     <h3>Contact</h3>
 
@@ -70,8 +70,10 @@ $contactinfo = '<ul class="list-unstyled mb-0">
         </div>
 
  <?php echo $contactinfo; ?>       <div class="col-md-3 text-right">
-<$contactinfo
+
         </div>
+        <br><br>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2431.6978911624606!2d6.125448916169112!3d52.4483872298006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c7ddd206af1103%3A0xd1c8109f9c7727d2!2sWindesheim%2C%20Zwolle!5e0!3m2!1sen!2snl!4v1578837024015!5m2!1sen!2snl" width="100%" height="350" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
     </div>
 
     <?php } //anders hoef je geen emailadres en naam in te voeren.
