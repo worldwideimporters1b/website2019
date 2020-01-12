@@ -1,4 +1,6 @@
 <?php
+
+error_reporting(E_ALL);
 // gemaakt door Boaz S1147963
 //PrijsVanBestelling geeft de uiteindelijk te betalen prijs. Voor de winkelmand totaalprijs zonder korting en verzendkosten kan de functie totaalprijszonderverzendkosten worden gebruikt
 
