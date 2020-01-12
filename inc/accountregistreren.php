@@ -98,7 +98,7 @@ if (isset($_POST['registreren'])) {
             } else {
 
                 echo "<div class=\"alert alert-danger\" role=\"alert\">Dit emailadres is al in gebruik.</div>";
-                
+
             }
 
         }
