@@ -7,7 +7,7 @@ include 'header.php';
     <h2 class="h1-responsive font-weight-bold text-center my-4">Contact</h2>
 
     <p class="text-center w-responsive mx-auto mb-5">Heeft u vragen en/of opmerking aan ons? Via het onderstaande
-        formulier kunt u via de mail contact met ons opnemen, WIj zullen zo spoedig mogelijk uw vragen beantwoorden.</p>
+        formulier kunt u via de mail contact met ons opnemen, wij zullen zo spoedig mogelijk uw vragen beantwoorden.</p>
 
     <div class="row">
 
@@ -112,7 +112,7 @@ include 'header.php';
         </li>
 
         <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-            <p>contact@worldwideimporters.nl</p>
+            <p>contact@wideworldimporters.nl</p>
         </li>
     </ul>
 </div>
