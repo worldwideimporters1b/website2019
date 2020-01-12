@@ -3,7 +3,7 @@
 include_once('head.php');
 include_once('header.php');
 
-#error_reporting(E_ALL);
+error_reporting(E_ALL);
 
 $gebruikerid = getgebruikerid();
 
