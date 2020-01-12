@@ -1,5 +1,5 @@
 <?php
-include "head.phpS";
+include "head.php";
 include "header.php";
 error_reporting(E_ALL);
 include "Kortingscode.php";
