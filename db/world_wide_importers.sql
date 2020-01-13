@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 12 jan 2020 om 15:28
--- Serverversie: 10.4.8-MariaDB
--- PHP-versie: 7.3.10
+-- Gegenereerd op: 13 jan 2020 om 18:04
+-- Serverversie: 10.4.11-MariaDB
+-- PHP-versie: 7.2.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -222,7 +222,7 @@ INSERT INTO `categorie` (`categorie_id`, `categorienaam`) VALUES
 --
 
 CREATE TABLE `chat` (
-  `chat_id` int(11) NOT NULL,
+  `chat_id` varchar(64) NOT NULL,
   `starttijd` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -231,12 +231,13 @@ CREATE TABLE `chat` (
 --
 
 INSERT INTO `chat` (`chat_id`, `starttijd`) VALUES
-(6, '2020-01-08 11:29:44'),
-(7, '2019-12-24 14:47:21'),
-(8, '2020-01-04 20:20:36'),
-(84, '2020-01-11 22:26:53'),
-(832, '2020-01-07 15:12:23'),
-(977, '2020-01-10 13:43:11');
+('544f1fa6092c123b9888c00e67877554c7f9ae0e4cd979ac04d8ad92075c7cd2', '2020-01-13 18:04:13'),
+('6', '2020-01-08 11:29:44'),
+('7', '2019-12-24 14:47:21'),
+('8', '2020-01-04 20:20:36'),
+('832', '2020-01-07 15:12:23'),
+('84', '2020-01-11 22:26:53'),
+('977', '2020-01-10 13:43:11');
 
 -- --------------------------------------------------------
 
@@ -246,7 +247,7 @@ INSERT INTO `chat` (`chat_id`, `starttijd`) VALUES
 
 CREATE TABLE `chatregel` (
   `chatregel_id` int(11) NOT NULL,
-  `chat_id` int(11) DEFAULT NULL,
+  `chat_id` varchar(64) DEFAULT NULL,
   `gebruiker_id` int(11) DEFAULT NULL,
   `berichtinhoud` varchar(255) DEFAULT NULL,
   `tijd` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -257,25 +258,27 @@ CREATE TABLE `chatregel` (
 --
 
 INSERT INTO `chatregel` (`chatregel_id`, `chat_id`, `gebruiker_id`, `berichtinhoud`, `tijd`) VALUES
-(1, 832, 0, '', '2020-01-07 14:12:25'),
-(2, 832, 0, 'test', '2020-01-07 14:12:29'),
-(3, 832, 68, 'test', '2020-01-07 14:15:40'),
-(4, 832, 68, 'werkt?', '2020-01-07 14:15:49'),
-(5, 832, 0, 'Testing', '2020-01-07 14:28:56'),
-(6, 832, 0, 'testing', '2020-01-07 14:29:02'),
-(7, 832, 0, 'testing', '2020-01-07 14:30:03'),
-(8, 832, 0, 'testing', '2020-01-07 14:31:51'),
-(9, 832, 1, 'chat aan computer gelocked?', '2020-01-07 14:36:15'),
-(10, 832, 1, 'YES!', '2020-01-07 14:36:23'),
-(11, 832, 68, 'kijk hij doet', '2020-01-07 19:34:16'),
-(12, 6, 68, 'test\r\n', '2020-01-08 10:29:53'),
-(13, 6, 68, 'test\r\n', '2020-01-08 10:30:07'),
-(14, 6, 0, 'test', '2020-01-08 10:30:28'),
-(15, 977, 68, 'Ik heb een vraag over een product', '2020-01-10 12:43:27'),
-(16, 977, 68, 'Nu weer', '2020-01-10 12:44:08'),
-(17, 977, 68, 'Nog steeds', '2020-01-10 12:47:26'),
-(18, 84, 68, 'test', '2020-01-11 21:27:02'),
-(19, 84, 68, 'test', '2020-01-11 21:28:12');
+(1, '832', 0, '', '2020-01-07 14:12:25'),
+(2, '832', 0, 'test', '2020-01-07 14:12:29'),
+(3, '832', 68, 'test', '2020-01-07 14:15:40'),
+(4, '832', 68, 'werkt?', '2020-01-07 14:15:49'),
+(5, '832', 0, 'Testing', '2020-01-07 14:28:56'),
+(6, '832', 0, 'testing', '2020-01-07 14:29:02'),
+(7, '832', 0, 'testing', '2020-01-07 14:30:03'),
+(8, '832', 0, 'testing', '2020-01-07 14:31:51'),
+(9, '832', 1, 'chat aan computer gelocked?', '2020-01-07 14:36:15'),
+(10, '832', 1, 'YES!', '2020-01-07 14:36:23'),
+(11, '832', 68, 'kijk hij doet', '2020-01-07 19:34:16'),
+(12, '6', 68, 'test\r\n', '2020-01-08 10:29:53'),
+(13, '6', 68, 'test\r\n', '2020-01-08 10:30:07'),
+(14, '6', 0, 'test', '2020-01-08 10:30:28'),
+(15, '977', 68, 'Ik heb een vraag over een product', '2020-01-10 12:43:27'),
+(16, '977', 68, 'Nu weer', '2020-01-10 12:44:08'),
+(17, '977', 68, 'Nog steeds', '2020-01-10 12:47:26'),
+(18, '84', 68, 'test', '2020-01-11 21:27:02'),
+(19, '84', 68, 'test', '2020-01-11 21:28:12'),
+(20, '544f1fa6092c123b9888c00e67877554c7f9ae0e4cd979ac04d8ad92075c7cd2', 68, 'test', '2020-01-13 17:04:16'),
+(21, '544f1fa6092c123b9888c00e67877554c7f9ae0e4cd979ac04d8ad92075c7cd2', 68, 'check hij doet', '2020-01-13 17:04:24');
 
 -- --------------------------------------------------------
 
@@ -362,7 +365,7 @@ CREATE TABLE `orderregel` (
 
 INSERT INTO `orderregel` (`order_id`, `artikel_id`, `aantal`, `korting_id`, `voorraadstatu`, `winkelmand_id`) VALUES
 (39, 1, 4, NULL, NULL, 2),
-(40, 9, 3, NULL, NULL, 2),
+(40, 9, 6, NULL, NULL, 2),
 (57, 5, 1, NULL, NULL, 3),
 (59, 1, 1, NULL, NULL, 6),
 (60, 4, 1, NULL, NULL, 6);
@@ -645,16 +648,10 @@ ALTER TABLE `categorie`
   MODIFY `categorie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT voor een tabel `chat`
---
-ALTER TABLE `chat`
-  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=978;
-
---
 -- AUTO_INCREMENT voor een tabel `chatregel`
 --
 ALTER TABLE `chatregel`
-  MODIFY `chatregel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `chatregel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT voor een tabel `gebruiker`

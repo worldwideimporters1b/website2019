@@ -10,11 +10,6 @@ function databaseConnectie()
     return $conn;
 }
 
-//function inlogpoging(){
-//  $inlogpoging = "Update gebruikers set foutieve_aanmeldpogingen = foutieve_aanmeldpogingen +1 where '"$session"'");
-//return $inlogpoging;
-//}
-
 
 //hier checken we of de database wel goed is, is het niet leeg en wat zijn gebruikersnaam en wachtwoord?
 function inloggen($gebruikersnaam, $wachtwoord)
